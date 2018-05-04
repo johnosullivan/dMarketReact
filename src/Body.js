@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react';
+import { Search, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment, Button } from 'semantic-ui-react';
 
 const Home = () => (
   <div>
@@ -22,7 +22,7 @@ const Schedule = () => (
 
 const Body = () => (
   <main>
-    <Container text style={{ marginTop: '7em' }}>
+    <Container text style={{ marginTop: '4em' }}>
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route path='/search' component={Roster}/>
