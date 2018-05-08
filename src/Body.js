@@ -31,7 +31,7 @@ const Products = () => (
 )
 
 const Body = () => (
-    <Container text style={{ marginTop: '5em' }}>
+    <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
     <Switch>
       <Route exact path='/' component={AddProduct}/>
       <Route path='/search' component={Roster}/>
