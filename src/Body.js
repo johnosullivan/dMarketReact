@@ -1,10 +1,14 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Search, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment, Button } from 'semantic-ui-react';
+import { Label,Advertisement,Form,TextArea,Message,Table,Card, Icon, Search, Input, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment, Button } from 'semantic-ui-react';
+
+import AddProduct from './AddProduct';
 
 const Home = () => (
   <div>
+    <Container style={{ padding: '5em 0em' }} text>
 
+    </Container>
   </div>
 )
 
@@ -20,16 +24,21 @@ const Schedule = () => (
   </div>
 )
 
+const Products = () => (
+  <div>
+
+  </div>
+)
+
 const Body = () => (
-  <main>
-    <Container text style={{ marginTop: '4em' }}>
+    <Container text style={{ marginTop: '5em' }}>
     <Switch>
-      <Route exact path='/' component={Home}/>
+      <Route exact path='/' component={AddProduct}/>
       <Route path='/search' component={Roster}/>
+      <Route path='/myproducts' component={Products}/>
       <Route path='/myorders' component={Schedule}/>
     </Switch>
     </Container>
-  </main>
 )
 
 export default Body

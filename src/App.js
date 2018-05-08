@@ -4,7 +4,21 @@ import DMHeader from './Header';
 import DMBody from './Body';
 import Footer from './Footer';
 
-import { Button, Icon ,Modal, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment,Input } from 'semantic-ui-react';
+import {
+  Button,
+  Icon,
+  Modal,
+  Container,
+  Divider,
+  Dropdown,
+  Grid,
+  Header,
+  Image,
+  List,
+  Menu,
+  Segment,
+  Input
+} from 'semantic-ui-react';
 
 
 import './App.css';
@@ -14,6 +28,7 @@ class App extends Component {
 
   constructor() {
     super();
+    console.log(window.web3);
   }
 
   render() {
