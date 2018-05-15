@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import aesjs from 'aes-js';
 
+import ipfsAPI from 'ipfs-api';
 
 import {
   Button,
@@ -86,6 +87,30 @@ class AddProduct extends Component {
   handleAddMCFile(selectorFiles: FileList) { this.setState({ marketfiles: selectorFiles }); }
 
   submit() {
+
+    var HttpClient = function() {
+        this.get = function(uri, callback) {
+        // XMLHttpRequest Get Method
+        var request = new XMLHttpRequest();
+        // Fires once the state of the request changes
+        request.onreadystatechange = function() {
+            // If the request is of the right code fire the callback
+            if (request.readyState == 4 && request.status == 200) { callback(request.responseText); }
+        }
+        // Sets the param and sends the request
+        request.open("GET",uri,true);
+        request.send(null);
+        }
+    }
+
+    /*
+    var client = new HttpClient();
+    client.get("http://localhost:8080/ipfs/QmSiKQMP3SiTGaNj6no2BrtvaAhUhSwvnXkNF7UYA7hWs8", function(response) {
+        console.log(response);
+    });
+    */
+
+
     // Testing secure file selling on the eth blockchain!
     var product = this.state;
     var file = product['content'][0];
@@ -101,7 +126,22 @@ class AddProduct extends Component {
       console.log(aesjs);
 
       console.log(bytes);
+      console.log(bytes.length);
 
+      Uint8Array.prototype.chunk = function (n) {
+        if (!this.length) {
+        return [];
+        }
+        return [ this.slice(0,n) ].concat(this.slice(n).chunk(n));
+      };
+
+      var chunk_num = 4;
+      var chunk_size = bytes.length / chunk_num;
+      var chunks = bytes.chunk(chunk_size);
+
+      console.log(chunks);
+
+      /*
       var key = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
                  16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
                  29, 30, 31];
@@ -114,7 +154,8 @@ class AddProduct extends Component {
 
       var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
 
-      //console.log(encryptedHex);
+      console.log(encryptedHex);
+      console.log(encryptedHex.length);
 
       var encryptedBytesA = aesjs.utils.hex.toBytes(encryptedHex);
 
@@ -122,6 +163,21 @@ class AddProduct extends Component {
       var decryptedBytes = aesCtr.decrypt(encryptedBytesA);
 
       console.log(decryptedBytes);
+      */
+
+      /*var ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
+
+      var data = new Buffer(encryptedHex);
+      var path = "testing.data";
+      const stream = ipfs.files.addReadableStream();
+      stream.on('data', function (file) {
+        console.log(file);
+        var hash = file['hash'];
+        console.log(hash);
+      });
+      stream.write({ path: path, content: data });
+      stream.end();*/
+
     }
 
     reader.readAsArrayBuffer(file);
