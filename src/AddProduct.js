@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import aesjs from 'aes-js';
+
+
 import {
   Button,
   Icon,
@@ -85,7 +88,46 @@ class AddProduct extends Component {
   submit() {
     // Testing secure file selling on the eth blockchain!
     var product = this.state;
-    console.log(product);
+    var file = product['content'][0];
+
+    console.log(file);
+
+    var reader = new FileReader();
+
+    reader.onload = function() {
+      var arrayBuffer = reader.result;
+      var bytes = new Uint8Array(arrayBuffer);
+
+      console.log(aesjs);
+
+      console.log(bytes);
+
+      var key = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+                 29, 30, 31];
+
+
+      var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+      var encryptedBytes = aesCtr.encrypt(bytes);
+
+      console.log(encryptedBytes);
+
+      var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+
+      //console.log(encryptedHex);
+
+      var encryptedBytesA = aesjs.utils.hex.toBytes(encryptedHex);
+
+      var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+      var decryptedBytes = aesCtr.decrypt(encryptedBytesA);
+
+      console.log(decryptedBytes);
+    }
+
+    reader.readAsArrayBuffer(file);
+
+
+
   }
 
   render() {
