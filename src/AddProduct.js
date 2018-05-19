@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-
 import aesjs from 'aes-js';
-
 import ipfsAPI from 'ipfs-api';
+
+import DataHelper from './DataHelper';
+import Web3Helper from './Web3Helper';
 
 import {
   Button,
@@ -69,9 +70,13 @@ class AddProduct extends Component {
         marketfiles: []
       };
     }
+
     this.submit = this.submit.bind(this);
+    this.datahelper = new DataHelper();
+    this.web3helper = new Web3Helper();
   }
 
+  // Handling all the bind and state change
   handleName(e) { this.setState({ name: e.target.value }); }
   handleDescription(e) { this.setState({ description: e.target.value }); }
   handleVideo(e) { this.setState({ video: e.target.value }); }
@@ -88,36 +93,33 @@ class AddProduct extends Component {
 
   submit() {
 
-    var HttpClient = function() {
-        this.get = function(uri, callback) {
-        // XMLHttpRequest Get Method
-        var request = new XMLHttpRequest();
-        // Fires once the state of the request changes
-        request.onreadystatechange = function() {
-            // If the request is of the right code fire the callback
-            if (request.readyState == 4 && request.status == 200) { callback(request.responseText); }
-        }
-        // Sets the param and sends the request
-        request.open("GET",uri,true);
-        request.send(null);
-        }
+    // Gets the product from the state component
+    var product = this.state;
+    // Checks if the product has contents
+    if (product['content'].length > 0) {
+
+      var file = product['content'][0];
+
+      this.datahelper.hexingContent(file)
+      .then(hex => this.datahelper.ipfsFile(hex))
+      .then(ipfs_file => {
+        console.log(ipfs_file);
+      })
+      .catch(err => console.log(err));
+
     }
 
-    /*
-    var client = new HttpClient();
-    client.get("http://localhost:8080/ipfs/QmSiKQMP3SiTGaNj6no2BrtvaAhUhSwvnXkNF7UYA7hWs8", function(response) {
-        console.log(response);
-    });
-    */
-
-
     // Testing secure file selling on the eth blockchain!
+    /*
     var product = this.state;
     var file = product['content'][0];
 
     console.log(file);
+    console.log(this);
 
     var reader = new FileReader();
+
+    var self = this;
 
     reader.onload = function() {
       var arrayBuffer = reader.result;
@@ -139,9 +141,13 @@ class AddProduct extends Component {
       var chunk_size = bytes.length / chunk_num;
       var chunks = bytes.chunk(chunk_size);
 
-      console.log(chunks);
+      var s = self.DataHelper.bytesToHex(bytes);
 
-      /*
+      console.log(s);
+
+      //console.log(self.hexToBytes(s));
+
+
       var key = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
                  16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
                  29, 30, 31];
@@ -176,13 +182,12 @@ class AddProduct extends Component {
         console.log(hash);
       });
       stream.write({ path: path, content: data });
-      stream.end();*/
+      stream.end();
 
     }
 
     reader.readAsArrayBuffer(file);
-
-
+    */
 
   }
 
