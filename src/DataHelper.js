@@ -7,12 +7,12 @@ const ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 class DataHelper {
 
   constructor() {
+    // IPFS configs for class
     this.ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
-
+    this.ipfs_endpoint = "http://localhost:8080/ipfs/";
+    // Prototype for chucking in Uint8Array
     Uint8Array.prototype.chunk = function (n) {
-      if (!this.length) {
-        return [];
-      }
+      if (!this.length) { return []; }
       return [ this.slice(0,n) ].concat(this.slice(n).chunk(n));
     };
   }
@@ -51,6 +51,93 @@ class DataHelper {
     }
     return hex.join("");
   }
+  /*
+  * Saving the data chunks to IPFS
+  */
+  savingIPFS = function(index, data, name) {
+    var current_index = index;
+    var current_data = data;
+    var current_name = name;
+    var self = this;
+    return new Promise((resolve, reject) => {
+      var data = new Buffer(current_data);
+      const stream = self.ipfs.files.addReadableStream();
+      stream.on('data', function (file) {
+        var obj = JSON.parse(JSON.stringify(file));
+        obj["index"] = current_index;
+        resolve(obj);
+      });
+      stream.write({ path: current_name, content: data });
+      stream.end();
+    });
+  }
+  /*
+  * Will cut up the encryped data into chuck of length (len)
+  */
+  chunkString = function(str, len) {
+    var size = Math.ceil(str.length / len),
+        ret  = new Array(size),
+        offset;
+    for (var i = 0; i < size; i++) {
+        offset = i * len;
+        ret[i] = str.substring(offset, offset + len);
+    }
+    return ret;
+  }
+  /*
+  * Gets the chunk off IPFS
+  */
+  getChuck = function(index, hash) {
+    var current_index = index;
+    var current_hash = hash;
+    var self = this;
+    return new Promise((resolve, reject) => {
+      var uri = self.ipfs_endpoint + current_hash;
+      self.get(uri, function(response) {
+        resolve({ 'index':current_index, 'data':response });
+      });
+    });
+  }
+  /*
+  * Giving the details from the EthSC the funciton will get fiel chunks decrypt
+  */
+  getFile = function(file_data_obj) {
+    // Gets the file object data
+    var file = file_data_obj;
+    var self = this;
+    return new Promise((resolve, reject) => {
+      var promises = [];
+      var chunks = file['chunks'];
+      var key = file['key'];
+      // Gets the chuck data from IPFS
+      for (var i = 0; i < chunks.length; i++) {
+        var chunk_hash = chunks[i];
+        promises.push(self.getChuck(i, chunk_hash));
+      }
+      Promise.all(promises).then(function(values) {
+          var data = "";
+          // Reassembles the single chuck
+          for (var i = 0; i < values.length; i++) {
+              data += self.findIndex(i,values).data;
+          }
+          // Bytes being decrypted
+          var bytes  = cryptojs.AES.decrypt(data, key);
+          var bencoding = bytes.toString(cryptojs.enc.Utf8);
+          // Resolve the final bytes
+          resolve(self.hexToBytes(bencoding));
+        });
+    });
+  }
+
+  findIndex = function(index, array) {
+    for (var i = 0; i < array.length; i++) {
+        var obj = array[i];
+        if (obj['index'] == index) {
+          return obj;
+        }
+    }
+    return "";
+  }
 
   hexingContent = function(file) {
     var packing_file = file;
@@ -61,35 +148,34 @@ class DataHelper {
       var reader = new FileReader();
       // Begins reading the file data
       reader.onload = function() {
-
         // Gets the bytes of the file
         var bytes = new Uint8Array(reader.result);
         console.log(bytes);
+
         var orhex = self.bytesToHex(bytes);
         var key = self.generateKey(50);
-        console.log("KEY:", key);
-        var endata = cryptojs.AES.encrypt(orhex, key);
-        console.log(endata.toString());
 
-        /*
-        var enbytes = self.hexToBytes(endata.toString());
-        var chunk_num = 4;
-        var chunk_size = enbytes.length / chunk_num;
-        var chunks = enbytes.chunk(chunk_size);
-        console.log(chunks);
-        console.log("file_size: ", enbytes.length);
-        */
+        var endata = cryptojs.AES.encrypt(orhex, key).toString();
+        console.log(endata);
 
-        var dedata = cryptojs.AES.decrypt(endata.toString(), key);
-        var ptd = dedata.toString(cryptojs.enc.Utf8);
-        var finalresults = self.hexToBytes(ptd);
-        console.log(finalresults);
-        //var data = self.bytesToHex(bytes);
-        //console.log(data);
+        var chunks = self.chunkString(endata, (endata.length / 3));
+        var promises = [];
 
-        resolve("");
+        for (var i = 0; i < chunks.length; i++) {
+            var chunk_data = chunks[i];
+            var name = "name# " + i;
+            promises.push(self.savingIPFS(i, chunk_data, name));
+        }
+        Promise.all(promises).then(function(values) {
+            var chunks = Array.apply(null, Array(values.length)).map(String.prototype.valueOf,"")
+            for (var i = 0; i < values.length; i++) {
+                var chunk = values[i];
+                var index = chunk["index"];
+                chunks[index] = chunk["hash"];
+            }
+            resolve({ 'key':key, 'chunks':chunks });
+        });
       }
-
       reader.readAsArrayBuffer(file);
 
     });

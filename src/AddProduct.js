@@ -35,6 +35,8 @@ class AddProduct extends Component {
   constructor() {
     super();
 
+
+
     this.state = {
       seller: "",
       name:"",
@@ -48,7 +50,8 @@ class AddProduct extends Component {
       website:"",
       price:0,
       content: [],
-      marketfiles: []
+      marketfiles: [],
+      testObj:{}
     };
 
     if (typeof window.web3 === 'undefined') {
@@ -69,7 +72,8 @@ class AddProduct extends Component {
         website:"",
         price:"",
         content: [],
-        marketfiles: []
+        marketfiles: [],
+        testObj:{}
       };
     }
 
@@ -96,8 +100,15 @@ class AddProduct extends Component {
 
   submit2() {
 
+    var testObj = this.state['testObj'];
+    console.log(testObj);
 
-    var state = this.state;
+    this.datahelper.getFile(testObj).then(data => {
+      console.log(data);
+      jsd(new Uint8Array(data), 'filename.png');
+    })
+    .catch(err => console.log(err));
+    /*
     var uri = "http://localhost:8080/ipfs/Qmcw87rUakyb2siK9yWmV1J6JDPKJtq2KABWDJv8AQYCak";
 
     //console.log(uri);
@@ -136,7 +147,7 @@ class AddProduct extends Component {
       //console.log(plaintext);
 
     });
-
+    */
 
     // Encrypt
 
@@ -153,9 +164,9 @@ class AddProduct extends Component {
       var file = product['content'][0];
       // Uses the helper to hex file and put on ipfs
       this.datahelper.hexingContent(file)
-      .then(hex => this.datahelper.ipfsFile(hex))
-      .then(ipfs_file => {
-        console.log(ipfs_file);
+      .then(data => {
+        console.log(data);
+        this.setState({ testObj: data });
       })
       .catch(err => console.log(err));
     }
