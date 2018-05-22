@@ -1,6 +1,7 @@
 import ipfsAPI from 'ipfs-api';
 import cryptojs from 'crypto-js';
 import aesjs from 'aes-js';
+import { sha256, sha224 } from 'js-sha256';
 
 const ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -37,13 +38,17 @@ class DataHelper {
     request.open("GET",uri,true);
     request.send(null);
   }
-
+  /*
+  * Converts the hex to bytes
+  */
   hexToBytes = function(hex) {
     for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
     return bytes;
   }
-
+  /*
+  * Converts the bytes to hex
+  */
   bytesToHex = function(bytes) {
     for (var hex = [], i = 0; i < bytes.length; i++) {
         hex.push((bytes[i] >>> 4).toString(16));
@@ -132,28 +137,31 @@ class DataHelper {
   findIndex = function(index, array) {
     for (var i = 0; i < array.length; i++) {
         var obj = array[i];
-        if (obj['index'] == index) {
-          return obj;
-        }
+        if (obj['index'] == index) { return obj; }
     }
     return "";
   }
 
-  hexingContent = function(file) {
+  uploadingFile = function(file, public_address) {
     var packing_file = file;
+    var paddress = public_address;
     var self = this;
     return new Promise((resolve, reject) => {
       // FileReader
       console.log(self);
+      console.log(paddress);
       var reader = new FileReader();
       // Begins reading the file data
       reader.onload = function() {
+
         // Gets the bytes of the file
         var bytes = new Uint8Array(reader.result);
         console.log(bytes);
+        console.log(file);
 
         var orhex = self.bytesToHex(bytes);
         var key = self.generateKey(50);
+        var name = self.generateKey(50);
 
         var endata = cryptojs.AES.encrypt(orhex, key).toString();
         console.log(endata);
@@ -163,7 +171,6 @@ class DataHelper {
 
         for (var i = 0; i < chunks.length; i++) {
             var chunk_data = chunks[i];
-            var name = "name# " + i;
             promises.push(self.savingIPFS(i, chunk_data, name));
         }
         Promise.all(promises).then(function(values) {
@@ -173,30 +180,13 @@ class DataHelper {
                 var index = chunk["index"];
                 chunks[index] = chunk["hash"];
             }
-            resolve({ 'key':key, 'chunks':chunks });
+            resolve({ "key":key, "chunks":chunks, "name": (paddress + "_" + file['name']), "hash": sha256(bytes), "type": file['type'], "size": file['size']  });
         });
       }
       reader.readAsArrayBuffer(file);
 
     });
   }
-
-  ipfsFile = function(hex) {
-    var hex_file = hex;
-    var self = this;
-    return new Promise((resolve, reject) => {
-      /*
-      var data = new Buffer(hex_file);
-      var path = "testing.data";
-      const stream = self.ipfs.files.addReadableStream();
-      stream.on('data', function (file) { resolve(file); });
-      stream.write({ path: path, content: data });
-      stream.end();
-      */
-      resolve("");
-    });
-  }
-
 
 }
 

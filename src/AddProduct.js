@@ -6,6 +6,7 @@ import DataHelper from './DataHelper';
 import jsd from 'js-file-download';
 import Web3Helper from './Web3Helper';
 import cryptojs from 'crypto-js';
+import chance from 'chance';
 
 import {
   Button,
@@ -100,6 +101,7 @@ class AddProduct extends Component {
 
   submit2() {
 
+    /*
     var testObj = this.state['testObj'];
     console.log(testObj);
 
@@ -108,6 +110,9 @@ class AddProduct extends Component {
       jsd(new Uint8Array(data), 'filename.png');
     })
     .catch(err => console.log(err));
+    */
+
+    console.log(chance.guid());
     /*
     var uri = "http://localhost:8080/ipfs/Qmcw87rUakyb2siK9yWmV1J6JDPKJtq2KABWDJv8AQYCak";
 
@@ -163,7 +168,7 @@ class AddProduct extends Component {
       // Gets the file from state
       var file = product['content'][0];
       // Uses the helper to hex file and put on ipfs
-      this.datahelper.hexingContent(file)
+      this.datahelper.uploadingFile(file, product.seller)
       .then(data => {
         console.log(data);
         this.setState({ testObj: data });
