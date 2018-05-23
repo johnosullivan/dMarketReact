@@ -1,11 +1,5 @@
 pragma solidity ^0.4.19;
 
-contract FileManager {
-
-
-
-}
-
 contract Owned {
     address owner;
     modifier onlyOwner() {
@@ -13,8 +7,28 @@ contract Owned {
         _;
     }
     function Owned() public {
+
+    }
+}
+
+contract FileManager is Owned {
+
+    mapping (address => address[]) public files;
+
+    event AddFile(address file, address uploader);
+
+    function FileManager() public {
         owner = msg.sender;
     }
+
+    function addNews(
+        string _ftype, string _hash, string _chunks, uint256 _size, string _name
+    ) public {
+        address c_file = new File(msg.sender, _ftype, _hash, _chunks, _name, _size);
+        files[msg.sender].push(c_file);
+        AddFile(c_file,msg.sender);
+    }
+
 }
 
 contract File is Owned {
@@ -24,12 +38,15 @@ contract File is Owned {
     string public ftype;
     string public hash;
     string public chucks;
+    string public name;
     uint256 public size;
 
-    function File(string _ftype, string _hash, string _chunks, uint256 _size) public {
+    function File(address _owner, string _ftype, string _hash, string _chunks, string _name, uint256 _size) public {
+        owner = _owner;
         ftype = _ftype;
         hash = _hash;
         size = _size;
+        name = _name;
         chucks = _chunks;
     }
 

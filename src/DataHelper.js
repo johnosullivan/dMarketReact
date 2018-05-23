@@ -166,7 +166,7 @@ class DataHelper {
         var endata = cryptojs.AES.encrypt(orhex, key).toString();
         console.log(endata);
 
-        var chunks = self.chunkString(endata, (endata.length / 3));
+        var chunks = self.chunkString(endata, (endata.length / 1));
         var promises = [];
 
         for (var i = 0; i < chunks.length; i++) {
