@@ -6,6 +6,10 @@ class Web3Helper {
     console.log("Web3Helper -> constructor");
   }
 
+  addedFile() {
+    console.log("Added data");
+  }
+
 }
 
 export default Web3Helper;

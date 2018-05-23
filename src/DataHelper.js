@@ -180,7 +180,7 @@ class DataHelper {
                 var index = chunk["index"];
                 chunks[index] = chunk["hash"];
             }
-            resolve({ "key":key, "chunks":chunks, "name": (paddress + "_" + file['name']), "hash": sha256(bytes), "type": file['type'], "size": file['size']  });
+            resolve({ "key":key, "chunks":chunks, "owner": paddress, "hash": sha256(bytes), "type": file['type'], "size": file['size']  });
         });
       }
       reader.readAsArrayBuffer(file);

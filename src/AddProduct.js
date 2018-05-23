@@ -101,6 +101,7 @@ class AddProduct extends Component {
 
   submit2() {
 
+    this.web3helper.addedFile();
     /*
     var testObj = this.state['testObj'];
     console.log(testObj);
@@ -112,7 +113,7 @@ class AddProduct extends Component {
     .catch(err => console.log(err));
     */
 
-    console.log(chance.guid());
+    //console.log(chance.guid());
     /*
     var uri = "http://localhost:8080/ipfs/Qmcw87rUakyb2siK9yWmV1J6JDPKJtq2KABWDJv8AQYCak";
 
