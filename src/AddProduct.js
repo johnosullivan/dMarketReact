@@ -79,6 +79,7 @@ class AddProduct extends Component {
     }
 
     this.submit = this.submit.bind(this);
+
     this.submit2 = this.submit2.bind(this);
     this.datahelper = new DataHelper();
     this.web3helper = new Web3Helper();
@@ -101,7 +102,16 @@ class AddProduct extends Component {
 
   submit2() {
 
-    this.web3helper.addedFile();
+    var self = this;
+    this.web3helper.addedFile().then((txhash) => {
+      console.log("Final TXHash", txhash);
+      console.log(self.web3helper);
+      /*self.web3helper.waitForReceipt(txhash, function (receipt) {
+        console.log(receipt);
+      });*/
+    });
+
+
     /*
     var testObj = this.state['testObj'];
     console.log(testObj);
