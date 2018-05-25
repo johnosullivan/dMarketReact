@@ -4,7 +4,7 @@ class Web3Helper {
 
   constructor() {
 
-    this.FileManagerABI = [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"files","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ftype","type":"string"},{"name":"_hash","type":"string"},{"name":"_chunks","type":"string"},{"name":"_size","type":"uint256"},{"name":"_name","type":"string"}],"name":"addFile","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"file","type":"address"},{"indexed":false,"name":"uploader","type":"address"}],"name":"AddFile","type":"event"}];
+    this.FileManagerABI = [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"files","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ftype","type":"string"},{"name":"_hash","type":"string"},{"name":"_chunks","type":"string"},{"name":"_size","type":"uint256"},{"name":"_name","type":"string"},{"name":"_key","type":"string"}],"name":"addFile","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"file","type":"address"},{"indexed":false,"name":"uploader","type":"address"}],"name":"AddFile","type":"event"}];
 
     console.log("Web3Helper -> constructor");
 
@@ -18,6 +18,8 @@ class Web3Helper {
     }
 
     this.public_address = this.web3js.eth.defaultAccount;
+
+    this.FileManagerAddress = "0x3149c4a79c962c5c1ec3c8404dcd7ba9800e571f";
   }
 
   waitForReceipt = function(hash, cb) {
@@ -31,17 +33,29 @@ class Web3Helper {
     });
   }
 
-  addedFile = function() {
+  addedFile = function(data) {
     console.log("Added data");
     var self = this;
+    var file_obj = data;
     return new Promise((resolve, reject) => {
 
-    var FMC = self.web3js.eth.contract(self.FileManagerABI);
-    var FileManager = FMC.at("0x87b29863d2a22543ba6f839a5aece2715fd938e6");
+    console.log(file_obj);
 
+    var FMC = self.web3js.eth.contract(self.FileManagerABI);
+    var FileManager = FMC.at(self.FileManagerAddress);
+    console.log(self.FileManagerAddress);
+    console.log(self.public_address);
     console.log(FileManager);
 
-    FileManager.addFile("johniscool", "here","today",122121,"was", { from: "0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f" }, (err, txHash) => {
+    FileManager.addFile(
+      file_obj["type"],
+      file_obj["hash"],
+      file_obj["chunks"][0],
+      file_obj["size"],
+      "SomeName",
+      file_obj["key"],
+    { from: self.public_address }, (err, txHash) => {
+        console.log(err);
         resolve(txHash);
     });
 

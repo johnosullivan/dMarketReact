@@ -95,7 +95,8 @@ class AddProduct extends Component {
   submit2() {
 
     var self = this;
-    this.web3helper.addedFile().then((txhash) => {
+    var testObj = this.state['testObj'];
+    this.web3helper.addedFile(testObj).then((txhash) => {
       console.log("Final TXHash", txhash);
       console.log(self.web3helper);
       /*self.web3helper.waitForReceipt(txhash, function (receipt) {
