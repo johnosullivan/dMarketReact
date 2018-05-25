@@ -36,8 +36,6 @@ class AddProduct extends Component {
   constructor() {
     super();
 
-
-
     this.state = {
       seller: "",
       name:"",
@@ -55,34 +53,28 @@ class AddProduct extends Component {
       testObj:{}
     };
 
-    if (typeof window.web3 === 'undefined') {
-      console.error("Please use a web3 browser");
-    } else {
-      var myWeb3 = new Web3(window.web3.currentProvider);
-      myWeb3.eth.defaultAccount = window.web3.eth.defaultAccount;
-      this.state = {
-        seller: myWeb3.eth.defaultAccount,
-        name:"",
-        description:"",
-        video:"",
-        videoType:"",
-        firstName:"",
-        lastName:"",
-        address:"",
-        phone:"",
-        website:"",
-        price:"",
-        content: [],
-        marketfiles: [],
-        testObj:{}
-      };
-    }
 
     this.submit = this.submit.bind(this);
-
     this.submit2 = this.submit2.bind(this);
     this.datahelper = new DataHelper();
     this.web3helper = new Web3Helper();
+
+    this.state = {
+      seller: this.web3helper.public_address,
+      name:"",
+      description:"",
+      video:"",
+      videoType:"",
+      firstName:"",
+      lastName:"",
+      address:"",
+      phone:"",
+      website:"",
+      price:"",
+      content: [],
+      marketfiles: [],
+      testObj:{}
+    };
   }
 
   // Handling all the bind and state change

@@ -17,23 +17,16 @@ class Web3Helper {
       this.web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     }
 
+    this.public_address = this.web3js.eth.defaultAccount;
   }
 
   waitForReceipt = function(hash, cb) {
     this.web3js.eth.getTransactionReceipt(hash, function (err, receipt) {
-    if (err) {
-    }
-
+    if (err) { }
     if (receipt !== null) {
-      // Transaction went through
-      if (cb) {
-        cb(receipt);
-      }
+      if (cb) { cb(receipt); }
     } else {
-      // Try again in 1 second
-      window.setTimeout(function () {
-        this.waitForReceipt(hash, cb);
-      }, 1000);
+      window.setTimeout(function () { this.waitForReceipt(hash, cb); }, 1000);
     }
     });
   }
