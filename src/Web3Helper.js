@@ -4,9 +4,7 @@ class Web3Helper {
 
   constructor() {
 
-    this.FileManagerABI = [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"files","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ftype","type":"string"},{"name":"_hash","type":"string"},{"name":"_chunks","type":"string"},{"name":"_size","type":"uint256"},{"name":"_name","type":"string"},{"name":"_key","type":"string"}],"name":"addFile","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"file","type":"address"},{"indexed":false,"name":"uploader","type":"address"}],"name":"AddFile","type":"event"}];
-
-    console.log("Web3Helper -> constructor");
+    this.FileManagerABI = [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"files","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ftype","type":"string"},{"name":"_hash","type":"string"},{"name":"_chunks","type":"string"},{"name":"_size","type":"uint256"},{"name":"_name","type":"string"},{"name":"_key","type":"string"},{"name":"_description","type":"string"}],"name":"addFile","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"file","type":"address"},{"indexed":false,"name":"uploader","type":"address"},{"indexed":false,"name":"name","type":"string"},{"indexed":false,"name":"description","type":"string"}],"name":"AddFile","type":"event"}];
 
     if (typeof window.web3 !== 'undefined') {
     // Use Mist/MetaMask's provider
@@ -19,17 +17,17 @@ class Web3Helper {
 
     this.public_address = this.web3js.eth.defaultAccount;
 
-    this.FileManagerAddress = "0x3149c4a79c962c5c1ec3c8404dcd7ba9800e571f";
+    this.FileManagerAddress = "0xf328562506f371c7f5465df925d1a8605bcee297";
   }
 
   waitForReceipt = function(hash, cb) {
     this.web3js.eth.getTransactionReceipt(hash, function (err, receipt) {
-    if (err) { }
-    if (receipt !== null) {
-      if (cb) { cb(receipt); }
-    } else {
-      window.setTimeout(function () { this.waitForReceipt(hash, cb); }, 1000);
-    }
+      if (err) { }
+      if (receipt !== null) {
+        if (cb) { cb(receipt); }
+      } else { window.setTimeout(function () {
+        this.waitForReceipt(hash, cb); }, 1000);
+      }
     });
   }
 
@@ -52,8 +50,9 @@ class Web3Helper {
       file_obj["hash"],
       file_obj["chunks"][0],
       file_obj["size"],
-      "SomeName",
+      "The Study Guide to the MCAT 2018",
       file_obj["key"],
+      "The Medical College Admission Test® (MCAT), developed and administered by the AAMC, is a standardized, multiple-choice examination created to help medical school admissions offices assess your problem solving, critical thinking, and knowledge of natural, behavioral, and social science concepts and principles.",
     { from: self.public_address }, (err, txHash) => {
         console.log(err);
         resolve(txHash);

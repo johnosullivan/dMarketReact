@@ -15,18 +15,18 @@ contract FileManager is Owned {
 
     mapping (address => address[]) public files;
 
-    event AddFile(address file, address uploader);
+    event AddFile(address file, address uploader, string name, string description);
 
     function FileManager() public {
         owner = msg.sender;
     }
 
     function addFile(
-        string _ftype, string _hash, string _chunks, uint256 _size, string _name, string _key
+        string _ftype, string _hash, string _chunks, uint256 _size, string _name, string _key, string _description
     ) public {
-        address c_file = new File(msg.sender, _ftype, _hash, _chunks, _name, _key, _size);
+        address c_file = new File(msg.sender, _ftype, _hash, _chunks, _name, _key, _size, _description);
         files[msg.sender].push(c_file);
-        AddFile(c_file,msg.sender);
+        AddFile(c_file,msg.sender, _name, _description);
     }
 
 }
@@ -39,10 +39,11 @@ contract File is Owned {
     string public hash;
     string public chucks;
     string public name;
+    string public description;
     string public key;
     uint256 public size;
 
-    function File(address _owner, string _ftype, string _hash, string _chunks, string _name, string _key,uint256 _size) public {
+    function File(address _owner, string _ftype, string _hash, string _chunks, string _name, string _key,uint256 _size, string _description) public {
         owner = _owner;
         ftype = _ftype;
         hash = _hash;
@@ -50,6 +51,7 @@ contract File is Owned {
         name = _name;
         key = _key;
         chucks = _chunks;
+        description = _description;
     }
 
     function allowAccess(address _address) onlyOwner public returns (bool status) {
