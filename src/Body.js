@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { Label,Advertisement,Form,TextArea,Message,Table,Card, Icon, Search, Input, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment, Button } from 'semantic-ui-react';
 
-import AddProduct from './AddProduct';
+//import AddProduct from './AddProduct';
 
 const Home = () => (
   <div>
@@ -29,11 +29,10 @@ const Products = () => (
 
   </div>
 )
-
+//<Route exact path='/' component={AddProduct}/>
 const Body = () => (
     <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
     <Switch>
-      <Route exact path='/' component={AddProduct}/>
       <Route path='/search' component={Roster}/>
       <Route path='/myproducts' component={Products}/>
       <Route path='/myorders' component={Schedule}/>
