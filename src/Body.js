@@ -1,16 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Label,Advertisement,Form,TextArea,Message,Table,Card, Icon, Search, Input, Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment, Button } from 'semantic-ui-react';
-
+import { Container } from 'semantic-ui-react';
 //import AddProduct from './AddProduct';
-
-const Home = () => (
-  <div>
-    <Container style={{ padding: '5em 0em' }} text>
-
-    </Container>
-  </div>
-)
 
 const Roster = () => (
   <div>
