@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DMHeader from './Header';
 import DMBody from './Body';
 
-import { Connect } from 'uport-connect';
+//import { Connect } from 'uport-connect';
 
 import './App.css';
 

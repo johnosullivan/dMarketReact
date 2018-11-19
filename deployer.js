@@ -4,6 +4,8 @@ const Web3 = require('web3');
 const Tx = require('ethereumjs-tx');
 var prompt = require('prompt');
 
+console.log('Starting Deployer');
+
 prompt.start();
 
 var schema = {
