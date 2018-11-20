@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import DMHeader from './Header';
-import DMBody from './Body';
+import Header from './Header';
+import Body from './Body';
 
 //import { Connect } from 'uport-connect';
 
@@ -31,8 +31,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <DMHeader/>
-        <DMBody/>
+      
+        <Header/>
+        <Body/>
       </div>
     );
   }
