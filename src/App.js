@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Body from './Body';
 
-//import { Connect } from 'uport-connect';
+import { Connect } from 'uport-connect';
 
 import './App.css';
 

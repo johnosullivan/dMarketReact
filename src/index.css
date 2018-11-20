@@ -5,3 +5,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.btn-custom {
+  background-color: rgb(92, 80, 202);
+  color: white;
+}
