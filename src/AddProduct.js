@@ -89,8 +89,8 @@ class AddProduct extends Component {
   handlePrice(e) { this.setState({ price: e.target.value }); }
   handleVideoYoutube(e) { this.setState({ videoType: e.target.value }); }
   handleVideoVimeo(e) { this.setState({ videoType: e.target.value }); }
-  handleAddDCFile(selectorFiles: FileList) { this.setState({ content: selectorFiles }); }
-  handleAddMCFile(selectorFiles: FileList) { this.setState({ marketfiles: selectorFiles }); }
+  //handleAddDCFile(selectorFiles: FileList) { this.setState({ content: selectorFiles }); }
+  //handleAddMCFile(selectorFiles: FileList) { this.setState({ marketfiles: selectorFiles }); }
 
   submit2() {
 

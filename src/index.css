@@ -6,7 +6,12 @@ body {
   font-family: sans-serif;
 }
 
-.btn-custom {
+.btn-uport {
   background-color: rgb(92, 80, 202);
+  color: white;
+}
+
+.btn-metamask {
+  background-color:#F79220;
   color: white;
 }

@@ -6,10 +6,17 @@ import { Connect } from 'uport-connect';
 
 import './App.css';
 
+import UserService from './UserService'; 
+
+
+
 class App extends Component {
 
   constructor() {
     super();
+
+
+    console.log(UserService);
     console.log(window.ethereum);
 
     window.ethereum.enable();
@@ -28,11 +35,11 @@ class App extends Component {
   }
 
   render() {
-
+    console.log(this.props);
     return (
       <div className="App">
       
-        <Header/>
+        <Header store={this.props.store}/>
         <Body/>
       </div>
     );

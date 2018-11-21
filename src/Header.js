@@ -11,20 +11,20 @@ import {
   MenuItem
 } from 'react-bootstrap';
 
+import * as actions from './store/dmarket/actions';
+
 import uport from './uport.svg';
 
-export default class Header extends React.Component {
+import { connect } from 'react-redux'
 
-  state = {
-    isAuth: false
-  }
+class Header extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   login = () => {
-    this.setState({ isAuth: true });
+    this.props.store.dispatch(actions.loadAuthSuccess())
   };
 
   render() {
@@ -38,14 +38,14 @@ export default class Header extends React.Component {
               <Nav.Link href="">Home</Nav.Link>
               <Nav.Link href="">About</Nav.Link>
             </Nav>
-            { !this.state.isAuth &&
+            { !this.props.isAuth &&
               <div>
-                <Button variant="custom" onClick={this.login}> 
+                <Button variant="uport" onClick={this.login}> 
                   <img src={uport}/>
                 </Button>
               </div>
             }
-            { this.state.isAuth &&
+            { this.props.isAuth &&
               <div>
                 <Row>
                   <Col>
@@ -64,3 +64,11 @@ export default class Header extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state, ownProps) {
+  console.log(state);
+  return {
+    isAuth: state.dmarket.isAuth
+  }
+}
+export default connect(mapStateToProps)(Header)
