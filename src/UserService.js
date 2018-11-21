@@ -1,8 +1,10 @@
-const service = class UserService {
+const UserService = class Service {
 
     constructor() {
         console.log('UserService');
     }
 }
 
-module.export = service;
+module.exports = {
+    UserService
+};
