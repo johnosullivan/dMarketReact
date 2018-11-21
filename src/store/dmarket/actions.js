@@ -1,10 +1,22 @@
 /**
 * Blog Actions
 */
-import { LOAD_AUTH_SUCCESS } from './types'
+import { 
+  LOAD_AUTH_SUCCESS,
+  LOAD_AUTH_LOGOUT 
+} from './types'
 
-export function loadAuthSuccess() {
+console.log("LOAD_AUTH_LOGOUT: ", LOAD_AUTH_LOGOUT);
+
+export function loadAuthSuccess(account) {
   return { 
-    type: LOAD_AUTH_SUCCESS
+    type: LOAD_AUTH_SUCCESS,
+    account
+  }
+}
+
+export function loadLogOutSuccess() {
+  return { 
+    type: LOAD_AUTH_LOGOUT
   }
 }

@@ -15,7 +15,6 @@ class App extends Component {
 
     const s = new Service();
 
-    console.log(this.props);
     console.log(window.ethereum);
 
     window.ethereum.enable();

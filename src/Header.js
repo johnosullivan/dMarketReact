@@ -10,14 +10,10 @@ import {
   Dropdown,
   MenuItem
 } from 'react-bootstrap';
-
-import * as actions from './store/dmarket/actions';
+import { connect } from 'react-redux';
+import PubSub from 'pubsub-js';
 
 import uport from './uport.svg';
-
-import { connect } from 'react-redux';
-
-import PubSub from 'pubsub-js';
 
 class Header extends React.Component {
 
@@ -26,11 +22,11 @@ class Header extends React.Component {
   }
 
   login = () => {
-    PubSub.publish('UPORT_LOGIN', 'hello world!');
-    //this.props.store.dispatch(actions.loadAuthSuccess())
+    PubSub.publish('UPORT_LOGIN', Date());
   };
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <Navbar bg="light" expand="lg">
@@ -52,7 +48,7 @@ class Header extends React.Component {
               <div>
                 <Row>
                   <Col>
-                    <img src="https://ipfs.infura.io/ipfs/QmcCCfuXWswSKt7ULnF19ATuoUt1cC5yUNgf4LFL8pQyTq" style={{
+                    <img src={this.props.account.avatar.uri} style={{
                       width: 40,
                       height: 40,
                       borderRadius: 20
@@ -71,7 +67,8 @@ class Header extends React.Component {
 function mapStateToProps(state, ownProps) {
   console.log(state);
   return {
-    isAuth: state.dmarket.isAuth
+    isAuth: state.dmarket.isAuth,
+    account: state.dmarket.uPortAccount
   }
 }
 export default connect(mapStateToProps)(Header)
