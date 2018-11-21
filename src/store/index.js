@@ -4,8 +4,14 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+var store;
+
+export function getCurrentStore() {
+    return store;
+}
+
 export function configureStore() {
-  return createStore(
+  store = createStore(
     rootReducer,
     composeWithDevTools(
       applyMiddleware(
@@ -13,5 +19,6 @@ export function configureStore() {
         reduxImmutableStateInvariant()
       )
     )
-  )
+  );
+  return store;
 }

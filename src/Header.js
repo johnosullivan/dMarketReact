@@ -15,7 +15,9 @@ import * as actions from './store/dmarket/actions';
 
 import uport from './uport.svg';
 
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+
+import PubSub from 'pubsub-js';
 
 class Header extends React.Component {
 
@@ -24,7 +26,8 @@ class Header extends React.Component {
   }
 
   login = () => {
-    this.props.store.dispatch(actions.loadAuthSuccess())
+    PubSub.publish('UPORT_LOGIN', 'hello world!');
+    //this.props.store.dispatch(actions.loadAuthSuccess())
   };
 
   render() {

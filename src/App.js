@@ -6,18 +6,16 @@ import { Connect } from 'uport-connect';
 
 import './App.css';
 
-import {
-  UserService
-} from './UserService'; 
-
-const service = new UserService();
+import Service from './UserService'; 
 
 class App extends Component {
 
   constructor() {
     super();
 
-    console.log(service);
+    const s = new Service();
+
+    console.log(this.props);
     console.log(window.ethereum);
 
     window.ethereum.enable();
