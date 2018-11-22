@@ -3,12 +3,8 @@ import {
   Navbar,
   Nav,
   Button,
-  Grid,
   Row,
-  Col,
-  Image,
-  Dropdown,
-  MenuItem
+  Col
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PubSub from 'pubsub-js';

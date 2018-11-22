@@ -7878,6 +7878,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-bootstrap-dropdown-menu@^1.1.15:
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-dropdown-menu/-/react-bootstrap-dropdown-menu-1.1.15.tgz#4b99b3f70c795947d55b55f394951eefff9a7d36"
+  integrity sha512-o35fODF4GsNxEzmnRWZuoe29a6x3fXqRsLXOlAvS4d+TvO3yoLTM8iZnSZpJCkHQnjOOWRnGvDh5tryqJCKZ0w==
+
 react-bootstrap@^1.0.0-beta.3:
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.0.0-beta.3.tgz#35748f1ddc1c508cf9c9a5ce0eb62b1e2f87290e"
