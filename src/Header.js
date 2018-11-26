@@ -8,7 +8,6 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PubSub from 'pubsub-js';
-
 import uport from './uport.svg';
 
 class Header extends React.Component {
