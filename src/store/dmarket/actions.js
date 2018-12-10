@@ -1,12 +1,11 @@
 /**
-* Blog Actions
+* Redux Actions
 */
 import { 
   LOAD_AUTH_SUCCESS,
-  LOAD_AUTH_LOGOUT 
+  LOAD_AUTH_LOGOUT,
+  LOAD_PRODUCTS
 } from './types'
-
-console.log("LOAD_AUTH_LOGOUT: ", LOAD_AUTH_LOGOUT);
 
 export function loadAuthSuccess(account) {
   return { 
@@ -18,5 +17,12 @@ export function loadAuthSuccess(account) {
 export function loadLogOutSuccess() {
   return { 
     type: LOAD_AUTH_LOGOUT
+  }
+}
+
+export function loadProducts(productListings) {
+  return { 
+    type: LOAD_PRODUCTS,
+    productListings
   }
 }

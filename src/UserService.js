@@ -22,8 +22,21 @@ const login = function(msg, data) {
 };
 
 const logout = function(msg, data) {
-    uport.logout();
-    store.dispatch(actions.loadLogOutSuccess());
+    //uport.logout();
+    console.log('loadProducts');
+    const products = [
+        {
+            seller: '0xf56eEBd4A787Ab0FBa4fEd65a3A4ed77CB330A9B',
+            title: 'Foundations of Python Network Programming',
+            description: 'Eliminate roadblocks to learn programming: Start writing your own programs in Python 3 from scratch',
+            author: 'John Doe and Mary Kate',
+            coverImage: 'https://ipfs.io/ipfs/Qmcg5aRcoaw21GYG2PQ1cSkX3oFrDMmscs5U7FaNptwa5Q',
+            localPrice: 10.00,
+            currency: 'USD',
+            ether: 0.00
+        }
+    ];
+    store.dispatch(actions.loadProducts(products));
 }
 
 const sendEth = function (msg, data) {

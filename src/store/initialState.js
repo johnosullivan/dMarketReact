@@ -1,6 +1,7 @@
 export default {
     dmarket: {
         isAuth: false,
-        uPortAccount: { }
+        uPortAccount: { },
+        productListings: []
     }
 }
