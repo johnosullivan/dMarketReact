@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">      
         <Header store={this.props.store}/>
-        <Body/>
+        <Body store={this.props.store}/>
       </div>
     );
   }

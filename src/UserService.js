@@ -33,7 +33,8 @@ const logout = function(msg, data) {
             coverImage: 'https://ipfs.io/ipfs/Qmcg5aRcoaw21GYG2PQ1cSkX3oFrDMmscs5U7FaNptwa5Q',
             localPrice: 10.00,
             currency: 'USD',
-            ether: 0.00
+            ether: 0.00,
+            id: '0xa5b9d60f32436310afebcfda832817a68921beb782fabf7915cc0460b443116a'
         }
     ];
     store.dispatch(actions.loadProducts(products));
