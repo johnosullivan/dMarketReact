@@ -29,21 +29,6 @@ import { sha256, sha224 } from 'js-sha256';
         </Button>
         */
 
-       function fileUrl(str) {
-        if (typeof str !== 'string') {
-            throw new Error('Expected a string');
-        }
-    
-        var pathName = path.resolve(str).replace(/\\/g, '/');
-    
-        // Windows drive letter must be prefixed with a slash
-        if (pathName[0] !== '/') {
-            pathName = '/' + pathName;
-        }
-    
-        return encodeURI('file://' + pathName);
-    };
-
 class Body extends React.Component {
 
   state = {
@@ -86,42 +71,31 @@ class Body extends React.Component {
 
 
   handleAddDCFile(selectorFiles) { 
-    console.log(selectorFiles[0]);
-    //this.setState({ file:selectorFiles[0] });
-
     var reader = new FileReader();
     var self = this;
+
     reader.onload = function() {
-
       const password = 'password123';
+
       const rawData = new Uint8Array(reader.result);
-      console.log('rawData: ', rawData);
-      var endata = cryptojs.AES.encrypt(self.bytesToHex(rawData), password).toString();
-      console.log('EN: ', endata);
+      const hexData = self.bytesToHex(rawData);
+      const encryptData = cryptojs.AES.encrypt(hexData, password).toString();
 
-      var tempbytes  = cryptojs.AES.decrypt(endata, password);
-      var bencoding = tempbytes.toString(cryptojs.enc.Utf8);
-
+      const decryptbytes  = cryptojs.AES.decrypt(encryptData, password);
+      const encoding = decryptbytes.toString(cryptojs.enc.Utf8);
+      const bytes = new Uint8Array(self.hexToBytes(encoding));  
       
-
-      const bytes = self.hexToBytes(bencoding);  
-      
-      console.log('DE: ', bytes);
-      console.log('Same: ', (rawData == tempbytes))
-
-      const blob = new Blob([rawData], { type: 'application/pdf'});
+      const blob = new Blob([bytes], { type: 'application/pdf' });
       const urlCreator = window.URL || window.webkitURL;
-      const Url = urlCreator.createObjectURL( blob );
+      const file = urlCreator.createObjectURL(blob);
 
-      self.setState({ file: Url });
+      self.setState({ file });
     }
     reader.readAsArrayBuffer(selectorFiles[0]);
   }
 
   render() {
     console.log('Body: ', this.props);
-
-    const url = fileUrl('/Users⁩/johnosullivan⁩/Desktop/Resume.⁩pdf');
 
     const { pageNumber, numPages, file } = this.state;
 
