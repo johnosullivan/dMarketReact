@@ -10,6 +10,9 @@ import { connect } from 'react-redux';
 import PubSub from 'pubsub-js';
 import uport from './uport.svg';
 
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 class Header extends React.Component {
 
   constructor(props) {
@@ -17,7 +20,7 @@ class Header extends React.Component {
   }
 
   login = () => {
-    PubSub.publish('UPORT_LOGIN', Date());
+    //PubSub.publish('UPORT_LOGIN', Date());
   };
 
   render() {
@@ -29,13 +32,12 @@ class Header extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="">Home</Nav.Link>
-              <Nav.Link href="">About</Nav.Link>
+             
             </Nav>
             { !this.props.isAuth &&
               <div>
-                <Button variant="uport" onClick={this.login}> 
-                  <img src={uport}/>
+                <Button variant="primary" onClick={this.login}> 
+                  Login
                 </Button>
               </div>
             }

@@ -2,39 +2,157 @@ import React from 'react'
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 //import AddProduct from './AddProduct';
+
 import { 
   Button
 } from 'react-bootstrap';
 
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle } from 'reactstrap';
+  CardTitle, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import PubSub from 'pubsub-js';
+import { Document, Page } from 'react-pdf';
+
+import path from 'path';
+import doc from './sample.pdf';
+
+
+import cryptojs from 'crypto-js';
+import aesjs from 'aes-js';
+import { sha256, sha224 } from 'js-sha256';
+
+/*
+ <Button variant="uport" onClick={() => {
+            PubSub.publish('UPORT_LOGOUT', Date())
+          }}> 
+          UPORT_LOGOUT        
+        </Button>
+        */
+
+       function fileUrl(str) {
+        if (typeof str !== 'string') {
+            throw new Error('Expected a string');
+        }
+    
+        var pathName = path.resolve(str).replace(/\\/g, '/');
+    
+        // Windows drive letter must be prefixed with a slash
+        if (pathName[0] !== '/') {
+            pathName = '/' + pathName;
+        }
+    
+        return encodeURI('file://' + pathName);
+    };
 
 class Body extends React.Component {
 
+  state = {
+    numPages: null,
+    pageNumber: 1,
+    file: ''
+  }
+
   constructor(props) {
     super(props);
+
+    console.log(doc);
+  }
+
+  back = () => {
+    this.setState({ pageNumber: --this.state.pageNumber });
+  }
+
+  forward = () => {
+    this.setState({ pageNumber: ++this.state.pageNumber });
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+  }
+
+  bytesToHex = (bytes) => {
+    for (var hex = [], i = 0; i < bytes.length; i++) {
+        hex.push((bytes[i] >>> 4).toString(16));
+        hex.push((bytes[i] & 0xF).toString(16));
+    }
+    return hex.join("");
+  }
+
+  hexToBytes = (hex) => {
+    for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16));
+    return bytes;
+  }
+
+
+  handleAddDCFile(selectorFiles) { 
+    console.log(selectorFiles[0]);
+    //this.setState({ file:selectorFiles[0] });
+
+    var reader = new FileReader();
+    var self = this;
+    reader.onload = function() {
+
+      const password = 'password123';
+      const rawData = new Uint8Array(reader.result);
+      console.log('rawData: ', rawData);
+      var endata = cryptojs.AES.encrypt(self.bytesToHex(rawData), password).toString();
+      console.log('EN: ', endata);
+
+      var tempbytes  = cryptojs.AES.decrypt(endata, password);
+      var bencoding = tempbytes.toString(cryptojs.enc.Utf8);
+
+      
+
+      const bytes = self.hexToBytes(bencoding);  
+      
+      console.log('DE: ', bytes);
+      console.log('Same: ', (rawData == tempbytes))
+
+      const blob = new Blob([rawData], { type: 'application/pdf'});
+      const urlCreator = window.URL || window.webkitURL;
+      const Url = urlCreator.createObjectURL( blob );
+
+      self.setState({ file: Url });
+    }
+    reader.readAsArrayBuffer(selectorFiles[0]);
   }
 
   render() {
     console.log('Body: ', this.props);
 
+    const url = fileUrl('/Users⁩/johnosullivan⁩/Desktop/Resume.⁩pdf');
+
+    const { pageNumber, numPages, file } = this.state;
+
     const listItems = this.props.productListings.map((item, i) =>
       <div key={item.id}>{item.title}</div>
     );
 
+
+
     return (
       <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
   
-        <Button variant="uport" onClick={() => {
-            PubSub.publish('UPORT_LOGOUT', Date())
-          }}> 
-          UPORT_LOGOUT        
-        </Button>
-
+       
+<div>
+        <Document
+          file={file}
+          onLoadSuccess={this.onDocumentLoadSuccess}
+        >
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <p>Page {pageNumber} of {numPages}</p>
+        <Button variant="primary" onClick={this.back}> 
+                  B
+                </Button>
+                <Button variant="primary" onClick={this.forward}> 
+                  F
+                </Button>
+      </div>
         <br/>
         <br/>
+        <input onChange={ (e) => this.handleAddDCFile(e.target.files) } type='file'/>
         <br/>
   
         {listItems}
