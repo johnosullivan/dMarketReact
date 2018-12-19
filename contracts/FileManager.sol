@@ -1,4 +1,5 @@
-pragma solidity ^0.4.19;
+pragma solidity >=0.4.22 <0.6.0;
+
 
 contract Owned {
     address owner;
@@ -6,28 +7,36 @@ contract Owned {
         require(msg.sender == owner);
         _;
     }
-    function Owned() public {
-
-    }
 }
 
 contract FileManager is Owned {
-
+    //maps all the file contracts to their rightful owners
     mapping (address => address[]) public files;
+    //maps all the boughts files to their rightful buyers;
+    mapping (address => address[]) public boughtFiles;
+    //all the file contract address stored here for indexing
+    File[] public allFiles;
+    
+    //file manager events
+    event AddedFile(address seller, address file);
+    
 
-    event AddFile(address file, address uploader, string name, string description);
-
-    function FileManager() public {
-        owner = msg.sender;
+    function FileManage() public {  
+        owner = msg.sender; 
     }
 
     function addFile(
-        string _ftype, string _hash, string _chunks, uint256 _size, string _name, string _key, string _description
+        string memory  _ftype, string memory _hash, string memory _chunks, string memory _name, string memory _key, string memory _description
     ) public {
-        address c_file = new File(msg.sender, _ftype, _hash, _chunks, _name, _key, _size, _description);
-        files[msg.sender].push(c_file);
-        AddFile(c_file,msg.sender, _name, _description);
+        File file = new File();
+        file.set(msg.sender, _ftype, _hash, _chunks, _name, _key, _description);
+        files[msg.sender].push(address(file));
+        emit AddedFile(msg.sender,address(file));
     }
+    
+    function buyFile(address file) public payable (
+          
+    )
 
 }
 
@@ -41,13 +50,11 @@ contract File is Owned {
     string public name;
     string public description;
     string public key;
-    uint256 public size;
 
-    function File(address _owner, string _ftype, string _hash, string _chunks, string _name, string _key,uint256 _size, string _description) public {
+    function set(address _owner, string memory _ftype, string memory _hash, string memory _chunks, string memory _name, string memory _key, string memory _description) public {
         owner = _owner;
         ftype = _ftype;
         hash = _hash;
-        size = _size;
         name = _name;
         key = _key;
         chucks = _chunks;
@@ -64,8 +71,13 @@ contract File is Owned {
         return !hasAccess[_address];
     }
 
-    function getAccess() constant public returns (bool) {
+    function hasAccess() view public returns (bool) {
         return hasAccess[msg.sender];
+    }
+    
+    function getPublicDetails() view public returns (address fileOwner, string memory fileName, string memory fileDescription) {
+        return (owner, name, description);
     }
 
 }
+
