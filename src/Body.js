@@ -2,6 +2,10 @@ import React from 'react'
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 //import AddProduct from './AddProduct';
+import ipfsClient from 'ipfs-http-client';
+import randomstring from 'randomstring';
+
+import abi from './abi.json';
 
 import { 
   Button
@@ -20,6 +24,8 @@ import doc from './sample.pdf';
 import cryptojs from 'crypto-js';
 import aesjs from 'aes-js';
 import { sha256, sha224 } from 'js-sha256';
+import { or } from 'ip';
+
 
 /*
  <Button variant="uport" onClick={() => {
@@ -41,6 +47,7 @@ class Body extends React.Component {
     super(props);
 
     console.log(doc);
+
   }
 
   back = () => {
@@ -69,19 +76,24 @@ class Body extends React.Component {
     return bytes;
   }
 
-
   handleAddDCFile(selectorFiles) { 
     var reader = new FileReader();
     var self = this;
 
-    reader.onload = function() {
-      const password = 'password123';
+    reader.onload = async function() {
+      const password = randomstring.generate();
 
       const rawData = new Uint8Array(reader.result);
       const hexData = self.bytesToHex(rawData);
       const encryptData = cryptojs.AES.encrypt(hexData, password).toString();
 
-      const decryptbytes  = cryptojs.AES.decrypt(encryptData, password);
+      let ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
+      let content = ipfs.types.Buffer.from(encryptData);
+      let results = await ipfs.add(content);
+      let hash = results[0].hash; 
+
+      const fileData = await ipfs.cat(hash);
+      const decryptbytes  = cryptojs.AES.decrypt(fileData.toString('utf8'), password);
       const encoding = decryptbytes.toString(cryptojs.enc.Utf8);
       const bytes = new Uint8Array(self.hexToBytes(encoding));  
       
@@ -92,6 +104,34 @@ class Body extends React.Component {
       self.setState({ file });
     }
     reader.readAsArrayBuffer(selectorFiles[0]);
+  }
+
+  testTrasaction = () => {
+    console.log('testTrasaction');
+    
+    console.log(abi);
+
+    const web3 = new window.Web3(window.web3.currentProvider);
+    const address = '0x3d95Fcf6bFe47109019D3a8Bd9fA2779447cA778';
+
+    let FileManager = web3.eth.contract(abi.filemanager);
+    let Contract = FileManager.at(address);
+
+    //var getData = Contract.addFile.getData("","","","","","");
+
+    //console.log(getData);
+    try {
+      Contract.addFile("","","","","","").sendTransaction({
+        from: web3.currentProvider.selectedAddress,
+        to: address,
+        gasPrice: '20000000000' 
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   render() {
@@ -122,6 +162,9 @@ class Body extends React.Component {
                 </Button>
                 <Button variant="primary" onClick={this.forward}> 
                   F
+                </Button>
+                <Button variant="primary" onClick={this.testTrasaction}> 
+                  Test Transaction
                 </Button>
       </div>
         <br/>

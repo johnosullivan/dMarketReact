@@ -1,6 +1,5 @@
 pragma solidity >=0.4.22 <0.6.0;
 
-
 contract Owned {
     address owner;
     modifier onlyOwner() {
@@ -15,12 +14,12 @@ contract FileManager is Owned {
     //maps all the boughts files to their rightful buyers;
     mapping (address => address[]) public boughtFiles;
     //all the file contract address stored here for indexing
-    File[] public allFiles;
+    address[] public allFiles;
     
     //file manager events
     event AddedFile(address seller, address file);
+    event BoughtFile(address buyer, address file);
     
-
     function FileManage() public {  
         owner = msg.sender; 
     }
@@ -31,13 +30,23 @@ contract FileManager is Owned {
         File file = new File();
         file.set(msg.sender, _ftype, _hash, _chunks, _name, _key, _description);
         files[msg.sender].push(address(file));
+        allFiles.push(address(file));
         emit AddedFile(msg.sender,address(file));
     }
     
-    function buyFile(address file) public payable (
-          
-    )
 
+    function buyFile(File _file) payable public {
+        File file = File(_file);
+        file.buy.value(msg.value)(msg.sender);
+        boughtFiles[msg.sender].push(address(file));
+        emit BoughtFile(msg.sender,address(file));
+    }
+    
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+    
+    function () external payable { }
 }
 
 contract File is Owned {
@@ -50,6 +59,16 @@ contract File is Owned {
     string public name;
     string public description;
     string public key;
+    
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+    
+    function buy(address buyer) public payable {
+        hasAccess[buyer] = true;  
+    }
+    
+    function () external payable { }
 
     function set(address _owner, string memory _ftype, string memory _hash, string memory _chunks, string memory _name, string memory _key, string memory _description) public {
         owner = _owner;
@@ -71,7 +90,7 @@ contract File is Owned {
         return !hasAccess[_address];
     }
 
-    function hasAccess() view public returns (bool) {
+    function getAccessStatus() view public returns (bool) {
         return hasAccess[msg.sender];
     }
     

@@ -4,6 +4,8 @@ import { store } from './store'
 import { Connect } from 'uport-connect';
 import Web3 from 'web3';
 
+const FILE_MANAGER_ADDRESS = '';
+
 const uport = new Connect('dMarket', {
     network: 'rinkeby'
 });
