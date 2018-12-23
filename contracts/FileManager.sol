@@ -25,7 +25,12 @@ contract FileManager is Owned {
     }
 
     function addFile(
-        string memory  _ftype, string memory _hash, string memory _chunks, string memory _name, string memory _key, string memory _description
+        string memory  _ftype, 
+        string memory _hash, 
+        string memory _chunks, 
+        string memory _name, 
+        string memory _key, 
+        string memory _description
     ) public {
         File file = new File();
         file.set(msg.sender, _ftype, _hash, _chunks, _name, _key, _description);
@@ -34,8 +39,9 @@ contract FileManager is Owned {
         emit AddedFile(msg.sender,address(file));
     }
     
-
-    function buyFile(File _file) payable public {
+    function buyFile(
+        File _file
+    ) payable public {
         File file = File(_file);
         file.buy.value(msg.value)(msg.sender);
         boughtFiles[msg.sender].push(address(file));
@@ -44,6 +50,18 @@ contract FileManager is Owned {
     
     function getBalance() public view returns (uint256) {
         return address(this).balance;
+    }
+    
+    function getAllFilesCount() public view returns (uint256) {
+        return allFiles.length;
+    }
+    
+    function getMyFilesCount() public view returns (uint256) {
+        return files[msg.sender].length;
+    }
+    
+    function getBoughtFilesCount() public view returns (uint256) {
+        return boughtFiles[msg.sender].length;
     }
     
     function () external payable { }
@@ -64,13 +82,28 @@ contract File is Owned {
         return address(this).balance;
     }
     
-    function buy(address buyer) public payable {
+    function buy(
+        address buyer
+    ) public payable {
         hasAccess[buyer] = true;  
     }
     
     function () external payable { }
+    
+    modifier onlyBuyer() {
+        require(hasAccess[msg.sender]);
+        _;
+    }
 
-    function set(address _owner, string memory _ftype, string memory _hash, string memory _chunks, string memory _name, string memory _key, string memory _description) public {
+    function set(
+        address _owner, 
+        string memory _ftype, 
+        string memory _hash, 
+        string memory _chunks, 
+        string memory _name, 
+        string memory _key, 
+        string memory _description
+    ) public {
         owner = _owner;
         ftype = _ftype;
         hash = _hash;
@@ -94,8 +127,32 @@ contract File is Owned {
         return hasAccess[msg.sender];
     }
     
-    function getPublicDetails() view public returns (address fileOwner, string memory fileName, string memory fileDescription) {
+    function getPublicDetails() view public returns (
+        address fileOwner, 
+        string memory fileName, 
+        string memory fileDescription
+    ) {
         return (owner, name, description);
+    }
+    
+    function getData() onlyBuyer view public returns (
+        address fileOwner, 
+        string memory fileType, 
+        string memory fileHash, 
+        string memory fileChunks, 
+        string memory fileName, 
+        string memory fileKey, 
+        string memory fileDescription    
+    ) {
+        return (
+           owner,
+           ftype,
+           hash,
+           chucks,
+           name,
+           key,
+           description
+        );
     }
 
 }

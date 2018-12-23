@@ -11,9 +11,6 @@ import {
   Button
 } from 'react-bootstrap';
 
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
 import PubSub from 'pubsub-js';
 import { Document, Page } from 'react-pdf';
 
@@ -26,7 +23,6 @@ import aesjs from 'aes-js';
 import { sha256, sha224 } from 'js-sha256';
 import { or } from 'ip';
 
-
 /*
  <Button variant="uport" onClick={() => {
             PubSub.publish('UPORT_LOGOUT', Date())
@@ -35,6 +31,8 @@ import { or } from 'ip';
         </Button>
         */
 
+ 
+       const web3 = new window.Web3(window.web3.currentProvider);
 class Body extends React.Component {
 
   state = {
@@ -45,8 +43,6 @@ class Body extends React.Component {
 
   constructor(props) {
     super(props);
-
-    console.log(doc);
 
   }
 
@@ -92,6 +88,15 @@ class Body extends React.Component {
       let results = await ipfs.add(content);
       let hash = results[0].hash; 
 
+      const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
+      let FileManager = web3.eth.contract(abi.filemanager);
+      let Contract = FileManager.at(address);
+      const data = Contract.addFile.getData("application/pdf",hash,"chuck","name",password,"description");
+      console.log(data);
+
+      const result = await self.sendTransaction(data, address);
+      console.log(result);
+
       const fileData = await ipfs.cat(hash);
       const decryptbytes  = cryptojs.AES.decrypt(fileData.toString('utf8'), password);
       const encoding = decryptbytes.toString(cryptojs.enc.Utf8);
@@ -106,33 +111,46 @@ class Body extends React.Component {
     reader.readAsArrayBuffer(selectorFiles[0]);
   }
 
-  testTrasaction = () => {
+  testTrasaction = async () => {
     console.log('testTrasaction');
     
     console.log(abi);
 
-    const web3 = new window.Web3(window.web3.currentProvider);
-    const address = '0x3d95Fcf6bFe47109019D3a8Bd9fA2779447cA778';
-
+    const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
     let FileManager = web3.eth.contract(abi.filemanager);
     let Contract = FileManager.at(address);
+    const data = Contract.addFile.getData("","","","","","description");
 
-    //var getData = Contract.addFile.getData("","","","","","");
-
-    //console.log(getData);
     try {
-      Contract.addFile("","","","","","").sendTransaction({
-        from: web3.currentProvider.selectedAddress,
-        to: address,
-        gasPrice: '20000000000' 
-      }).then((res) => {
-        console.log(res);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
+      const result = await this.sendTransaction(data, address);
+      console.log(result);
+    } catch (error) { }
   }
+
+  sendTransaction = (data, address) => {
+    const transactionData = data;
+    const transactionAddress = address;
+    return new Promise(function(resolve, reject) {
+        web3.eth.sendTransaction({from: web3.currentProvider.selectedAddress , to: transactionAddress, data: transactionData }, function(err, transactionHash) { 
+          if (err) {
+            reject(err);
+          } else {
+            resolve(transactionHash);
+          }
+        });
+    });
+  }
+
+  testGetFiles = () => {
+    console.log('testGetFiles');
+    const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
+    let FileManager = web3.eth.contract(abi.filemanager);
+    let Contract = FileManager.at(address);
+    console.log(Contract);
+    let data = Contract.boughtFiles(web3.currentProvider.selectedAddress,0, function(err, transactionHash) { 
+      console.log(transactionHash);
+    });
+  };
 
   render() {
     console.log('Body: ', this.props);
@@ -165,6 +183,9 @@ class Body extends React.Component {
                 </Button>
                 <Button variant="primary" onClick={this.testTrasaction}> 
                   Test Transaction
+                </Button>
+                <Button variant="primary" onClick={this.testGetFiles}> 
+                  Get Files
                 </Button>
       </div>
         <br/>
