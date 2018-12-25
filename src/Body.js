@@ -37,8 +37,8 @@ class Body extends React.Component {
   constructor(props) {
     super(props);
 
-    this.fileManager = web3.eth.contract(abi.filemanager).at('0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4');
-
+    this.fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
+    this.file = web3.eth.contract(abi.file);
   }
 
   back = () => {
@@ -83,14 +83,8 @@ class Body extends React.Component {
       let results = await ipfs.add(content);
       let hash = results[0].hash; 
 
-      const address = '0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4';
-      let FileManager = web3.eth.contract(abi.filemanager);
-      let Contract = FileManager.at(address);
-      const data = Contract.addFile.getData("application/pdf",hash,"chuck","name",password,"description");
-      console.log(data);
-
-      const result = await self.sendTransaction(data, address);
-      console.log(result);
+      const data = self.fileManager.addFile.getData("application/pdf",hash,"chuck","name",'Resume.pdf',"Accepisse has partiales reliquiae archetypi consortio uti. Sequentium tum tur falsitatem realitatis usu. Eae probatur qualitas singulae cui supponam arbitror quadrati. Facultates satyriscos exponantur me ac at continuata ne excoluisse perfectior. Praesertim sae cucurbitas quantumvis sua objectioni secernitur cogitantem duo. Res qualis quinta sub loquor cau soleam multae etc mandat. To in nulli novam pappo athei sequi ausim ei. Diversi et ex occasio agnosci divelli im videmus. Cum creatione industria mea cur sic cerebella. ");
+      const result = await self.sendTransaction(data, '0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
 
       const fileData = await ipfs.cat(hash);
       const decryptbytes  = cryptojs.AES.decrypt(fileData.toString('utf8'), password);
@@ -110,8 +104,7 @@ class Body extends React.Component {
     const self = this;
     return new Promise(function(resolve, reject) {
       self.fileManager.getMyFilesCount(function(err, data) { 
-        if (err) { reject(err); }
-        resolve(data['c'][0]);
+        if (err) { reject(err); } else { resolve(data['c'][0]); }
       });
     });
   };
@@ -120,24 +113,36 @@ class Body extends React.Component {
     const self = this;
     return new Promise(function(resolve, reject) {
       self.fileManager.getMyFilesAt(index, function(err, data) { 
-        if (err) { reject(err); }
-        resolve(data);
+        if (err) { reject(err); } else { resolve(data); }
+      });
+    });
+  };
+
+  getFilePublicDetails = async (address) => {
+    const self = this;
+    return new Promise(function(resolve, reject) {
+      self.file.at(address).getPublicDetails(function(err, data) { 
+        if (err) { reject(err); } else { resolve(data); }
       });
     });
   };
 
   testTrasaction = async () => {
-    
+
     const myFilesCount = await this.getMyFilesCount();
     let myFilesAddresses = [];
-    for (const x of Array(myFilesCount).keys()) {
-      const fileAddress = await this.getMyFilesAt(x);
-      myFilesAddresses.push(fileAddress);
+
+    for (const index of Array(myFilesCount).keys()) {
+      const fileAddress = await this.getMyFilesAt(index);
+      const filePublicDetails = await this.getFilePublicDetails(fileAddress);
+      myFilesAddresses.push(filePublicDetails);
     }
+
+    
 
     console.log(myFilesAddresses);
 
-    
+
 /*
     Contract.getMyFilesAt(0, function(err, data) { 
       if (err) {

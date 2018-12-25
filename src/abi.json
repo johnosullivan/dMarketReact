@@ -304,29 +304,6 @@
         },
         {
             "constant": true,
-            "inputs": [
-                {
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "files",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
             "inputs": [],
             "name": "getMyFilesCount",
             "outputs": [
@@ -398,6 +375,25 @@
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getBoughtFilesAt",
+            "outputs": [
+                {
+                    "name": "file",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "getBoughtFilesCount",
             "outputs": [
@@ -428,25 +424,6 @@
             "constant": true,
             "inputs": [
                 {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "allFiles",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [
-                {
                     "name": "index",
                     "type": "uint256"
                 }
@@ -466,18 +443,14 @@
             "constant": true,
             "inputs": [
                 {
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "name": "",
+                    "name": "index",
                     "type": "uint256"
                 }
             ],
-            "name": "boughtFiles",
+            "name": "getAllFilesAt",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "file",
                     "type": "address"
                 }
             ],

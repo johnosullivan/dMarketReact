@@ -10,11 +10,11 @@ contract Owned {
 
 contract FileManager is Owned {
     //maps all the file contracts to their rightful owners
-    mapping (address => address[]) public files;
+    mapping (address => address[]) private files;
     //maps all the boughts files to their rightful buyers;
-    mapping (address => address[]) public boughtFiles;
+    mapping (address => address[]) private boughtFiles;
     //all the file contract address stored here for indexing
-    address[] public allFiles;
+    address[] private allFiles;
     
     //file manager events
     event AddedFile(address seller, address file);
@@ -52,16 +52,40 @@ contract FileManager is Owned {
         return address(this).balance;
     }
     
-    function getAllFilesCount() public view returns (uint256) {
-        return allFiles.length;
-    }
+    /*
+    * Array My Files Functions
+    */
     
     function getMyFilesCount() public view returns (uint256) {
         return files[msg.sender].length;
     }
     
+    function getMyFilesAt(uint256 index) public view returns (address file) {
+        return files[msg.sender][index];
+    }
+    
+    /*
+    * Array Boughts Files Functions
+    */
+    
     function getBoughtFilesCount() public view returns (uint256) {
         return boughtFiles[msg.sender].length;
+    }
+    
+    function getBoughtFilesAt(uint256 index) public view returns (address file) {
+        return boughtFiles[msg.sender][index];
+    }
+    
+    /*
+    * Array All Files Functions
+    */
+    
+    function getAllFilesCount() public view returns (uint256) {
+        return allFiles.length;
+    }
+    
+    function getAllFilesAt(uint256 index) public view returns (address file) {
+        return allFiles[index];
     }
     
     function () external payable { }
