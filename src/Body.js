@@ -23,16 +23,9 @@ import aesjs from 'aes-js';
 import { sha256, sha224 } from 'js-sha256';
 import { or } from 'ip';
 
-/*
- <Button variant="uport" onClick={() => {
-            PubSub.publish('UPORT_LOGOUT', Date())
-          }}> 
-          UPORT_LOGOUT        
-        </Button>
-        */
-
  
-       const web3 = new window.Web3(window.web3.currentProvider);
+const web3 = new window.Web3(window.web3.currentProvider);
+
 class Body extends React.Component {
 
   state = {
@@ -43,6 +36,8 @@ class Body extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.fileManager = web3.eth.contract(abi.filemanager).at('0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4');
 
   }
 
@@ -88,7 +83,7 @@ class Body extends React.Component {
       let results = await ipfs.add(content);
       let hash = results[0].hash; 
 
-      const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
+      const address = '0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4';
       let FileManager = web3.eth.contract(abi.filemanager);
       let Contract = FileManager.at(address);
       const data = Contract.addFile.getData("application/pdf",hash,"chuck","name",password,"description");
@@ -111,11 +106,46 @@ class Body extends React.Component {
     reader.readAsArrayBuffer(selectorFiles[0]);
   }
 
-  testTrasaction = async () => {
-    console.log('testTrasaction');
-    
-    console.log(abi);
+  getMyFilesCount = async () => {
+    const self = this;
+    return new Promise(function(resolve, reject) {
+      self.fileManager.getMyFilesCount(function(err, data) { 
+        if (err) { reject(err); }
+        resolve(data['c'][0]);
+      });
+    });
+  };
 
+  getMyFilesAt = async (index) => {
+    const self = this;
+    return new Promise(function(resolve, reject) {
+      self.fileManager.getMyFilesAt(index, function(err, data) { 
+        if (err) { reject(err); }
+        resolve(data);
+      });
+    });
+  };
+
+  testTrasaction = async () => {
+    
+    const myFilesCount = await this.getMyFilesCount();
+    let myFilesAddresses = [];
+    for (const x of Array(myFilesCount).keys()) {
+      const fileAddress = await this.getMyFilesAt(x);
+      myFilesAddresses.push(fileAddress);
+    }
+
+    console.log(myFilesAddresses);
+
+    
+/*
+    Contract.getMyFilesAt(0, function(err, data) { 
+      if (err) {
+      }
+      console.log(data);
+  });*/
+
+/*
     const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
     let FileManager = web3.eth.contract(abi.filemanager);
     let Contract = FileManager.at(address);
@@ -124,7 +154,8 @@ class Body extends React.Component {
     try {
       const result = await this.sendTransaction(data, address);
       console.log(result);
-    } catch (error) { }
+    } catch (error) { } */
+
   }
 
   sendTransaction = (data, address) => {
@@ -143,7 +174,7 @@ class Body extends React.Component {
 
   testGetFiles = () => {
     console.log('testGetFiles');
-    const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
+    const address = '0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4';
     let FileManager = web3.eth.contract(abi.filemanager);
     let Contract = FileManager.at(address);
     console.log(Contract);
