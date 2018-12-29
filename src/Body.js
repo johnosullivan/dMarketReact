@@ -100,6 +100,23 @@ class Body extends React.Component {
     reader.readAsArrayBuffer(selectorFiles[0]);
   }
 
+  uploadDataIPFS = async (data) => {
+    let ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
+    let content = ipfs.types.Buffer.from(data);
+    let results = await ipfs.add(content);
+    return results[0]; 
+  };
+
+  testingIPFS = async () => {
+    const data = {
+      'productName':'COMP 150 Study Guide',
+      'productTags':'Study Guide,PDF,LUC,COMP 150'
+    };
+    const results = await this.uploadDataIPFS(JSON.stringify(data));
+    console.log(results);
+  };
+
+
   getMyFilesCount = async () => {
     const self = this;
     return new Promise(function(resolve, reject) {
@@ -126,6 +143,8 @@ class Body extends React.Component {
       });
     });
   };
+
+  
 
   testTrasaction = async () => {
 
@@ -220,8 +239,8 @@ class Body extends React.Component {
                 <Button variant="primary" onClick={this.testTrasaction}> 
                   Test Transaction
                 </Button>
-                <Button variant="primary" onClick={this.testGetFiles}> 
-                  Get Files
+                <Button variant="primary" onClick={this.testingIPFS}> 
+                  Test IPFS
                 </Button>
       </div>
         <br/>

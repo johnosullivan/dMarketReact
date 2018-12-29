@@ -1,5 +1,8 @@
 pragma solidity >=0.4.22 <0.6.0;
 
+import "./Owner.sol";
+import "./File.sol";
+
 contract FileManager is Owned {
     //maps all the file contracts to their rightful owners
     mapping (address => address[]) private files;
