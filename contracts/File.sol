@@ -6,12 +6,8 @@ contract File is Owned {
 
     mapping(address => bool) public hasAccess;
 
-    string public ftype;
-    string public hash;
-    string public chucks;
-    string public name;
-    string public description;
-    string public key;
+    string public fileHash;
+    string public fileKey;
     
     function getBalance() public view returns (uint256) {
         return address(this).balance;
@@ -32,20 +28,12 @@ contract File is Owned {
 
     function set(
         address _owner, 
-        string memory _ftype, 
-        string memory _hash, 
-        string memory _chunks, 
-        string memory _name, 
-        string memory _key, 
-        string memory _description
+        string memory _fileHash,
+        string memory _fileKey
     ) public {
         owner = _owner;
-        ftype = _ftype;
-        hash = _hash;
-        name = _name;
-        key = _key;
-        chucks = _chunks;
-        description = _description;
+        fileHash = _fileHash;
+        fileKey = _fileKey;
     }
 
     function allowAccess(address _address) onlyOwner public returns (bool status) {
@@ -63,32 +51,21 @@ contract File is Owned {
     }
     
     function getPublicDetails() view public returns (
-        address fileOwner, 
-        string memory fileName, 
-        string memory fileDescription
+        string memory hash
     ) {
-        return (owner, name, description);
+        return (fileHash);
     }
     
     function getData() onlyBuyer view public returns (
         address fileOwner, 
-        string memory fileType, 
-        string memory fileHash, 
-        string memory fileChunks, 
-        string memory fileName, 
-        string memory fileKey, 
-        string memory fileDescription    
+        string memory hash, 
+        string memory key 
     ) {
         return (
            owner,
-           ftype,
-           hash,
-           chucks,
-           name,
-           key,
-           description
+           fileHash,
+           fileKey
         );
     }
 
 }
-

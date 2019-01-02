@@ -20,15 +20,11 @@ contract FileManager is Owned {
     }
 
     function addFile(
-        string memory  _ftype, 
         string memory _hash, 
-        string memory _chunks, 
-        string memory _name, 
-        string memory _key, 
-        string memory _description
+        string memory _key
     ) public {
         File file = new File();
-        file.set(msg.sender, _ftype, _hash, _chunks, _name, _key, _description);
+        file.set(msg.sender, _hash, _key);
         files[msg.sender].push(address(file));
         allFiles.push(address(file));
         emit AddedFile(msg.sender,address(file));

@@ -7,6 +7,8 @@ import randomstring from 'randomstring';
 
 import abi from './abi.json';
 
+import DataProvider from './DataProvider';
+
 import { 
   Button
 } from 'react-bootstrap';
@@ -36,6 +38,7 @@ class Body extends React.Component {
 
   constructor(props) {
     super(props);
+
 
     this.fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
     this.file = web3.eth.contract(abi.file);
@@ -148,18 +151,12 @@ class Body extends React.Component {
 
   testTrasaction = async () => {
 
-    const myFilesCount = await this.getMyFilesCount();
-    let myFilesAddresses = [];
-
-    for (const index of Array(myFilesCount).keys()) {
-      const fileAddress = await this.getMyFilesAt(index);
-      const filePublicDetails = await this.getFilePublicDetails(fileAddress);
-      myFilesAddresses.push(filePublicDetails);
-    }
-
     
+    const d = DataProvider['DataProvider'];
 
-    console.log(myFilesAddresses);
+    const getMyFiles = await d.getMyFiles();
+    
+    console.log(getMyFiles);
 
 
 /*
@@ -197,14 +194,7 @@ class Body extends React.Component {
   }
 
   testGetFiles = () => {
-    console.log('testGetFiles');
-    const address = '0xf25e4afe1c33e25e4fe245029f25a5f7b76680c4';
-    let FileManager = web3.eth.contract(abi.filemanager);
-    let Contract = FileManager.at(address);
-    console.log(Contract);
-    let data = Contract.boughtFiles(web3.currentProvider.selectedAddress,0, function(err, transactionHash) { 
-      console.log(transactionHash);
-    });
+    
   };
 
   render() {

@@ -1,6 +1,10 @@
+import abi from './abi.json';
+
 const DataProvider = {};
 
 const web3 = new window.Web3(window.web3.currentProvider);
+const fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
+const file = web3.eth.contract(abi.file);
 
 DataProvider.bytesToHex = (bytes) => {
     for (var hex = [], i = 0; i < bytes.length; i++) {
@@ -17,33 +21,60 @@ DataProvider.hexToBytes = (hex) => {
 }
 
 DataProvider.getMyFilesCount = async () => {
-    const self = this;
     return new Promise(function(resolve, reject) {
-      self.fileManager.getMyFilesCount(function(err, data) { 
+      fileManager.getMyFilesCount(function(err, data) { 
         if (err) { reject(err); } else { resolve(data['c'][0]); }
       });
     });
 };
 
 DataProvider.getMyFilesAt = async (index) => {
-    const self = this;
     return new Promise(function(resolve, reject) {
-      self.fileManager.getMyFilesAt(index, function(err, data) { 
+      fileManager.getMyFilesAt(index, function(err, data) { 
         if (err) { reject(err); } else { resolve(data); }
       });
     });
+};
+
+DataProvider.getMyFiles = async () => {
+    const myFilesCount = await DataProvider.getMyFilesCount();
+    let myFiles = [];
+
+    for (const index of Array(myFilesCount).keys()) {
+      const fileAddress = await DataProvider.getMyFilesAt(index);
+      const filePublicDetails = await DataProvider.getFilePublicDetails(fileAddress);
+      myFiles.push({
+        fileAddress,
+        filePublicDetails
+      });
+    }
+
+    return myFiles;
 };
 
 DataProvider.getFilePublicDetails = async (address) => {
-    const self = this;
     return new Promise(function(resolve, reject) {
-      self.file.at(address).getPublicDetails(function(err, data) { 
+      file.at(address).getPublicDetails(function(err, data) { 
         if (err) { reject(err); } else { resolve(data); }
       });
     });
 };
 
-module.exports = {
+DataProvider.sendTransaction = (data, address) => {
+    const transactionData = data;
+    const transactionAddress = address;
+    return new Promise(function(resolve, reject) {
+        web3.eth.sendTransaction({from: web3.currentProvider.selectedAddress , to: transactionAddress, data: transactionData }, function(err, transactionHash) { 
+          if (err) {
+            reject(err);
+          } else {
+            resolve(transactionHash);
+          }
+        });
+    });
+}
+
+export default {
     DataProvider,
     web3
 };
