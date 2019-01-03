@@ -1,239 +1,5 @@
 {
-    "file": [
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "name",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "hash",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getBalance",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "key",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getData",
-            "outputs": [
-                {
-                    "name": "fileOwner",
-                    "type": "address"
-                },
-                {
-                    "name": "fileType",
-                    "type": "string"
-                },
-                {
-                    "name": "fileHash",
-                    "type": "string"
-                },
-                {
-                    "name": "fileChunks",
-                    "type": "string"
-                },
-                {
-                    "name": "fileName",
-                    "type": "string"
-                },
-                {
-                    "name": "fileKey",
-                    "type": "string"
-                },
-                {
-                    "name": "fileDescription",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getPublicDetails",
-            "outputs": [
-                {
-                    "name": "fileOwner",
-                    "type": "address"
-                },
-                {
-                    "name": "fileName",
-                    "type": "string"
-                },
-                {
-                    "name": "fileDescription",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "description",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "chucks",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_address",
-                    "type": "address"
-                }
-            ],
-            "name": "removeAccess",
-            "outputs": [
-                {
-                    "name": "status",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_ftype",
-                    "type": "string"
-                },
-                {
-                    "name": "_hash",
-                    "type": "string"
-                },
-                {
-                    "name": "_chunks",
-                    "type": "string"
-                },
-                {
-                    "name": "_name",
-                    "type": "string"
-                },
-                {
-                    "name": "_key",
-                    "type": "string"
-                },
-                {
-                    "name": "_description",
-                    "type": "string"
-                }
-            ],
-            "name": "set",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "hasAccess",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getAccessStatus",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
+    "file":[
         {
             "constant": false,
             "inputs": [
@@ -268,9 +34,55 @@
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_address",
+                    "type": "address"
+                }
+            ],
+            "name": "removeAccess",
+            "outputs": [
+                {
+                    "name": "status",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                {
+                    "name": "_fileHash",
+                    "type": "string"
+                },
+                {
+                    "name": "_fileKey",
+                    "type": "string"
+                }
+            ],
+            "name": "set",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "fallback"
+        },
+        {
             "constant": true,
             "inputs": [],
-            "name": "ftype",
+            "name": "fileHash",
             "outputs": [
                 {
                     "name": "",
@@ -282,12 +94,33 @@
             "type": "function"
         },
         {
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "fallback"
-        }
-    ], 
-    "filemanager": [
+            "constant": true,
+            "inputs": [],
+            "name": "fileKey",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAccessStatus",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
             "constant": true,
             "inputs": [],
@@ -305,11 +138,19 @@
         {
             "constant": true,
             "inputs": [],
-            "name": "getMyFilesCount",
+            "name": "getData",
             "outputs": [
                 {
-                    "name": "",
-                    "type": "uint256"
+                    "name": "fileOwner",
+                    "type": "address"
+                },
+                {
+                    "name": "hash",
+                    "type": "string"
+                },
+                {
+                    "name": "key",
+                    "type": "string"
                 }
             ],
             "payable": false,
@@ -319,11 +160,11 @@
         {
             "constant": true,
             "inputs": [],
-            "name": "getAllFilesCount",
+            "name": "getPublicDetails",
             "outputs": [
                 {
-                    "name": "",
-                    "type": "uint256"
+                    "name": "hash",
+                    "type": "string"
                 }
             ],
             "payable": false,
@@ -331,30 +172,35 @@
             "type": "function"
         },
         {
-            "constant": false,
+            "constant": true,
             "inputs": [
                 {
-                    "name": "_ftype",
-                    "type": "string"
-                },
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "hasAccess",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ], 
+    "filemanager": [
+        {
+            "constant": false,
+            "inputs": [
                 {
                     "name": "_hash",
                     "type": "string"
                 },
                 {
-                    "name": "_chunks",
-                    "type": "string"
-                },
-                {
-                    "name": "_name",
-                    "type": "string"
-                },
-                {
                     "name": "_key",
-                    "type": "string"
-                },
-                {
-                    "name": "_description",
                     "type": "string"
                 }
             ],
@@ -362,48 +208,6 @@
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "FileManage",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "index",
-                    "type": "uint256"
-                }
-            ],
-            "name": "getBoughtFilesAt",
-            "outputs": [
-                {
-                    "name": "file",
-                    "type": "address"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getBoughtFilesCount",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -421,41 +225,12 @@
             "type": "function"
         },
         {
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "index",
-                    "type": "uint256"
-                }
-            ],
-            "name": "getMyFilesAt",
-            "outputs": [
-                {
-                    "name": "file",
-                    "type": "address"
-                }
-            ],
+            "constant": false,
+            "inputs": [],
+            "name": "FileManage",
+            "outputs": [],
             "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [
-                {
-                    "name": "index",
-                    "type": "uint256"
-                }
-            ],
-            "name": "getAllFilesAt",
-            "outputs": [
-                {
-                    "name": "file",
-                    "type": "address"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -496,6 +271,119 @@
             ],
             "name": "BoughtFile",
             "type": "event"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getAllFilesAt",
+            "outputs": [
+                {
+                    "name": "file",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllFilesCount",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getBalance",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getBoughtFilesAt",
+            "outputs": [
+                {
+                    "name": "file",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getBoughtFilesCount",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getMyFilesAt",
+            "outputs": [
+                {
+                    "name": "file",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getMyFilesCount",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         }
     ]
 }
