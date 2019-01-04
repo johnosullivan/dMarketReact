@@ -70,7 +70,13 @@ class Body extends React.Component {
     return bytes;
   }
 
-  handleAddDCFile(selectorFiles) { 
+  async handleAddDCFile(selectorFiles) { 
+
+    const dataProvider = DataProvider['DataProvider'];
+
+    await dataProvider.addFile(selectorFiles[0], { });
+    
+    /*
     var reader = new FileReader();
     var self = this;
 
@@ -100,7 +106,8 @@ class Body extends React.Component {
 
       self.setState({ file });
     }
-    reader.readAsArrayBuffer(selectorFiles[0]);
+    reader.readAsArrayBuffer(selectorFiles[0]);*/
+
   }
 
   uploadDataIPFS = async (data) => {

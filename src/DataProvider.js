@@ -1,9 +1,16 @@
 import abi from './abi.json';
 
+import ipfsClient from 'ipfs-http-client';
+import randomstring from 'randomstring';
+import cryptojs from 'crypto-js';
+import aesjs from 'aes-js';
+import { sha256, sha224 } from 'js-sha256';
+import { or } from 'ip';
+
 const DataProvider = {};
 
 const web3 = new window.Web3(window.web3.currentProvider);
-const fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
+const fileManager = web3.eth.contract(abi.filemanager).at('0x05da3337fe64ff1c99819dddaf1f159e53862e0e');
 const file = web3.eth.contract(abi.file);
 
 DataProvider.bytesToHex = (bytes) => {
@@ -60,6 +67,29 @@ DataProvider.getFilePublicDetails = async (address) => {
     });
 };
 
+DataProvider.addFile = async (file, details) => {
+  const reader = new FileReader();
+
+  const hashObject = await DataProvider.uploadDataIPFS(JSON.stringify(details));
+  const hash = hashObject['hash'];
+
+  console.log('Details: ', hash);
+
+  reader.onload = async function() {
+    const password = randomstring.generate();
+
+    const rawData = new Uint8Array(reader.result);
+    const hexData = DataProvider.bytesToHex(rawData);
+    const encryptData = cryptojs.AES.encrypt(hexData, password).toString();
+
+    const fileHashObject = await DataProvider.uploadDataIPFS(encryptData);
+    const fileHash = fileHashObject['hash'];
+    
+    console.log('File: ', fileHash);
+  }
+  reader.readAsArrayBuffer(file);
+};
+
 DataProvider.sendTransaction = (data, address) => {
     const transactionData = data;
     const transactionAddress = address;
@@ -73,6 +103,13 @@ DataProvider.sendTransaction = (data, address) => {
         });
     });
 }
+
+DataProvider.uploadDataIPFS = async (data) => {
+    let ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
+    let content = ipfs.types.Buffer.from(data);
+    let results = await ipfs.add(content);
+    return results[0]; 
+};
 
 export default {
     DataProvider,
