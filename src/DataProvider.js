@@ -9,8 +9,13 @@ import { or } from 'ip';
 
 const DataProvider = {};
 
+const FILE_MANAGER_ADDRESS = '0xcb2c2d8923dcb82dbb379501f214ecbc751caf9b';
+
 const web3 = new window.Web3(window.web3.currentProvider);
-const fileManager = web3.eth.contract(abi.filemanager).at('0x05da3337fe64ff1c99819dddaf1f159e53862e0e');
+
+console.log(web3);
+
+const fileManager = web3.eth.contract(abi.filemanager).at(FILE_MANAGER_ADDRESS);
 const file = web3.eth.contract(abi.file);
 
 DataProvider.bytesToHex = (bytes) => {
@@ -71,9 +76,9 @@ DataProvider.addFile = async (file, details) => {
   const reader = new FileReader();
 
   const hashObject = await DataProvider.uploadDataIPFS(JSON.stringify(details));
-  const hash = hashObject['hash'];
+  const hashDetails = hashObject['hash'];
 
-  console.log('Details: ', hash);
+  console.log('Details: ', hashDetails);
 
   reader.onload = async function() {
     const password = randomstring.generate();
@@ -84,8 +89,14 @@ DataProvider.addFile = async (file, details) => {
 
     const fileHashObject = await DataProvider.uploadDataIPFS(encryptData);
     const fileHash = fileHashObject['hash'];
-    
+
     console.log('File: ', fileHash);
+    console.log('FILE_MANAGER_ADDRESS: ', FILE_MANAGER_ADDRESS);
+
+    const data = fileManager.addFile.getData(fileHash, password, hashDetails);
+    const result = await DataProvider.sendTransaction(data, FILE_MANAGER_ADDRESS);
+    
+    console.log("Results: ", result);
   }
   reader.readAsArrayBuffer(file);
 };

@@ -53,6 +53,46 @@
         {
             "constant": true,
             "inputs": [],
+            "name": "fileDetails",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_owner",
+                    "type": "address"
+                },
+                {
+                    "name": "_fileHash",
+                    "type": "string"
+                },
+                {
+                    "name": "_fileKey",
+                    "type": "string"
+                },
+                {
+                    "name": "_fileDetails",
+                    "type": "string"
+                }
+            ],
+            "name": "set",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
             "name": "getPublicDetails",
             "outputs": [
                 {
@@ -153,28 +193,6 @@
             "constant": false,
             "inputs": [
                 {
-                    "name": "_owner",
-                    "type": "address"
-                },
-                {
-                    "name": "_fileHash",
-                    "type": "string"
-                },
-                {
-                    "name": "_fileKey",
-                    "type": "string"
-                }
-            ],
-            "name": "set",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "name": "buyer",
                     "type": "address"
                 }
@@ -204,24 +222,6 @@
             ],
             "payable": false,
             "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_hash",
-                    "type": "string"
-                },
-                {
-                    "name": "_key",
-                    "type": "string"
-                }
-            ],
-            "name": "addFile",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -306,6 +306,28 @@
             "outputs": [],
             "payable": true,
             "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_hash",
+                    "type": "string"
+                },
+                {
+                    "name": "_key",
+                    "type": "string"
+                },
+                {
+                    "name": "_details",
+                    "type": "string"
+                }
+            ],
+            "name": "addFile",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
