@@ -93,10 +93,9 @@ DataProvider.addFile = async (file, details) => {
     console.log('File: ', fileHash);
     console.log('FILE_MANAGER_ADDRESS: ', FILE_MANAGER_ADDRESS);
 
-    const data = fileManager.addFile.getData(fileHash, password, hashDetails);
-    const result = await DataProvider.sendTransaction(data, FILE_MANAGER_ADDRESS);
-    
-    console.log("Results: ", result);
+    //const data = fileManager.addFile.getData(fileHash, password, hashDetails);
+    //const result = await DataProvider.sendTransaction(data, FILE_MANAGER_ADDRESS);
+    //console.log("Results: ", result);
   }
   reader.readAsArrayBuffer(file);
 };
@@ -116,7 +115,9 @@ DataProvider.sendTransaction = (data, address) => {
 }
 
 DataProvider.uploadDataIPFS = async (data) => {
-    let ipfs = ipfsClient('/ip4/127.0.0.1/tcp/5001');
+
+    console.log(data);
+    let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
     let content = ipfs.types.Buffer.from(data);
     let results = await ipfs.add(content);
     return results[0]; 
