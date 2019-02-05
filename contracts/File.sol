@@ -4,25 +4,38 @@ import "./Owner.sol";
 
 contract File is Owned {
 
-    mapping(address => bool) public hasAccess;
+    struct Version
+    {
+        string fileHash;
+        string fileKey;
+        string version;
+    }
 
-    string public fileHash;
-    string public fileKey;
-    string public filePublicDetails;
+    mapping(address => bool) private hasAccess;
+
+    Version[] private versions;
+
+    string private filePublicDetails;
 
     function getBalance() public view returns (uint256) {
         return address(this).balance;
     }
 
     constructor(
+        string memory _version,
         string memory _fileHash,
         string memory _fileKey,
         string memory _filePublicDetails
     ) public {
-        fileHash = _fileHash;
-        fileKey = _fileKey;
+        versions.push(Version({
+            fileHash: _fileHash,
+            fileKey: _fileKey,
+            version: _version
+        }));
+
         filePublicDetails = _filePublicDetails;
         owner = msg.sender;
+        hasAccess[msg.sender] = true;
     }
 
     function buy(
@@ -38,14 +51,28 @@ contract File is Owned {
         _;
     }
 
-    function allowAccess(address _address) onlyOwner public returns (bool status) {
+    function allowAccess(
+        address _address
+    ) onlyOwner public returns (bool status) {
         hasAccess[_address] = true;
         return hasAccess[_address];
     }
 
-    function removeAccess(address _address) onlyOwner public returns (bool status) {
+    function removeAccess(
+        address _address
+    ) onlyOwner public returns (bool status) {
         hasAccess[_address] = false;
         return !hasAccess[_address];
+    }
+
+    function getVersionsCount() public view returns (uint256) {
+        return versions.length;
+    }
+
+    function getVersionName(
+        uint256 index
+    ) public view returns (string memory) {
+        return versions[index].version;
     }
 
     function getAccessStatus() view public returns (bool) {
@@ -58,15 +85,17 @@ contract File is Owned {
         return (filePublicDetails);
     }
 
-    function getData() onlyBuyer view public returns (
+    function getData(
+        uint256 index
+    ) onlyBuyer view public returns (
         address fileOwner,
         string memory hash,
         string memory key
     ) {
         return (
            owner,
-           fileHash,
-           fileKey
+           versions[index].fileHash,
+           versions[index].fileKey
         );
     }
 
