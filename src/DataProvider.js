@@ -34,7 +34,7 @@ DataProvider.hexToBytes = (hex) => {
 
 DataProvider.getMyFilesCount = async () => {
     return new Promise(function(resolve, reject) {
-      fileManager.getMyFilesCount(function(err, data) { 
+      fileManager.getMyFilesCount(function(err, data) {
         if (err) { reject(err); } else { resolve(data['c'][0]); }
       });
     });
@@ -42,7 +42,7 @@ DataProvider.getMyFilesCount = async () => {
 
 DataProvider.getMyFilesAt = async (index) => {
     return new Promise(function(resolve, reject) {
-      fileManager.getMyFilesAt(index, function(err, data) { 
+      fileManager.getMyFilesAt(index, function(err, data) {
         if (err) { reject(err); } else { resolve(data); }
       });
     });
@@ -66,7 +66,7 @@ DataProvider.getMyFiles = async () => {
 
 DataProvider.getFilePublicDetails = async (address) => {
     return new Promise(function(resolve, reject) {
-      file.at(address).getPublicDetails(function(err, data) { 
+      file.at(address).getPublicDetails(function(err, data) {
         if (err) { reject(err); } else { resolve(data); }
       });
     });
@@ -104,7 +104,7 @@ DataProvider.sendTransaction = (data, address) => {
     const transactionData = data;
     const transactionAddress = address;
     return new Promise(function(resolve, reject) {
-        web3.eth.sendTransaction({from: web3.currentProvider.selectedAddress , to: transactionAddress, data: transactionData }, function(err, transactionHash) { 
+        web3.eth.sendTransaction({from: web3.currentProvider.selectedAddress , to: transactionAddress, data: transactionData }, function(err, transactionHash) {
           if (err) {
             reject(err);
           } else {
@@ -120,7 +120,7 @@ DataProvider.uploadDataIPFS = async (data) => {
     let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
     let content = ipfs.types.Buffer.from(data);
     let results = await ipfs.add(content);
-    return results[0]; 
+    return results[0];
 };
 
 export default {
