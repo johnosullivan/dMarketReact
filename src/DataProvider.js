@@ -7,7 +7,7 @@ import aesjs from 'aes-js';
 import { sha256, sha224 } from 'js-sha256';
 import { or } from 'ip';
 
-const DataProvider = {};
+const dataProvider = {};
 
 const FILE_MANAGER_ADDRESS = '0xcb2c2d8923dcb82dbb379501f214ecbc751caf9b';
 
@@ -18,7 +18,7 @@ console.log(web3);
 const fileManager = web3.eth.contract(abi.filemanager).at(FILE_MANAGER_ADDRESS);
 const file = web3.eth.contract(abi.file);
 
-DataProvider.bytesToHex = (bytes) => {
+dataProvider.bytesToHex = (bytes) => {
     for (var hex = [], i = 0; i < bytes.length; i++) {
         hex.push((bytes[i] >>> 4).toString(16));
         hex.push((bytes[i] & 0xF).toString(16));
@@ -26,13 +26,13 @@ DataProvider.bytesToHex = (bytes) => {
     return hex.join("");
 }
 
-DataProvider.hexToBytes = (hex) => {
+dataProvider.hexToBytes = (hex) => {
     for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
     return bytes;
 }
 
-DataProvider.getMyFilesCount = async () => {
+dataProvider.getMyFilesCount = async () => {
     return new Promise(function(resolve, reject) {
       fileManager.getMyFilesCount(function(err, data) {
         if (err) { reject(err); } else { resolve(data['c'][0]); }
@@ -40,7 +40,7 @@ DataProvider.getMyFilesCount = async () => {
     });
 };
 
-DataProvider.getMyFilesAt = async (index) => {
+dataProvider.getMyFilesAt = async (index) => {
     return new Promise(function(resolve, reject) {
       fileManager.getMyFilesAt(index, function(err, data) {
         if (err) { reject(err); } else { resolve(data); }
@@ -48,13 +48,13 @@ DataProvider.getMyFilesAt = async (index) => {
     });
 };
 
-DataProvider.getMyFiles = async () => {
-    const myFilesCount = await DataProvider.getMyFilesCount();
+dataProvider.getMyFiles = async () => {
+    const myFilesCount = await dataProvider.getMyFilesCount();
     let myFiles = [];
 
     for (const index of Array(myFilesCount).keys()) {
-      const fileAddress = await DataProvider.getMyFilesAt(index);
-      const filePublicDetails = await DataProvider.getFilePublicDetails(fileAddress);
+      const fileAddress = await dataProvider.getMyFilesAt(index);
+      const filePublicDetails = await dataProvider.getFilePublicDetails(fileAddress);
       myFiles.push({
         fileAddress,
         filePublicDetails
@@ -64,7 +64,7 @@ DataProvider.getMyFiles = async () => {
     return myFiles;
 };
 
-DataProvider.getFilePublicDetails = async (address) => {
+dataProvider.getFilePublicDetails = async (address) => {
     return new Promise(function(resolve, reject) {
       file.at(address).getPublicDetails(function(err, data) {
         if (err) { reject(err); } else { resolve(data); }
@@ -72,35 +72,34 @@ DataProvider.getFilePublicDetails = async (address) => {
     });
 };
 
-DataProvider.addFile = async (file, details) => {
-  const reader = new FileReader();
+dataProvider.addFile = async (file, details) => {
+    return new Promise(async function(resolve, reject) {
+      const reader = new FileReader();
 
-  const hashObject = await DataProvider.uploadDataIPFS(JSON.stringify(details));
-  const hashDetails = hashObject['hash'];
+      const hashObject = await dataProvider.uploadDataIPFS(JSON.stringify(details));
+      const hashDetails = hashObject['hash'];
 
-  console.log('Details: ', hashDetails);
+      reader.onload = async function() {
+        const password = randomstring.generate();
 
-  reader.onload = async function() {
-    const password = randomstring.generate();
+        const rawData = new Uint8Array(reader.result);
+        const hexData = dataProvider.bytesToHex(rawData);
+        const encryptData = cryptojs.AES.encrypt(hexData, password).toString();
 
-    const rawData = new Uint8Array(reader.result);
-    const hexData = DataProvider.bytesToHex(rawData);
-    const encryptData = cryptojs.AES.encrypt(hexData, password).toString();
+        const fileHashObject = await dataProvider.uploadDataIPFS(encryptData);
+        const fileHash = fileHashObject['hash'];
 
-    const fileHashObject = await DataProvider.uploadDataIPFS(encryptData);
-    const fileHash = fileHashObject['hash'];
-
-    console.log('File: ', fileHash);
-    console.log('FILE_MANAGER_ADDRESS: ', FILE_MANAGER_ADDRESS);
-
-    //const data = fileManager.addFile.getData(fileHash, password, hashDetails);
-    //const result = await DataProvider.sendTransaction(data, FILE_MANAGER_ADDRESS);
-    //console.log("Results: ", result);
-  }
-  reader.readAsArrayBuffer(file);
+        resolve({
+          hashDetails,
+          fileHash,
+          password
+        });
+      }
+      reader.readAsArrayBuffer(file);
+    });
 };
 
-DataProvider.sendTransaction = (data, address) => {
+dataProvider.sendTransaction = (data, address) => {
     const transactionData = data;
     const transactionAddress = address;
     return new Promise(function(resolve, reject) {
@@ -114,7 +113,7 @@ DataProvider.sendTransaction = (data, address) => {
     });
 }
 
-DataProvider.uploadDataIPFS = async (data) => {
+dataProvider.uploadDataIPFS = async (data) => {
 
     console.log(data);
     let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
@@ -124,6 +123,6 @@ DataProvider.uploadDataIPFS = async (data) => {
 };
 
 export default {
-    DataProvider,
+    dataProvider,
     web3
 };
