@@ -1,17 +1,15 @@
 import React from 'react';
-import { 
-  Navbar,
-  Nav,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
+
 import { connect } from 'react-redux';
 import PubSub from 'pubsub-js';
 import uport from './uport.svg';
 
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 class Header extends React.Component {
 
@@ -23,40 +21,51 @@ class Header extends React.Component {
     //PubSub.publish('UPORT_LOGIN', Date());
   };
 
+/*
+<Navbar bg="light" expand="lg">
+  <Navbar.Brand href="">dMarket</Navbar.Brand>
+  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+  <Navbar.Collapse id="basic-navbar-nav">
+    <Nav className="mr-auto">
+
+    </Nav>
+    { !this.props.isAuth &&
+      <div>
+        <Button variant="primary" onClick={this.login}>
+          Login
+        </Button>
+      </div>
+    }
+    { this.props.isAuth &&
+      <div>
+        <Row>
+          <Col>
+            <img src={this.props.account.avatar.uri} style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20
+            }}/>
+          </Col>
+        </Row>
+      </div>
+    }
+  </Navbar.Collapse>
+</Navbar>
+*/
+
+
   render() {
     console.log(this.props);
     return (
       <div>
-        <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="">dMarket</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-             
-            </Nav>
-            { !this.props.isAuth &&
-              <div>
-                <Button variant="primary" onClick={this.login}> 
-                  Login
-                </Button>
-              </div>
-            }
-            { this.props.isAuth &&
-              <div>
-                <Row>
-                  <Col>
-                    <img src={this.props.account.avatar.uri} style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 20
-                    }}/>
-                  </Col>
-                </Row>
-              </div>
-            }
-          </Navbar.Collapse>
-        </Navbar>
-    </div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton color="inherit" aria-label="Menu">
+            <MenuIcon/>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      </div>
     );
   }
 }

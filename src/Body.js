@@ -9,9 +9,8 @@ import abi from './abi.json';
 
 import dataProvider from './DataProvider';
 
-import {
-  Button
-} from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+
 
 import PubSub from 'pubsub-js';
 import { Document, Page } from 'react-pdf';
@@ -254,18 +253,7 @@ class Body extends React.Component {
           <Page pageNumber={pageNumber} />
         </Document>
         <p>Page {pageNumber} of {numPages}</p>
-        <Button variant="primary" onClick={this.back}>
-                  B
-                </Button>
-                <Button variant="primary" onClick={this.forward}>
-                  F
-                </Button>
-                <Button variant="primary" onClick={this.testTrasaction}>
-                  Test Transaction
-                </Button>
-                <Button variant="primary" onClick={this.testingIPFS}>
-                  Test IPFS
-                </Button>
+
       </div>
         <br/>
         <br/>
@@ -273,7 +261,9 @@ class Body extends React.Component {
         <br/>
 
         {listItems}
-
+        <Button variant="contained" color="secondary">
+              Hello World
+            </Button>
       </Container>
   );
   };
