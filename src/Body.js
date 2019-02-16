@@ -11,7 +11,7 @@ import dataProvider from './DataProvider';
 
 import Button from '@material-ui/core/Button';
 
-
+import TextField from '@material-ui/core/TextField';
 import PubSub from 'pubsub-js';
 import { Document, Page } from 'react-pdf';
 
@@ -25,12 +25,53 @@ import { or } from 'ip';
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
+const currencies = [
+  {
+    value: 'USD',
+    label: '$',
+  },
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'JPY',
+    label: '¥',
+  },
+];
+
 class Body extends React.Component {
 
   state = {
     numPages: null,
     pageNumber: 1,
-    file: ''
+    file: '',
+    version: '',
+    price: '',
+    description: '',
+    name:''
   }
 
   constructor(props) {
@@ -78,6 +119,8 @@ class Body extends React.Component {
     const data = await x.addFile(selectorFiles[0], { });
     console.log(data);
     this.tempfile = data;
+
+
 
     /*
     var reader = new FileReader();
@@ -186,7 +229,9 @@ class Body extends React.Component {
     });
   };
 
-
+  add = () => {
+    console.log(this.state);
+  }
 
   testTrasaction = async () => {
 
@@ -256,14 +301,40 @@ class Body extends React.Component {
 
       </div>
         <br/>
+        <TextField
+          id="version"
+          label="Version"
+          margin="normal"
+          value={this.state.version} onChange={(event) => { this.setState({version: event.target.value}); }}
+        />
+        <br/>
+        <TextField
+          id="name"
+          label="Name"
+          margin="normal"
+          value={this.state.name} onChange={(event) => { this.setState({name: event.target.value}); }}
+        />
+        <br/>
+        <TextField
+          id="description"
+          label="Description"
+          margin="normal"
+          value={this.state.description} onChange={(event) => { this.setState({description: event.target.value}); }}
+        />
+        <br/>
+        <TextField
+          id="price"
+          label="Price"
+          margin="normal"
+          value={this.state.price} onChange={(event) => { this.setState({price: event.target.value}); }}
+        />
         <br/>
         <input onChange={ (e) => this.handleAddDCFile(e.target.files) } type='file'/>
         <br/>
-
-        {listItems}
-        <Button variant="contained" color="secondary">
-              Hello World
-            </Button>
+        <br/>
+        <Button variant="contained" color="secondary" onClick={this.add}>
+            Add
+        </Button>
       </Container>
   );
   };
