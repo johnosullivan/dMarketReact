@@ -72,7 +72,8 @@ class Body extends React.Component {
     price: '',
     description: '',
     name:'',
-    author: ''
+    author: '',
+    acontract: ''
   }
 
   constructor(props) {
@@ -263,30 +264,6 @@ class Body extends React.Component {
     });
   }
 
-  testTrasaction = async () => {
-
-
-
-/*
-    Contract.getMyFilesAt(0, function(err, data) {
-      if (err) {
-      }
-      console.log(data);
-  });*/
-
-/*
-    const address = '0xb565e58bda6f31647719a1b162080e982f80bc87';
-    let FileManager = web3.eth.contract(abi.filemanager);
-    let Contract = FileManager.at(address);
-    const data = Contract.addFile.getData("","","","","","description");
-
-    try {
-      const result = await this.sendTransaction(data, address);
-      console.log(result);
-    } catch (error) { } */
-
-  }
-
   sendTransaction = (data, address) => {
     const transactionData = data;
     const transactionAddress = address;
@@ -301,8 +278,21 @@ class Body extends React.Component {
     });
   }
 
-  testGetFiles = () => {
+  load = () => {
+    const { acontract } = this.state;
 
+    // Contract object
+    const contract = web3.eth.contract(abi['file']).at(acontract);
+
+    contract.getData.call(0, function (error, result) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(result);
+      }
+    });
+
+    console.log(contract);
   };
 
   render() {
@@ -314,7 +304,7 @@ class Body extends React.Component {
       <div key={item.id}>{item.title}</div>
     );
 
-
+//0x8119aaBc94CdE2aB47d0C9Bc60d4829514b89481
 
     return (
       <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
@@ -371,6 +361,21 @@ class Body extends React.Component {
         <br/>
         <Button variant="contained" color="secondary" onClick={this.add}>
             Add
+        </Button>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <TextField
+          id="address_contract"
+          label="Address Contract"
+          margin="normal"
+          value={this.state.acontract} onChange={(event) => { this.setState({acontract: event.target.value}); }}
+        />
+        <br/>
+        <br/>
+        <Button variant="contained" color="secondary" onClick={this.load}>
+            Load
         </Button>
       </Container>
   );
