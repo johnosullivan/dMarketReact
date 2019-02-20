@@ -1,16 +1,6 @@
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity ^0.4.25;
 
-import "./Owner.sol";
-
-pragma solidity >=0.4.22 <0.6.0;
-
-contract Owned {
-    address owner;
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
-}
+import "./Owned.sol";
 
 contract File is Owned {
     /*
@@ -28,6 +18,7 @@ contract File is Owned {
 
     // Stores all the different version of the document
     Version[] private versions;
+
 
     // Stores the ipfs hash with all the public details
     string private filePublicDetails;
