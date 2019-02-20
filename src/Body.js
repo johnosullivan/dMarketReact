@@ -290,11 +290,27 @@ class Body extends React.Component {
     // Contract object
     const contract = web3.eth.contract(JSON.parse(file['interface'])).at(acontract);
 
-    contract.getData.call(0, function (error, result) {
+    const self = this;
+    contract.getData.call(0, async function (error, result) {
       if (error) {
         console.log(error);
       } else {
         console.log(result);
+
+        let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
+        const fileData = await ipfs.cat(result[1]);
+
+        console.log(fileData);
+
+        const decryptbytes  = cryptojs.AES.decrypt(fileData.toString('utf8'), result[2]);
+        const encoding = decryptbytes.toString(cryptojs.enc.Utf8);
+        const bytes = new Uint8Array(self.hexToBytes(encoding));
+
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const urlCreator = window.URL || window.webkitURL;
+        const file = urlCreator.createObjectURL(blob);
+
+        self.setState({ file });
       }
     });
 
