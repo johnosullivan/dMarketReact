@@ -65,12 +65,17 @@ class Header extends React.Component {
 
   render() {
     console.log(this.props);
+
+    const style = {
+      outline: 'none'
+    };
+
     return (
       <div>
       <AppBar position="static">
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon/>
+          <IconButton color="inherit" aria-label="Menu" style={style}>
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>

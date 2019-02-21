@@ -24,6 +24,8 @@ import { or } from 'ip';
 
 import FileBuild from './contracts/build/File.json';
 
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
@@ -75,7 +77,8 @@ class Body extends React.Component {
     description: '',
     name:'',
     author: '',
-    acontract: ''
+    acontract: '',
+    left: false
   }
 
   constructor(props) {
@@ -319,6 +322,12 @@ class Body extends React.Component {
 
   };
 
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
+
   render() {
     console.log('Body: ', this.props);
 
@@ -330,11 +339,29 @@ class Body extends React.Component {
 
 //0x8119aaBc94CdE2aB47d0C9Bc60d4829514b89481
 
+
     return (
       <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
 
 
 <div>
+
+
+<SwipeableDrawer
+          open={this.state.left}
+          onClose={this.toggleDrawer('left', false)}
+          onOpen={this.toggleDrawer('left', true)}
+        >
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+          >
+          </div>
+        </SwipeableDrawer>
+
+
         <Document
           file={file}
           onLoadSuccess={this.onDocumentLoadSuccess}
