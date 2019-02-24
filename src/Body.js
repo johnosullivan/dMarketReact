@@ -26,6 +26,12 @@ import FileBuild from './contracts/build/File.json';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
@@ -329,7 +335,7 @@ class Body extends React.Component {
   };
 
   render() {
-    console.log('Body: ', this.props);
+    console.log(this.props);
 
     const { pageNumber, numPages, file } = this.state;
 
@@ -360,7 +366,6 @@ class Body extends React.Component {
           >
           </div>
         </SwipeableDrawer>
-
 
         <Document
           file={file}

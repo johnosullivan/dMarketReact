@@ -20,6 +20,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+
 class Header extends React.Component {
 
   constructor(props) {
@@ -77,6 +78,8 @@ class Header extends React.Component {
           <IconButton color="inherit" aria-label="Menu" style={style}>
             <MenuIcon />
           </IconButton>
+
+
         </Toolbar>
       </AppBar>
       </div>
