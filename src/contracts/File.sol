@@ -3,7 +3,12 @@ pragma solidity ^0.4.25;
 import "./Owned.sol";
 
 interface FileManagerInterface {
-    function addFile();
+    function addFile(address value) external;
+    function removeFile(address value) external;
+}
+
+interface TokenInterface {
+    function transferFrom(address _from, address _to, uint256 _value) external returns(bool success);
 }
     
 contract File is Owned {
@@ -32,18 +37,21 @@ contract File is Owned {
         return address(this).balance;
     }
     
-    FileManagerInterface public called_address;
+    FileManagerInterface public fileManager;
+    TokenInterface public token;
 
-    function setFileManager(address _addy) public {
-        called_address = FileManagerInterface(_addy);
+    function makePublic() onlyOwner public {
+        fileManager.addFile(address(this));
     }
-
-    function makePublic() public {
-        called_address.addFile();
+    
+    function makeNotPublic() onlyOwner public {
+        fileManager.removeFile(address(this));
     }
 
     // Constructor of the contract with params for the version first version
     constructor(
+        address fileManagerAddress,
+        address tokenAddress,
         string memory _version,
         string memory _fileHash,
         string memory _fileKey,
@@ -58,12 +66,15 @@ contract File is Owned {
         filePublicDetails = _filePublicDetails;
         owner = msg.sender;
         hasAccess[msg.sender] = true;
+        fileManager = FileManagerInterface(fileManagerAddress);
+        token = TokenInterface(tokenAddress);
     }
 
     // Buys the document and gives access to address buying
     function buy(
         address buyer
-    ) public payable {
+    ) public {
+        require(token.transferFrom(msg.sender, address(this), 10000000000000));
         hasAccess[buyer] = true;
     }
 

@@ -41,9 +41,33 @@ contract FileManager is Owned {
     * Array Boughts Files Functions
     */
     
-    function addFile() public {
+    function addFile(address value) public {
+        require(value == msg.sender);
         allFiles.push(msg.sender);
     }
+    
+    function removeFile(address value) public {
+        require(value == msg.sender);
+        uint i = findFile(value);
+        removeFileByIndex(i);
+    }
+    
+    function findFile(address value) internal view returns(uint) {
+        uint i = 0;
+        while (allFiles[i] != value) {
+            i++;
+        }
+        return i;
+    }
+    
+    function removeFileByIndex(uint i) internal {
+        while (i < allFiles.length - 1) {
+            allFiles[i] = allFiles[i + 1];
+            i++;
+        }
+        allFiles.length--;
+    }
+
 
     function getBoughtFilesCount() public view returns (uint256) {
         return boughtFiles[msg.sender].length;
