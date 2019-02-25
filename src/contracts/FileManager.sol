@@ -10,6 +10,8 @@ contract FileManager is Owned {
     mapping (address => address[]) private boughtFiles;
     //all the file contract address stored here for indexing
     address[] private allFiles;
+    
+    uint256 public testIndex;
 
     //file manager events
     event AddedFile(address seller, address file);
@@ -38,6 +40,10 @@ contract FileManager is Owned {
     /*
     * Array Boughts Files Functions
     */
+    
+    function addFile() public {
+        allFiles.push(msg.sender);
+    }
 
     function getBoughtFilesCount() public view returns (uint256) {
         return boughtFiles[msg.sender].length;

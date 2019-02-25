@@ -3,9 +3,9 @@ pragma solidity ^0.4.25;
 import "./Owned.sol";
 
 interface FileManagerInterface {
-    function setTest(uint256);
+    function addFile();
 }
-
+    
 contract File is Owned {
     /*
      * Struct for the managing of different doc version.
@@ -16,7 +16,7 @@ contract File is Owned {
         string fileKey;
         string version;
     }
-
+    
     // Mapping for the permission of the addresses who have access to the document
     mapping(address => bool) private hasAccess;
 
@@ -30,6 +30,16 @@ contract File is Owned {
     // Gets the balance of the contract
     function getBalance() public view returns (uint256) {
         return address(this).balance;
+    }
+    
+    FileManagerInterface public called_address;
+
+    function setFileManager(address _addy) public {
+        called_address = FileManagerInterface(_addy);
+    }
+
+    function makePublic() public {
+        called_address.addFile();
     }
 
     // Constructor of the contract with params for the version first version
