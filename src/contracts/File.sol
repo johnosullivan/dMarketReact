@@ -28,7 +28,9 @@ contract File is Owned {
     // Stores all the different version of the document
     Version[] private versions;
 
-
+    // Requested token price 
+    uint256 public tokenPrice;
+    
     // Stores the ipfs hash with all the public details
     string private filePublicDetails;
 
@@ -50,12 +52,12 @@ contract File is Owned {
 
     // Constructor of the contract with params for the version first version
     constructor(
-        address fileManagerAddress,
-        address tokenAddress,
+        address _fileManagerContractManager,
         string memory _version,
         string memory _fileHash,
         string memory _fileKey,
-        string memory _filePublicDetails
+        string memory _filePublicDetails,
+        uint256 _tokenPrice
     ) public {
         versions.push(Version({
             fileHash: _fileHash,
@@ -66,15 +68,17 @@ contract File is Owned {
         filePublicDetails = _filePublicDetails;
         owner = msg.sender;
         hasAccess[msg.sender] = true;
-        fileManager = FileManagerInterface(fileManagerAddress);
-        token = TokenInterface(tokenAddress);
+        
+        fileManager = FileManagerInterface(FileContractManagerInterface(_fileManagerContractManager).getContractAddress("fileManager"));
+        token = TokenInterface(FileContractManagerInterface(_fileManagerContractManager).getContractAddress("token"));
+        tokenPrice = _tokenPrice;
     }
 
     // Buys the document and gives access to address buying
     function buy(
         address buyer
     ) public {
-        require(token.transferFrom(msg.sender, address(this), 10000000000000));
+        require(token.transferFrom(msg.sender, address(this), tokenPrice));
         hasAccess[buyer] = true;
     }
 
