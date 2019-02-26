@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class Header extends React.Component {
 
@@ -56,35 +57,6 @@ class Header extends React.Component {
 
     return (
       <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton color="inherit" aria-label="Menu" style={style} onClick={this.toggleDrawer('left', true)}>
-            <MenuIcon />
-          </IconButton>
-
-
-        </Toolbar>
-      </AppBar>
-
-      <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} > 
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
-            style={{
-              width: 300,
-              flexShrink: 0
-            }}>
-            <List>
-              <ListItem button key="search">
-                <ListItemIcon><SearchIcon/></ListItemIcon>
-                <ListItemText primary="Search"/>
-              </ListItem>
-            </List>
-            <Divider/>
-          </div>
-        </Drawer>
       </div>
     );
   }

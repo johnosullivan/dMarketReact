@@ -33,6 +33,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 const web3 = new window.Web3(window.web3.currentProvider);
 
 const styles = theme => ({
@@ -334,15 +346,72 @@ class Body extends React.Component {
     });
   };
 
+  
+
   render() {
     const { pageNumber, numPages, file } = this.state;
 
+
+    const Home = () => (
+      <div>
+        <h2>Home</h2>
+      </div>
+    );
+    
+    const About = () => (
+      <div>
+        <h2>About</h2>
+      </div>
+    );
+
+    const style = {
+      outline: 'none'
+    };
+
     return (
-      <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
+      <Router>
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+            <IconButton color="inherit" aria-label="Menu" style={style} onClick={this.toggleDrawer('left', true)}>
+              <MenuIcon />
+            </IconButton>
 
 
-      </Container>
-  );
+            </Toolbar>
+          </AppBar>
+
+          <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} > 
+              <div
+                tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('left', false)}
+                onKeyDown={this.toggleDrawer('left', false)}
+                style={{
+                  width: 300,
+                  flexShrink: 0
+                }}>
+                <List>
+                  <Link to="/about">
+                    <ListItem button key="search">
+                      <ListItemText primary="Search"/>
+                    </ListItem>
+                  </Link>
+                  <Link to="/">
+                    <ListItem button key="search">
+                      <ListItemText primary="Home"/>
+                    </ListItem>
+                  </Link>
+                </List>
+                <Divider/>
+              </div>
+          </Drawer>
+          
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />                
+        </div>
+        </Router>
+    );
   };
 
 }

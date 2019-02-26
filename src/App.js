@@ -19,7 +19,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header store={this.props.store}/>
         <Body store={this.props.store}/>
       </div>
     );
