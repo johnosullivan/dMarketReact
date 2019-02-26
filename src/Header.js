@@ -6,66 +6,49 @@ import uport from './uport.svg';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 
 class Header extends React.Component {
 
+  state = {
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  };
+
   constructor(props) {
     super(props);
+
+
   }
 
   login = () => {
     //PubSub.publish('UPORT_LOGIN', Date());
+
+    const toggleMenuTrigger = function (msg, data) {
+      console.log(msg, data);
+    };  
+    this.toggleMenu = PubSub.subscribe('MENU', toggleMenuTrigger);
   };
 
-/*
-<Navbar bg="light" expand="lg">
-  <Navbar.Brand href="">dMarket</Navbar.Brand>
-  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-  <Navbar.Collapse id="basic-navbar-nav">
-    <Nav className="mr-auto">
-
-    </Nav>
-    { !this.props.isAuth &&
-      <div>
-        <Button variant="primary" onClick={this.login}>
-          Login
-        </Button>
-      </div>
-    }
-    { this.props.isAuth &&
-      <div>
-        <Row>
-          <Col>
-            <img src={this.props.account.avatar.uri} style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20
-            }}/>
-          </Col>
-        </Row>
-      </div>
-    }
-  </Navbar.Collapse>
-</Navbar>
-*/
-
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
 
   render() {
-    console.log(this.props);
+    console.log(this.state);
 
     const style = {
       outline: 'none'
@@ -75,13 +58,33 @@ class Header extends React.Component {
       <div>
       <AppBar position="static">
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu" style={style}>
+          <IconButton color="inherit" aria-label="Menu" style={style} onClick={this.toggleDrawer('left', true)}>
             <MenuIcon />
           </IconButton>
 
 
         </Toolbar>
       </AppBar>
+
+      <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} > 
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+            onKeyDown={this.toggleDrawer('left', false)}
+            style={{
+              width: 300,
+              flexShrink: 0
+            }}>
+            <List>
+              <ListItem button key="search">
+                <ListItemIcon><SearchIcon/></ListItemIcon>
+                <ListItemText primary="Search"/>
+              </ListItem>
+            </List>
+            <Divider/>
+          </div>
+        </Drawer>
       </div>
     );
   }

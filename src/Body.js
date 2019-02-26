@@ -335,104 +335,12 @@ class Body extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-
     const { pageNumber, numPages, file } = this.state;
-
-    const listItems = this.props.productListings.map((item, i) =>
-      <div key={item.id}>{item.title}</div>
-    );
-
-//0x8119aaBc94CdE2aB47d0C9Bc60d4829514b89481
-
 
     return (
       <Container text style={{ marginTop: '5em', marginBottom: '2em' }}>
 
 
-<div>
-
-
-<SwipeableDrawer
-          open={this.state.left}
-          onClose={this.toggleDrawer('left', false)}
-          onOpen={this.toggleDrawer('left', true)}
-        >
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
-          >
-          </div>
-        </SwipeableDrawer>
-
-        <Document
-          file={file}
-          onLoadSuccess={this.onDocumentLoadSuccess}
-        >
-          <Page pageNumber={pageNumber} />
-        </Document>
-        <p>Page {pageNumber} of {numPages}</p>
-
-      </div>
-        <br/>
-        <TextField
-          id="version"
-          label="Version"
-          margin="normal"
-          value={this.state.version} onChange={(event) => { this.setState({version: event.target.value}); }}
-        />
-        <br/>
-        <TextField
-          id="name"
-          label="Name"
-          margin="normal"
-          value={this.state.name} onChange={(event) => { this.setState({name: event.target.value}); }}
-        />
-        <br/>
-        <TextField
-          id="description"
-          label="Description"
-          margin="normal"
-          value={this.state.description} onChange={(event) => { this.setState({description: event.target.value}); }}
-        />
-        <br/>
-        <TextField
-          id="price"
-          label="Price"
-          margin="normal"
-          value={this.state.price} onChange={(event) => { this.setState({price: event.target.value}); }}
-        />
-        <br/>
-        <TextField
-          id="author"
-          label="Author"
-          margin="normal"
-          value={this.state.author} onChange={(event) => { this.setState({author: event.target.value}); }}
-        />
-        <br/>
-        <input onChange={ (e) => this.handleAddDCFile(e.target.files) } type='file'/>
-        <br/>
-        <br/>
-        <Button variant="contained" color="secondary" onClick={this.add}>
-            Add
-        </Button>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <TextField
-          id="address_contract"
-          label="Address Contract"
-          margin="normal"
-          value={this.state.acontract} onChange={(event) => { this.setState({acontract: event.target.value}); }}
-        />
-        <br/>
-        <br/>
-        <Button variant="contained" color="secondary" onClick={this.load}>
-            Load
-        </Button>
       </Container>
   );
   };
