@@ -45,6 +45,13 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+
+import { 
+  HomePage,
+  SearchPage,
+  MyFilesPage
+} from "./components/pages";
+
 const web3 = new window.Web3(window.web3.currentProvider);
 
 const styles = theme => ({
@@ -392,9 +399,14 @@ class Body extends React.Component {
                   flexShrink: 0
                 }}>
                 <List>
-                  <Link to="/about">
+                  <Link to="/search">
                     <ListItem button key="search">
                       <ListItemText primary="Search"/>
+                    </ListItem>
+                  </Link>
+                  <Link to="/myfiles">
+                    <ListItem button key="myfiles">
+                      <ListItemText primary="My Files"/>
                     </ListItem>
                   </Link>
                   <Link to="/">
@@ -407,8 +419,9 @@ class Body extends React.Component {
               </div>
           </Drawer>
           
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />                
+          <Route exact path="/" component={HomePage}/>
+          <Route path="/search" component={SearchPage}/> 
+          <Route path="/myfiles" component={MyFilesPage}/>                
         </div>
         </Router>
     );
