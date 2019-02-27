@@ -1,10 +1,6 @@
 pragma solidity >=0.4.22 <0.6.0;
 
-import "./Owner.sol";
-
 contract FileContractManager is Owned {
-    // The owner of the contract manager
-    address private owner;
     // Contract struct to hold the address
     struct contractStructure {
         address contractAddress;

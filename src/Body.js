@@ -11,7 +11,6 @@ import dataProvider from './DataProvider';
 
 import Button from '@material-ui/core/Button';
 
-import TextField from '@material-ui/core/TextField';
 import PubSub from 'pubsub-js';
 import { Document, Page } from 'react-pdf';
 
@@ -42,7 +41,19 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
 
+import TextField from '@material-ui/core/TextField';
+
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+
+import Typography from '@material-ui/core/Typography';
+ 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
@@ -53,6 +64,22 @@ import {
 } from "./components/pages";
 
 const web3 = new window.Web3(window.web3.currentProvider);
+
+const Box = require('3box');
+
+/*
+Box.openBox('0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9', window.web3.currentProvider).then(async box => {
+  // interact with 3Box data
+  console.log('box: ', box);
+  await box.public.remove('name')
+  await box.public.set("firstName", "John");
+  await box.public.set("lastName", "O'Sullivan");
+  await box.public.set("email", "jnosullivan@icloud.com");
+  await box.public.set("photo", "QmR5ky9Tc1okum6YgxBTYNwMDGfQTFx3ZvinS9Gmr15a7G");
+})
+*/
+
+//0x59411045D41B538AfF6685B34c4F2654FA773e3A 0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9
 
 const styles = theme => ({
   container: {
@@ -103,7 +130,13 @@ class Body extends React.Component {
     name:'',
     author: '',
     acontract: '',
-    left: false
+    left: false,
+    profile: {
+      email: '',
+      firstName: '',
+      lastName: '',
+      photo: ''
+    }
   }
 
   constructor(props) {
@@ -113,6 +146,19 @@ class Body extends React.Component {
     this.fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
     this.file = web3.eth.contract(abi.file);
     this.tempfile = {};
+
+    this.getP();
+  }
+
+  getP = async () => {
+    try {
+      const profile = await Box.getProfile('0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9');
+      console.log(profile);
+
+      this.setState({ profile });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   back = () => {
@@ -353,10 +399,25 @@ class Body extends React.Component {
     });
   };
 
-  
+  z = async (selectorFiles) => {
+    var reader = new FileReader();
+
+    reader.onload = async function() {
+      const rawData = new Uint8Array(reader.result);
+
+      let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
+      let content = ipfs.types.Buffer.from(rawData);
+      let results = await ipfs.add(content);
+
+      console.log(results);
+    }
+    reader.readAsArrayBuffer(selectorFiles[0]);
+  };
 
   render() {
-    const { pageNumber, numPages, file } = this.state;
+    console.log('state: ', this.state);
+
+    const { pageNumber, numPages, file, profile } = this.state;
 
 
     const Home = () => (
@@ -398,6 +459,32 @@ class Body extends React.Component {
                   width: 300,
                   flexShrink: 0
                 }}>
+
+                <br/>
+                <div style={{
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  paddingTop: 5,
+                  paddingBottom: 0
+                }}>
+
+                <Grid container spacing={16}>
+                  <Grid item>
+                    <Avatar alt="" src={'https://ipfs.io/ipfs/' + profile.photo}/>
+                  </Grid>
+                  <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={16}>
+                      <Grid item xs>
+                        <Typography gutterBottom variant="subtitle1">
+                          {profile['firstName'] + " " + profile['lastName']}
+                        </Typography>
+                        <Typography gutterBottom>{profile['email']}</Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                </div>
+
                 <List>
                   <Link to="/search">
                     <ListItem button key="search">
@@ -409,15 +496,61 @@ class Body extends React.Component {
                       <ListItemText primary="My Files"/>
                     </ListItem>
                   </Link>
-                  <Link to="/">
-                    <ListItem button key="search">
-                      <ListItemText primary="Home"/>
-                    </ListItem>
-                  </Link>
                 </List>
                 <Divider/>
               </div>
           </Drawer>
+
+
+
+
+
+
+          <Dialog open={false} aria-labelledby="welcomd-dialog-title">
+              <DialogTitle id="welcomd-dialog-title">Welcome to dMarket</DialogTitle>
+
+              <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </DialogContentText>
+            <div>
+                <TextField
+                id="firstName"
+                label="First Name"
+                defaultValue=""
+                margin="dense"
+                fullWidth/>
+                <TextField
+                id="lastName"
+                label="Last Name"
+                defaultValue=""
+                margin="dense"
+                fullWidth/>
+                <TextField
+                id="email"
+                label="Email"
+                defaultValue=""
+                margin="dense"
+                fullWidth/>
+              </div>
+              <br/>
+              <input type="file" onChange={ (e) => this.z(e.target.files) } />
+
+          </DialogContent>
+
+              <DialogActions>
+                <Button  color="primary">
+                  Done
+                </Button>
+              </DialogActions>
+          </Dialog>
+
+
+
+
+
+
+
           
           <Route exact path="/" component={HomePage}/>
           <Route path="/search" component={SearchPage}/> 

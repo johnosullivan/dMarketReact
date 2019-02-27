@@ -1,16 +1,8 @@
 pragma solidity ^0.4.25;
 
-import "./Owned.sol";
+import "Owned.sol";
+import "Interfaces.sol";
 
-interface FileManagerInterface {
-    function addFile(address value) external;
-    function removeFile(address value) external;
-}
-
-interface TokenInterface {
-    function transferFrom(address _from, address _to, uint256 _value) external returns(bool success);
-}
-    
 contract File is Owned {
     /*
      * Struct for the managing of different doc version.

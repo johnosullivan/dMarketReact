@@ -114,8 +114,6 @@ dataProvider.sendTransaction = (data, address) => {
 }
 
 dataProvider.uploadDataIPFS = async (data) => {
-
-    console.log(data);
     let ipfs = ipfsClient('/ip4/142.93.156.212/tcp/5001');
     let content = ipfs.types.Buffer.from(data);
     let results = await ipfs.add(content);
