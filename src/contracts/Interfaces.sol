@@ -1,6 +1,7 @@
 interface FileManagerInterface {
     function addFile(address value) external;
     function removeFile(address value) external;
+    function addMyFile(address value, address sender) external;
 }
 
 interface TokenInterface {

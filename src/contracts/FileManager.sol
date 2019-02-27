@@ -11,8 +11,6 @@ contract FileManager is Owned {
     //all the file contract address stored here for indexing
     address[] private allFiles;
     
-    uint256 public testIndex;
-
     //file manager events
     event AddedFile(address seller, address file);
     event BoughtFile(address buyer, address file);
@@ -28,9 +26,17 @@ contract FileManager is Owned {
     /*
     * Array My Files Functions
     */
+    function addMyFile(address value, address sender) public {
+        require(value == msg.sender);
+        files[sender].push(value);
+    }
 
     function getMyFilesCount() public view returns (uint256) {
         return files[msg.sender].length;
+    }
+    
+    function getMyFiles() public view returns (address[] memory) {
+        return files[msg.sender];
     }
 
     function getMyFilesAt(uint256 index) public view returns (address file) {

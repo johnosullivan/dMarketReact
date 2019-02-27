@@ -72,6 +72,7 @@ contract File is Owned {
         fileManager = FileManagerInterface(FileContractManagerInterface(_fileManagerContractManager).getContractAddress("fileManager"));
         token = TokenInterface(FileContractManagerInterface(_fileManagerContractManager).getContractAddress("token"));
         tokenPrice = _tokenPrice;
+        fileManager.addMyFile(address(this),msg.sender);
     }
 
     // Buys the document and gives access to address buying
