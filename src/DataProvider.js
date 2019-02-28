@@ -1,5 +1,4 @@
-import abi from './abi.json';
-
+import { FileManager } from "./contracts/build/output";
 import ipfsClient from 'ipfs-http-client';
 import randomstring from 'randomstring';
 import cryptojs from 'crypto-js';
@@ -9,13 +8,12 @@ import { or } from 'ip';
 
 const dataProvider = {};
 
-const FILE_MANAGER_ADDRESS = '0xcb2c2d8923dcb82dbb379501f214ecbc751caf9b';
+const FILE_MANAGER_ADDRESS = '0x400b1973f46407d1288d1bd64160517acf3001ee';
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
-console.log(web3);
+const fileManager = web3.eth.contract(FileManager.interface).at(FILE_MANAGER_ADDRESS);
 
-const fileManager = web3.eth.contract(abi.filemanager).at(FILE_MANAGER_ADDRESS);
 const file = web3.eth.contract(abi.file);
 
 dataProvider.bytesToHex = (bytes) => {

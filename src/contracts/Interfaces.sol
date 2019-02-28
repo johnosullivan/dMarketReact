@@ -13,3 +13,7 @@ interface TokenInterface {
 interface FileContractManagerInterface {
     function getContractAddress(bytes32 name) external returns (address);
 }
+
+interface tokenRecipient { 
+    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; 
+}

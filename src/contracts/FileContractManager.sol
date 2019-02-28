@@ -1,5 +1,7 @@
 pragma solidity >=0.4.22 <0.6.0;
 
+import "Owned.sol";
+
 contract FileContractManager is Owned {
     // Contract struct to hold the address
     struct contractStructure {
