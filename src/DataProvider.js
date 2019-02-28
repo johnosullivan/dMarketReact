@@ -1,20 +1,20 @@
-import { FileManager } from "./contracts/build/output";
+import { FileManager, File, FileContractManager } from "./contracts/build/output";
 import ipfsClient from 'ipfs-http-client';
 import randomstring from 'randomstring';
 import cryptojs from 'crypto-js';
-import aesjs from 'aes-js';
-import { sha256, sha224 } from 'js-sha256';
-import { or } from 'ip';
 
 const dataProvider = {};
 
-const FILE_MANAGER_ADDRESS = '0x400b1973f46407d1288d1bd64160517acf3001ee';
-
 const web3 = new window.Web3(window.web3.currentProvider);
 
-const fileManager = web3.eth.contract(FileManager.interface).at(FILE_MANAGER_ADDRESS);
+const fileContractManager = web3.eth.contract(FileContractManager.interface).at("0xb0f18a0835f2f7bc8c57e17a013f37b9880c5d79");
+let fileManager;
 
-const file = web3.eth.contract(abi.file);
+fileContractManager.getContractAddress(web3.toHex("fileManager"), function(err, data) {
+  fileManager = web3.eth.contract(FileManager.interface).at(data);
+});
+
+const file = web3.eth.contract(File.interface);
 
 dataProvider.bytesToHex = (bytes) => {
     for (var hex = [], i = 0; i < bytes.length; i++) {

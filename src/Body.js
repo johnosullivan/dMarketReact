@@ -3,40 +3,19 @@ import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 //import AddProduct from './AddProduct';
 import ipfsClient from 'ipfs-http-client';
-import randomstring from 'randomstring';
 
 import abi from './abi.json';
 
-import dataProvider from './DataProvider';
-
 import Button from '@material-ui/core/Button';
-
-import PubSub from 'pubsub-js';
-import { Document, Page } from 'react-pdf';
-
-import path from 'path';
-
-import cryptojs from 'crypto-js';
-import aesjs from 'aes-js';
-import { sha256, sha224 } from 'js-sha256';
-import { or } from 'ip';
-
-import FileBuild from './contracts/build/File.json';
-
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -308,7 +287,7 @@ class Body extends React.Component {
   };
 
   add = async () => {
-    const fileBuild = FileBuild['contracts']['File.sol:File'];
+    /*const fileBuild = FileBuild['contracts']['File.sol:File'];
 
     const { bytecode } = fileBuild;
 
@@ -339,7 +318,7 @@ class Body extends React.Component {
       console.log(res.transactionHash);
 
       if (res.address) { console.log('Contract address: ' + res.address); }
-    });
+    });*/
   }
 
   sendTransaction = (data, address) => {
@@ -357,6 +336,7 @@ class Body extends React.Component {
   }
 
   load = () => {
+    /*
     const file = FileBuild['contracts']['File.sol:File'];
 
     const { acontract } = this.state;
@@ -389,7 +369,7 @@ class Body extends React.Component {
     });
 
     console.log(contract);
-    
+    */
 
   };
 

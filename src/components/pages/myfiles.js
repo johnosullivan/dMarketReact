@@ -24,7 +24,7 @@ class MyFiles extends React.Component {
     description: '',
     price: '',
     file: [],
-    isAdding: true
+    isAdding: false
   };
 
   constructor(props) {
