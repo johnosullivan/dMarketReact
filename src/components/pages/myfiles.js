@@ -13,6 +13,13 @@ import TextField from '@material-ui/core/TextField';
 
 import Button from '@material-ui/core/Button';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+
 
 class MyFiles extends React.Component {
 
@@ -74,10 +81,32 @@ class MyFiles extends React.Component {
     this.dataProvider.transactionFile(version, fileHash, password, hashDetails, np);
   };
 
+  
+
   render() {
-    const { myFiles } = this.state;
+    const { myFiles = [] } = this.state;
 
     console.log(myFiles);
+
+    const fileItems = myFiles.map((file, i) =>
+        <ListItem key={i} style={{
+            backgroundColor:'white'
+        }}>
+        <ListItemText
+          primary={file.title + ' - ' + file.price + ' dPUB'}
+          secondary={
+            <React.Fragment>
+              <Typography component="span" color="textPrimary">
+                {file.description}
+              </Typography>
+            </React.Fragment>
+          }
+        />
+        <Button variant="contained" color="secondary">
+            View
+        </Button>
+        </ListItem> 
+    );
 
     return (
       <div>
@@ -107,6 +136,13 @@ class MyFiles extends React.Component {
         <Button onClick={this.submit} color="primary">
             My Files
         </Button>
+
+    
+        <List>
+          {fileItems}
+        </List>
+
+
       </div>
     );
   }
