@@ -24,7 +24,8 @@ class MyFiles extends React.Component {
     description: '',
     price: '',
     file: [],
-    isAdding: false
+    isAdding: false,
+    myfiles: []
   };
 
   constructor(props) {
@@ -32,8 +33,16 @@ class MyFiles extends React.Component {
 
 
     this.dataProvider = Providers.dataProvider;
+    console.log(this.dataProvider);
   }
 
+  submit = () => {
+    let self = this;
+    this.dataProvider.myFiles().then(async function(data) {
+        const s = await self.dataProvider.getFilePublicDetails(data[0]);
+        self.setState({ myFiles: [s] });
+    });
+  }
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -48,18 +57,28 @@ class MyFiles extends React.Component {
 
     const details = {
         fileName, title, version,
-        fileAuthor, description,
-        price
+        fileAuthor, description, price
     };
 
-    const res = await this.dataProvider.addFile(file[0], details);
+    const { 
+        hashDetails,
+        fileHash,
+        password
+    } = await this.dataProvider.addFile(file[0], details);
+
+    const np = parseInt(String(price).padEnd(18,0));
 
     console.log('Submit');
     console.log(this.state);
-    console.log(res);
+
+    this.dataProvider.transactionFile(version, fileHash, password, hashDetails, np);
   };
 
   render() {
+    const { myFiles } = this.state;
+
+    console.log(myFiles);
+
     return (
       <div>
         <Dialog open={this.state.isAdding} aria-labelledby="welcomd-dialog-title">
@@ -84,6 +103,10 @@ class MyFiles extends React.Component {
                 </Button>
             </DialogActions>
         </Dialog>
+
+        <Button onClick={this.submit} color="primary">
+            My Files
+        </Button>
       </div>
     );
   }

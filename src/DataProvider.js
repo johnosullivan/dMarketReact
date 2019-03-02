@@ -2,19 +2,60 @@ import { FileManager, File, FileContractManager } from "./contracts/build/output
 import ipfsClient from 'ipfs-http-client';
 import randomstring from 'randomstring';
 import cryptojs from 'crypto-js';
+import axios from 'axios';
 
 const dataProvider = {};
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
-const fileContractManager = web3.eth.contract(FileContractManager.interface).at("0xb0f18a0835f2f7bc8c57e17a013f37b9880c5d79");
+const FileContractManagerAddress = "0xb0f18a0835f2f7bc8c57e17a013f37b9880c5d79";
+const IPFS_URL = 'https://ipfs.io';
+
+const fileContractManager = web3.eth.contract(FileContractManager.interface).at(FileContractManagerAddress);
 let fileManager;
 
 fileContractManager.getContractAddress(web3.toHex("fileManager"), function(err, data) {
+  console.log('FileManager:', data);
   fileManager = web3.eth.contract(FileManager.interface).at(data);
 });
 
 const file = web3.eth.contract(File.interface);
+
+dataProvider.FileContractManagerAddress = FileContractManagerAddress;
+dataProvider.IPFS_URL = IPFS_URL;
+
+dataProvider.myFiles = () => {
+  return new Promise(function(resolve, reject) {
+    fileManager.getMyFiles(function(err, data) {
+      if (err) { reject(err); } else { resolve(data); }
+    });
+  });
+}
+
+dataProvider.transactionFile = (fileVersion, fileHash, password, hashDetails, price) => {
+   const contract = web3.eth.contract(File.interface);
+
+   const contractInstance = contract.new(
+     FileContractManagerAddress, 
+     fileVersion,
+     fileHash, 
+     password, 
+     hashDetails,
+     price,
+     {
+      data: File.bytecode,
+      from: web3.eth.defaultAccount
+     }, (err, res) => {
+     if (err) {
+         console.log(err);
+         return;
+     }
+
+     console.log(res.transactionHash);
+
+     if (res.address) { console.log('Contract address: ' + res.address); }
+   });
+};
 
 dataProvider.bytesToHex = (bytes) => {
     for (var hex = [], i = 0; i < bytes.length; i++) {
@@ -64,8 +105,9 @@ dataProvider.getMyFiles = async () => {
 
 dataProvider.getFilePublicDetails = async (address) => {
     return new Promise(function(resolve, reject) {
-      file.at(address).getPublicDetails(function(err, data) {
-        if (err) { reject(err); } else { resolve(data); }
+      file.at(address).getPublicDetails(async function(err, data) {
+        const dataFromHash = await dataProvider.getIPFS(data);
+        if (err) { reject(err); } else { resolve(dataFromHash); }
       });
     });
 };
@@ -117,6 +159,20 @@ dataProvider.uploadDataIPFS = async (data) => {
     let results = await ipfs.add(content);
     return results[0];
 };
+
+dataProvider.getIPFS = async (hash) => {
+    let results = '';
+    try {
+      const result = await axios.get(dataProvider.IPFS_URL + '/ipfs/' + hash);
+      console.log(result);
+      if (result.status == 200) {
+        results = result.data;
+      }
+    } catch (e) { 
+      console.log(e);
+    }
+    return results;
+}
 
 export default {
     dataProvider,

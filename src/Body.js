@@ -1,5 +1,4 @@
 import React from 'react'
-import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 //import AddProduct from './AddProduct';
 import ipfsClient from 'ipfs-http-client';
@@ -59,44 +58,6 @@ Box.openBox('0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9', window.web3.currentPro
 */
 
 //0x59411045D41B538AfF6685B34c4F2654FA773e3A 0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9
-
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
-
 class Body extends React.Component {
 
   state = {
@@ -397,20 +358,7 @@ class Body extends React.Component {
   render() {
     console.log('state: ', this.state);
 
-    const { pageNumber, numPages, file, profile } = this.state;
-
-
-    const Home = () => (
-      <div>
-        <h2>Home</h2>
-      </div>
-    );
-    
-    const About = () => (
-      <div>
-        <h2>About</h2>
-      </div>
-    );
+    const { profile } = this.state;
 
     const style = {
       outline: 'none'
