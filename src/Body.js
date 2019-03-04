@@ -38,7 +38,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { 
   HomePage,
   SearchPage,
-  MyFilesPage
+  MyFilesPage,
+  FileView
 } from "./components/pages";
 
 const web3 = new window.Web3(window.web3.currentProvider);
@@ -482,7 +483,8 @@ class Body extends React.Component {
           
           <Route exact path="/" component={HomePage}/>
           <Route path="/search" component={SearchPage}/> 
-          <Route path="/myfiles" component={MyFilesPage}/>                
+          <Route path="/myfiles" component={MyFilesPage}/>  
+          <Route path="/file/:address" component={FileView}/>  
         </div>
         </Router>
     );

@@ -32,7 +32,7 @@ class MyFiles extends React.Component {
     price: '',
     file: [],
     isAdding: false,
-    myfiles: []
+    myFiles: []
   };
 
   constructor(props) {
@@ -47,6 +47,7 @@ class MyFiles extends React.Component {
     let self = this;
     this.dataProvider.myFiles().then(async function(data) {
         const s = await self.dataProvider.getFilePublicDetails(data[0]);
+        s['address'] = data[0];
         self.setState({ myFiles: [s] });
     });
   }
@@ -81,7 +82,15 @@ class MyFiles extends React.Component {
     this.dataProvider.transactionFile(version, fileHash, password, hashDetails, np);
   };
 
-  
+  view = async (index, event) => {
+    console.log('view index:', index);
+    console.log(this.state);
+    const { myFiles = [] } = this.state;
+    const file = myFiles[index - 1];
+    console.log(file);
+    const balance = await this.dataProvider.getFileBalance(file.address);
+    console.log('balance: ', balance);
+  };
 
   render() {
     const { myFiles = [] } = this.state;
@@ -102,7 +111,7 @@ class MyFiles extends React.Component {
             </React.Fragment>
           }
         />
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={(event) => this.view(1, event)}>
             View
         </Button>
         </ListItem> 
@@ -133,16 +142,13 @@ class MyFiles extends React.Component {
             </DialogActions>
         </Dialog>
 
-        <Button onClick={this.submit} color="primary">
-            My Files
-        </Button>
-
-    
         <List>
           {fileItems}
         </List>
 
-
+        <Button onClick={this.submit} color="primary">
+            My Files
+        </Button>
       </div>
     );
   }

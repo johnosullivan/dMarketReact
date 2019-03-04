@@ -112,6 +112,15 @@ dataProvider.getFilePublicDetails = async (address) => {
     });
 };
 
+dataProvider.getFileBalance = async (address) => {
+  return new Promise(function(resolve, reject) {
+    file.at(address).getBalance(async function(err, data) {
+      if (err) { reject(err); } else { resolve(data); }
+    });
+  });
+};
+
+
 dataProvider.addFile = async (file, details) => {
     return new Promise(async function(resolve, reject) {
       const reader = new FileReader();
