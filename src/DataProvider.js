@@ -120,6 +120,21 @@ dataProvider.getFileBalance = async (address) => {
   });
 };
 
+dataProvider.getData = async (address) => {
+  return new Promise(function(resolve, reject) {
+    file.at(address).getData(0, async function(err, result) {
+      if (err) { reject(err); } else { resolve(result); }
+    });
+  });
+};
+
+dataProvider.getAccessStatus = async (address) => {
+  return new Promise(function(resolve, reject) {
+    file.at(address).getAccessStatus(async function(err, result) {
+      if (err) { reject(err); } else { resolve(result); }
+    });
+  });
+};
 
 dataProvider.addFile = async (file, details) => {
     return new Promise(async function(resolve, reject) {
