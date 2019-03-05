@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 //import AddProduct from './AddProduct';
 import ipfsClient from 'ipfs-http-client';
 
-import abi from './abi.json';
-
 import Button from '@material-ui/core/Button';
 
 import List from '@material-ui/core/List';
@@ -83,11 +81,11 @@ class Body extends React.Component {
   constructor(props) {
     super(props);
 
-
+/*
     this.fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
     this.file = web3.eth.contract(abi.file);
     this.tempfile = {};
-
+*/
     this.getP();
   }
 
@@ -183,41 +181,7 @@ class Body extends React.Component {
   };
 
   testingIPFS = async () => {
-    console.log('testingIPFS');
-
-    const bytecode = '';
-
-    const {
-      fileHash,
-      hashDetails,
-      password
-    } = this.tempfile;
-
-    // Contract object
-    const contract = web3.eth.contract(abi['file']);
-
-    // Deploy contract instance
-    const contractInstance = contract.new('v1.0', fileHash, password, hashDetails, {
-      data: bytecode,
-      from: web3.eth.defaultAccount
-    }, (err, res) => {
-      if (err) {
-          console.log(err);
-          return;
-      }
-
-      console.log(res.transactionHash);
-
-      if (res.address) { console.log('Contract address: ' + res.address); }
-    });
-    /*
-    const data = {
-      'productName':'COMP 150 Study Guide',
-      'productTags':'Study Guide,PDF,LUC,COMP 150'
-    };
-    const results = await this.uploadDataIPFS(JSON.stringify(data));
-    console.log(results);
-    */
+   
   };
 
 

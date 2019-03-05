@@ -4,6 +4,8 @@ import randomstring from 'randomstring';
 import cryptojs from 'crypto-js';
 import axios from 'axios';
 
+import sabi from './static';
+
 const dataProvider = {};
 
 const web3 = new window.Web3(window.web3.currentProvider);
@@ -13,10 +15,16 @@ const IPFS_URL = 'https://ipfs.io';
 
 const fileContractManager = web3.eth.contract(FileContractManager.interface).at(FileContractManagerAddress);
 let fileManager;
+let token;
 
-fileContractManager.getContractAddress(web3.toHex("fileManager"), function(err, data) {
-  console.log('FileManager:', data);
-  fileManager = web3.eth.contract(FileManager.interface).at(data);
+fileContractManager.getContractAddress(web3.toHex("fileManager"), function(err, address) {
+  console.log('FileManager:', address);
+  fileManager = web3.eth.contract(FileManager.interface).at(address);
+});
+
+fileContractManager.getContractAddress(web3.toHex("token"), function(err, address) {
+  console.log('Token:', address);
+  token = web3.eth.contract(sabi.tokenABI).at(address);
 });
 
 const file = web3.eth.contract(File.interface);
@@ -56,6 +64,63 @@ dataProvider.transactionFile = (fileVersion, fileHash, password, hashDetails, pr
      if (res.address) { console.log('Contract address: ' + res.address); }
    });
 };
+
+dataProvider.transactionReceipt = (hash) => {
+  return new Promise(function(resolve, reject) {
+    dataProvider.waitForReceipt(hash, function(data) {
+      if (data) { resolve(data); } else { reject(data); }
+    });
+  });
+};
+
+dataProvider.waitForReceipt = (hash, cb) => {
+  web3.eth.getTransactionReceipt(hash, function (err, receipt) {
+    if (err) {
+      cb(null);
+    }
+    if (receipt !== null) {
+      if (cb) {
+        cb(receipt);
+      }
+    } else {
+      window.setTimeout(function () {
+        dataProvider.waitForReceipt(hash, cb);
+      }, 1000);
+    }
+  });
+}
+
+dataProvider.approve = (address, amount) => {
+  return new Promise(function(resolve, reject) {
+    token.approve(address, amount, function(err, data) {
+      if (err) { reject(err); } else { resolve(data); }
+    });
+  });
+}
+
+dataProvider.buy = (address) => {
+  return new Promise(function(resolve, reject) {
+    file.at(address).buy(web3.eth.defaultAccount, async function(err, result) {
+      if (err) { reject(err); } else { resolve(result); }
+    });
+  });
+}
+
+dataProvider.tokenPrice = (address) => {
+  return new Promise(function(resolve, reject) {
+    file.at(address).tokenPrice(async function(err, result) {
+      if (err) { reject(err); } else { resolve(result); }
+    });
+  });
+}
+
+dataProvider.bytesToHex = (bytes) => {
+  for (var hex = [], i = 0; i < bytes.length; i++) {
+      hex.push((bytes[i] >>> 4).toString(16));
+      hex.push((bytes[i] & 0xF).toString(16));
+  }
+  return hex.join("");
+}
 
 dataProvider.bytesToHex = (bytes) => {
     for (var hex = [], i = 0; i < bytes.length; i++) {

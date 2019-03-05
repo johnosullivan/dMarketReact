@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Body from './Body';
-import './App.css';
+import './styles/App.css';
 import Service from './UserService';
 
 class App extends Component {
