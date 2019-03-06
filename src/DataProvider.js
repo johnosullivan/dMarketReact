@@ -44,10 +44,10 @@ dataProvider.transactionFile = (fileVersion, fileHash, password, hashDetails, pr
    const contract = web3.eth.contract(File.interface);
 
    const contractInstance = contract.new(
-     FileContractManagerAddress, 
+     FileContractManagerAddress,
      fileVersion,
-     fileHash, 
-     password, 
+     fileHash,
+     password,
      hashDetails,
      price,
      {
@@ -257,7 +257,7 @@ dataProvider.getIPFS = async (hash) => {
       if (result.status == 200) {
         results = result.data;
       }
-    } catch (e) { 
+    } catch (e) {
       console.log(e);
     }
     return results;
