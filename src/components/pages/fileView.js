@@ -24,6 +24,10 @@ class FileView extends React.Component {
         cost: 0,
         isLoading: false,
         alertOpened: true,
+        approveHash: '',
+        approveDone: false,
+        buyHash: '',
+        buyDone: false
     }
 
     constructor(props) {
@@ -55,24 +59,26 @@ class FileView extends React.Component {
 
     buy = async () => {
         const { hasAccess, address, cost } = this.state;
-        if (!hasAccess) {
+        //if (!hasAccess) {
             try {
                 // Creates the approve for the token transfer
                 const hashApprove = await this.dataProvider.approve(address, cost);
                 // Starts the animation of the spinner
-                this.setState({ isLoading: true });
+                this.setState({ isLoading: true, approveHash: hashApprove, approveDone: false });
                 // Waits for the transaction to the completed
                 const receiptApprove = await this.dataProvider.transactionReceipt(hashApprove);
+                this.setState({ approveDone: true });
                 // Creates the buy hash for the file
                 const hashBuy = await this.dataProvider.buy(address);
+                this.setState({ buyHash: hashBuy, buyDone: false });
                 // Waits for the transaction to the completed
                 const receiptBuy = await this.dataProvider.transactionReceipt(hashBuy);
                 // Stops the animation of the spinner
-                this.setState({ isLoading: false });
+                this.setState({ isLoading: false, buyDone: false });
             } catch (e) {
                 console.error(e);
             }
-        }
+       //}
     }
 
     handleClose = () => {
@@ -80,7 +86,7 @@ class FileView extends React.Component {
     };
 
     render() {
-        const { hasAccess, isLoading, alertOpened, address } = this.state;
+        const { hasAccess, isLoading, alertOpened, address, approveHash, approveDone, buyHash, buyDone } = this.state;
 
 
         const classes = {
@@ -96,6 +102,17 @@ class FileView extends React.Component {
         if (hasAccess) {
             return (
                 <div>
+                    FileView View
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <br/>
+                    <Button variant="contained" color="secondary" onClick={this.buy}>
+                        Buy
+                    </Button>
+                    <br/>
                     <Dialog
           open={alertOpened}
           onClose={this.handleClose}
@@ -111,22 +128,28 @@ class FileView extends React.Component {
 
             <div className={classes.root}>
                 <Grid container spacing={24}>
-                    <Grid item xs={11}>
-                        <Typography color="textSecondary">
-                            <a href="">0x593689853d01b7940901571dd67ea6e2a0cf4121605494d47b2f7becc08fec1f</a>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                         <Done style={{ color: '#a0db8e' }}/>
-                    </Grid>
-                    <Grid item xs={11}>
-                        <Typography color="textSecondary">
-                            <a href="">0x30db2dffea3c9b70f1fa08ddc12fdff3d4828d2073ab29acc2da7395f0703763</a>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <CircularProgress size={14}/>
-                    </Grid>
+                    {approveHash != '' && 
+                        <Grid item xs={11}>
+                            <Typography color="textSecondary">
+                                <a href="">{approveHash}</a>
+                            </Typography>
+                        </Grid>}
+                    {approveHash != '' &&
+                        <Grid item xs={1}>
+                            {approveDone == true && <Done style={{ color: '#a0db8e' }}/>}
+                            {approveDone == false && <CircularProgress size={14}/>}
+                        </Grid>}
+                    {buyHash != '' &&
+                        <Grid item xs={11}>
+                            <Typography color="textSecondary">
+                                <a href="">{buyHash}</a>
+                            </Typography>
+                        </Grid>}
+                    {buyHash != '' &&
+                        <Grid item xs={1}>
+                            {buyDone == true && <Done style={{ color: '#a0db8e' }}/>}
+                            {buyDone == false && <CircularProgress size={14}/>}
+                        </Grid>}
                 </Grid>
             </div>
 
@@ -135,22 +158,11 @@ class FileView extends React.Component {
             <Button onClick={this.handleClose} color="primary">
                 Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.buy} color="primary">
                 Buy
             </Button>
           </DialogActions>
         </Dialog>
-                    FileView View
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <br/>
-                    <Button variant="contained" color="secondary" onClick={this.buy}>
-                        Buy
-                    </Button>
-                    <br/>
                     <br/>
                     {isLoading && <CircularProgress size={24}/>}
                 </div>
