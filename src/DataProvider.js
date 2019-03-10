@@ -59,6 +59,7 @@ dataProvider.transactionFile = (fileVersion, fileHash, password, hashDetails, pr
          return;
      }
 
+     console.log(contractInstance);
      console.log(res.transactionHash);
 
      if (res.address) { console.log('Contract address: ' + res.address); }
@@ -254,7 +255,7 @@ dataProvider.getIPFS = async (hash) => {
     try {
       const result = await axios.get(dataProvider.IPFS_URL + '/ipfs/' + hash);
       console.log(result);
-      if (result.status == 200) {
+      if (result.status === 200) {
         results = result.data;
       }
     } catch (e) {
@@ -262,6 +263,16 @@ dataProvider.getIPFS = async (hash) => {
     }
     return results;
 }
+
+dataProvider.getFile = async (details) => {
+    const fileData = await dataProvider.getIPFS(details[1]);
+    const decryptbytes  = cryptojs.AES.decrypt(fileData.toString('utf8'), details[2]);
+    const encoding = decryptbytes.toString(cryptojs.enc.Utf8);
+    const bytes = new Uint8Array(dataProvider.hexToBytes(encoding));
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const urlCreator = window.URL || window.webkitURL;
+    return urlCreator.createObjectURL(blob);
+};
 
 export default {
     dataProvider,
