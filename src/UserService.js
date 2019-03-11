@@ -2,7 +2,7 @@ import PubSub from 'pubsub-js';
 import * as actions from './store/dmarket/actions';
 import { store } from './store'
 import { Connect } from 'uport-connect';
-import Web3 from 'web3';
+//import Web3 from 'web3';
 
 const uport = new Connect('dMarket', {
     network: 'rinkeby'

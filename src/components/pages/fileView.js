@@ -19,6 +19,7 @@ import { Done } from '@material-ui/icons';
 import { Document, Page } from 'react-pdf';
 
 import { pdfjs } from 'react-pdf';
+import "react-pdf/dist/Page/AnnotationLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const deplay = ms => new Promise(res => setTimeout(res, ms))
@@ -57,6 +58,7 @@ class FileView extends React.Component {
     checkFileStatus = async (address) => {
         // Checks the access status of the metamask address
         const status = await this.dataProvider.getAccessStatus(address);
+        console.log('status:', status);
         if (status) {
             // Grabs the fileData
             const fileDetails = await this.dataProvider.getData(address);
@@ -88,11 +90,11 @@ class FileView extends React.Component {
                 this.setState({ isLoading: true, approveHash: hashApprove, approveDone: false });
                 // Waits for the transaction to the completed
                 const receiptApprove = await this.dataProvider.transactionReceipt(hashApprove);
-                this.setState({ approveDone: true });
+                this.setState({ approveDone: true, receiptApprove });
                 // Creates the buy hash for the file
                 const hashBuy = await this.dataProvider.buy(address);
                 this.setState({ buyHash: hashBuy, buyDone: false });
-                // Waits for the transaction to the completed
+                // Waits for the tvransaction to the completed
                 const receiptBuy = await this.dataProvider.transactionReceipt(hashBuy);
                 // Stops the animation of the spinner
                 this.setState({ isLoading: false, buyDone: true, waiting: true, receiptBuy });
@@ -123,6 +125,14 @@ class FileView extends React.Component {
         console.log(error);
     };
 
+    back = () => {
+        this.setState({ pageNumber: --this.state.pageNumber });
+    }
+    
+    forward = () => {
+        this.setState({ pageNumber: ++this.state.pageNumber });
+    }
+
     render() {
         const { pageNumber, numPages, hasAccess, alertOpened, approveHash, approveDone, buyHash, buyDone, waiting, file } = this.state;
 
@@ -138,9 +148,15 @@ class FileView extends React.Component {
                         file={file}
                         onLoadError={this.onDocumentError}
                         onLoadSuccess={this.onDocumentLoadSuccess}>
-                        <Page pageNumber={pageNumber} />
+                        <Page pageNumber={pageNumber} width={600} scale={1.0}/>
                     </Document>
                     <p>Page {pageNumber} of {numPages}</p>
+                    <Button onClick={this.back} color="primary">
+                            Back
+                    </Button>
+                    <Button onClick={this.forward} color="primary">
+                            Forward
+                    </Button>
                 </div>
             );
         } else {
@@ -166,7 +182,7 @@ class FileView extends React.Component {
                                 {approveHash !== '' && 
                                     <Grid item xs={11}>
                                         <Typography color="textSecondary">
-                                            <a href="">{approveHash}</a>
+                                            <a href="approveHash">{approveHash}</a>
                                         </Typography>
                                     </Grid>}
                                 {approveHash !== '' &&
@@ -177,7 +193,7 @@ class FileView extends React.Component {
                                 {buyHash !== '' &&
                                     <Grid item xs={11}>
                                         <Typography color="textSecondary">
-                                            <a href="">{buyHash}</a>
+                                            <a href="buyHash">{buyHash}</a>
                                         </Typography>
                                     </Grid>}
                                 {buyHash !== '' &&

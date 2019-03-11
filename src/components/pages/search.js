@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 class Search extends React.Component {
 
-  constructor(props) {
+  /*constructor(props) {
     super(props);
-  }
+  }*/
 
   render() {
     return (

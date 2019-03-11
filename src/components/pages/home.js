@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 class Home extends React.Component {
 
-  constructor(props) {
+  /*constructor(props) {
     super(props);
 
-  }
+  }*/
 
   render() {
     return (
