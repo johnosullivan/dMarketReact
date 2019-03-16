@@ -1,33 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux';
-
 import Button from '@material-ui/core/Button';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-
 import TextField from '@material-ui/core/TextField';
-
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-
 import Typography from '@material-ui/core/Typography';
- 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
@@ -40,19 +31,6 @@ import {
 
 const Box = require('3box');
 
-/*
-Box.openBox('0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9', window.web3.currentProvider).then(async box => {
-  // interact with 3Box data
-  console.log('box: ', box);
-  await box.public.remove('name')
-  await box.public.set("firstName", "John");
-  await box.public.set("lastName", "O'Sullivan");
-  await box.public.set("email", "jnosullivan@icloud.com");
-  await box.public.set("photo", "QmR5ky9Tc1okum6YgxBTYNwMDGfQTFx3ZvinS9Gmr15a7G");
-})
-*/
-
-//0x59411045D41B538AfF6685B34c4F2654FA773e3A 0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9
 class Body extends React.Component {
 
   state = {
@@ -77,17 +55,11 @@ class Body extends React.Component {
   constructor(props) {
     super(props);
 
-/*
-    this.fileManager = web3.eth.contract(abi.filemanager).at('0x97d6ad12e0a15156fbe5f59d2c67a7ebd8ae7f4e');
-    this.file = web3.eth.contract(abi.file);
-    this.tempfile = {};
-*/
-    this.getP();
   }
 
   getP = async () => {
     try {
-      const profile = await Box.getProfile('0x8ca34635eB1DC9AA9bDbF274D8DeAA85Cf1cB2b9');
+      const profile = await Box.getProfile('0x52B865600655DCbe5f72cc41304dA5F152C1d4a6');
       console.log(profile);
 
       this.setState({ profile });
