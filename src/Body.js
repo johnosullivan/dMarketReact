@@ -21,6 +21,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import Providers from './DataProvider';
 
 import { 
   HomePage,
@@ -31,54 +32,73 @@ import {
 
 const Box = require('3box');
 
+const web3 = new window.Web3(window.web3.currentProvider);
+
 class Body extends React.Component {
 
   state = {
-    numPages: null,
-    pageNumber: 1,
-    file: '',
-    version: '',
-    price: '',
-    description: '',
-    name:'',
-    author: '',
-    acontract: '',
     left: false,
-    profile: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      photo: ''
-    }
+    email: '',
+    firstName: '',
+    lastName: '',
+    photo: '',
+    boxDialog: false
   }
 
   constructor(props) {
     super(props);
 
+    this.dataProvider = Providers.dataProvider;
+
+    this.checkProfile();
   }
 
-  getP = async () => {
-    try {
-      const profile = await Box.getProfile('0x52B865600655DCbe5f72cc41304dA5F152C1d4a6');
-      console.log(profile);
+  getWeb3Account = async () => {
+    return new Promise(function(resolve, reject) {
+      web3.eth.getAccounts(async function(err, accounts) {
+        if (err) { reject(err); } else { resolve(accounts[0]); }
+      });
+    });
+  }
 
-      this.setState({ profile });
+  checkProfile = async () => {
+    const account = await this.getWeb3Account();
+    try {
+      const profile = await Box.getProfile(account);
+      if (profile.status) {
+        this.setState({ boxDialog: true });
+      } else {
+        this.setState({ boxDialog: false, profile });
+      }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
  
   toggleDrawer = (side, open) => () => {
-    this.setState({
-      [side]: open,
-    });
+    this.setState({ [side]: open, });
+  };
+
+  uploadPicPro = (files) => {
+    const reader = new FileReader();
+    let self = this;
+    reader.onload = async function() {
+        const rawData = new Uint8Array(reader.result);
+        const hashObject = await self.dataProvider.uploadDataIPFS(rawData);
+        const photo = hashObject['hash'];
+        self.setState({ photo }); 
+    }
+    reader.readAsArrayBuffer(files[0]);
   };
 
   render() {
     console.log('state: ', this.state);
 
-    const { profile } = this.state;
+    const { firstName, lastName, email, photo, boxDialog } = this.state;
 
     const style = {
       outline: 'none'
@@ -118,15 +138,15 @@ class Body extends React.Component {
 
                 <Grid container spacing={16}>
                   <Grid item>
-                    <Avatar alt="" src={'https://ipfs.io/ipfs/' + profile.photo}/>
+                    <Avatar alt="" src={'https://ipfs.io/ipfs/' + photo}/>
                   </Grid>
                   <Grid item xs={12} sm container>
                     <Grid item xs container direction="column" spacing={16}>
                       <Grid item xs>
                         <Typography gutterBottom variant="subtitle1">
-                          {profile['firstName'] + " " + profile['lastName']}
+                          {firstName + " " + lastName}
                         </Typography>
-                        <Typography gutterBottom>{profile['email']}</Typography>
+                        <Typography gutterBottom>{email}</Typography>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -154,7 +174,7 @@ class Body extends React.Component {
 
 
 
-          <Dialog open={false} aria-labelledby="welcomd-dialog-title">
+          <Dialog open={boxDialog} aria-labelledby="welcomd-dialog-title">
               <DialogTitle id="welcomd-dialog-title">Welcome to dMarket</DialogTitle>
 
               <DialogContent>
@@ -165,24 +185,24 @@ class Body extends React.Component {
                 <TextField
                 id="firstName"
                 label="First Name"
-                defaultValue=""
+                alue={this.state.firstName} onChange={this.handleChange('firstName')}
                 margin="dense"
                 fullWidth/>
                 <TextField
                 id="lastName"
                 label="Last Name"
-                defaultValue=""
+                alue={this.state.lastName} onChange={this.handleChange('lastName')}
                 margin="dense"
                 fullWidth/>
                 <TextField
                 id="email"
                 label="Email"
-                defaultValue=""
+                alue={this.state.email} onChange={this.handleChange('email')}
                 margin="dense"
                 fullWidth/>
               </div>
               <br/>
-              <input type="file" onChange={ (e) => this.z(e.target.files) } />
+              <input type="file" onChange={ (e) => this.uploadPicPro(e.target.files) } />
 
           </DialogContent>
 
