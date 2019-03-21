@@ -20,6 +20,9 @@ import { Document, Page } from 'react-pdf';
 
 import { pdfjs } from 'react-pdf';
 import "react-pdf/dist/Page/AnnotationLayer.css";
+
+import PubSub from 'pubsub-js';
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const deplay = ms => new Promise(res => setTimeout(res, ms))
@@ -54,6 +57,10 @@ class FileView extends React.Component {
             console.error(e);
         }
     }
+
+    componentWillMount() {
+        PubSub.publish('SET_TITLE', 'File');
+      }
 
     checkFileStatus = async (address) => {
         // Checks the access status of the metamask address

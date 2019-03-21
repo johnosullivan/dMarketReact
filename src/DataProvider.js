@@ -8,7 +8,7 @@ import sabi from './static';
 
 const dataProvider = {};
 
-const web3 = new window.Web3(window.web3.currentProvider);
+const web3 = new window.Web3(window.ethereum);
 
 const FileContractManagerAddress = "0xb0f18a0835f2f7bc8c57e17a013f37b9880c5d79";
 const IPFS_URL = 'https://ipfs.io';

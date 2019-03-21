@@ -19,6 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Typography from '@material-ui/core/Typography';
 
+import PubSub from 'pubsub-js';
 
 class MyFiles extends React.Component {
 
@@ -40,6 +41,12 @@ class MyFiles extends React.Component {
 
     this.dataProvider = Providers.dataProvider;
     console.log(this.dataProvider);
+
+    this.submit();
+  }
+
+  componentWillMount() {
+    PubSub.publish('SET_TITLE', 'My Files');
   }
 
   submit = () => {
@@ -82,19 +89,26 @@ class MyFiles extends React.Component {
   };
 
   view = async (index, event) => {
-    console.log('view index:', index);
+    /*console.log('view index:', index);
     console.log(this.state);
     const { myFiles = [] } = this.state;
     const file = myFiles[index - 1];
     console.log(file);
     const balance = await this.dataProvider.getFileBalance(file.address);
-    console.log('balance: ', balance);
+    console.log('balance: ', balance);*/
+
+    const { myFiles = [] } = this.state;
+    const file = myFiles[index - 1];
+    this.props.history.push('/file/' + file.address)
+
   };
 
   render() {
     const { myFiles = [] } = this.state;
 
     console.log(myFiles);
+
+    console.log(this.props);
 
     const fileItems = myFiles.map((file, i) =>
         <ListItem key={i} style={{

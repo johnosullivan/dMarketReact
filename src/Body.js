@@ -19,9 +19,10 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Providers from './DataProvider';
+import PubSub from 'pubsub-js'
 
 import { 
   HomePage,
@@ -34,6 +35,13 @@ const Box = require('3box');
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
+/*
+Box.openBox('0xec578f71649a1f65F20Fd335B03aC6cEd41Bc46A', window.web3.currentProvider).then(box => {
+  // interact with 3Box data
+  console.log(box);
+})*/
+
+
 class Body extends React.Component {
 
   state = {
@@ -42,7 +50,14 @@ class Body extends React.Component {
     firstName: '',
     lastName: '',
     photo: '',
-    boxDialog: false
+    boxDialog: false,
+    profile: {
+      email: '',
+      firstName: '',
+      lastName: '',
+      photo: ''
+    },
+    navBarTitle: 'dMarket'
   }
 
   constructor(props) {
@@ -51,6 +66,10 @@ class Body extends React.Component {
     this.dataProvider = Providers.dataProvider;
 
     this.checkProfile();
+
+    this.titlePubSub = PubSub.subscribe('SET_TITLE', (msg, navBarTitle) => {
+      this.setState({ navBarTitle });
+    });
   }
 
   getWeb3Account = async () => {
@@ -65,11 +84,13 @@ class Body extends React.Component {
     const account = await this.getWeb3Account();
     try {
       const profile = await Box.getProfile(account);
-      if (profile.status) {
+      console.log(profile);
+      /*if (profile.status) {
         this.setState({ boxDialog: true });
       } else {
         this.setState({ boxDialog: true, profile });
-      }
+      }*/
+      this.setState({ boxDialog: false, profile });
     } catch (err) {
       console.log(err);
     }
@@ -88,25 +109,11 @@ class Body extends React.Component {
 
     const account = await this.getWeb3Account();
 
-    const box = await Box.openBox(account, window.ethereum);
-
+    const box = await Box.openBox(window.ethereum.selectedAddress, window.ethereum, {});
     console.log(box);
+    
+    await box.public.set('email', 'jnosullivan@icloud.com');
 
-    box.onSyncDone(function() {
-      console.log('done sync');
-      box.public.set("firstName", firstName);
-    });
-
-    //await box.public.set("firstName", firstName);
-
-    /*
-    Box.openBox(account, window.ethereum).then(box => {    
-      console.log(box);
-      box.public.set("firstName", firstName);
-      box.public.set("lastName", lastName);
-      box.public.set("email", email);
-      box.public.set("photo", photo);
-    })*/
   };
 
   uploadPicPro = (files) => {
@@ -124,10 +131,12 @@ class Body extends React.Component {
   render() {
     console.log('state: ', this.state);
 
-    const { firstName, lastName, email, photo, boxDialog } = this.state;
+    const { profile, boxDialog, navBarTitle } = this.state;
 
     const style = {
-      outline: 'none'
+      outline: 'none',
+      marginLeft: -12,
+      marginRight: 20
     };
 
     return (
@@ -138,8 +147,9 @@ class Body extends React.Component {
             <IconButton color="inherit" aria-label="Menu" style={style} onClick={this.toggleDrawer('left', true)}>
               <MenuIcon />
             </IconButton>
-
-
+            <Typography variant="h6" color="inherit" noWrap>
+              {navBarTitle}
+            </Typography>
             </Toolbar>
           </AppBar>
 
@@ -164,15 +174,15 @@ class Body extends React.Component {
 
                 <Grid container spacing={16}>
                   <Grid item>
-                    <Avatar alt="" src={'https://ipfs.io/ipfs/' + photo}/>
+                    <Avatar alt="" src={'https://ipfs.io/ipfs/' + profile['photo']}/>
                   </Grid>
                   <Grid item xs={12} sm container>
                     <Grid item xs container direction="column" spacing={16}>
                       <Grid item xs>
                         <Typography gutterBottom variant="subtitle1">
-                          {firstName + " " + lastName}
+                          {profile['firstName'] + " " + profile['lastName']}
                         </Typography>
-                        <Typography gutterBottom>{email}</Typography>
+                        <Typography gutterBottom>{profile['email']}</Typography>
                       </Grid>
                     </Grid>
                   </Grid>
