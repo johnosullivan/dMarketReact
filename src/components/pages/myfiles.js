@@ -21,6 +21,19 @@ import Typography from '@material-ui/core/Typography';
 
 import PubSub from 'pubsub-js';
 
+import SwipeableViews from 'react-swipeable-views';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+function TabContainer({ children, dir }) {
+  return (
+    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+      {children}
+    </Typography>
+  );
+};
+
 class MyFiles extends React.Component {
 
   state = {
@@ -32,7 +45,8 @@ class MyFiles extends React.Component {
     price: '',
     file: [],
     isAdding: false,
-    myFiles: []
+    myFiles: [],
+    tabValue: 0
   };
 
   constructor(props) {
@@ -42,11 +56,11 @@ class MyFiles extends React.Component {
     this.dataProvider = Providers.dataProvider;
     console.log(this.dataProvider);
 
-    this.submit();
+    //this.submit();
   }
 
   componentWillMount() {
-    PubSub.publish('SET_TITLE', 'My Files');
+    PubSub.publish('SET_TITLE', 'Files');
   }
 
   submit = () => {
@@ -103,6 +117,14 @@ class MyFiles extends React.Component {
 
   };
 
+  handleChangeIndex = index => {
+    this.setState({ 'tabValue': index });
+  };
+
+  handleChangeTwo = (event, value) => {
+    this.setState({ 'tabValue':value });
+  };
+
   render() {
     const { myFiles = [] } = this.state;
 
@@ -154,6 +176,30 @@ class MyFiles extends React.Component {
                 </Button>
             </DialogActions>
         </Dialog>
+
+        <div className={{
+          width: 500
+        }}>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={this.state.tabValue}
+            onChange={this.handleChangeTwo}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth">
+
+            <Tab style={{ outline: 'none' }} label="Purchased Documents" />
+            <Tab style={{ outline: 'none' }} label="My Documents" />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+            axis='x'
+            index={this.state.tabValue}
+            onChangeIndex={this.handleChangeIndex}>
+            <TabContainer dir='x'>Item One</TabContainer>
+            <TabContainer dir='x'>Item Two</TabContainer>
+        </SwipeableViews>
+      </div>
 
         <List>
           {fileItems}

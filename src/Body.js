@@ -195,9 +195,9 @@ class Body extends React.Component {
                       <ListItemText primary="Search"/>
                     </ListItem>
                   </Link>
-                  <Link to="/myfiles">
-                    <ListItem button key="myfiles">
-                      <ListItemText primary="My Files"/>
+                  <Link to="/files">
+                    <ListItem button key="c">
+                      <ListItemText primary="Files"/>
                     </ListItem>
                   </Link>
                 </List>
@@ -258,7 +258,7 @@ class Body extends React.Component {
           
           <Route exact path="/" component={HomePage}/>
           <Route path="/search" component={SearchPage}/> 
-          <Route path="/myfiles" component={MyFilesPage}/>  
+          <Route path="/files" component={MyFilesPage}/>  
           <Route path="/file/:address" component={FileView}/>  
         </div>
         </Router>
