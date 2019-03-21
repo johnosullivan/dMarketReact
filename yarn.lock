@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"3box@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/3box/-/3box-1.4.0.tgz#1048edab90da819878461898f94fccafe7ba2929"
-  integrity sha512-NbwwRQBrd+2fjFMNB6r+y+t+V+vAbRGo7PfEy6itgVi6MR2UfaCcs2peWpGJdm2mQR443l2G1uQcOeojXEnDWA==
+"3box@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/3box/-/3box-1.5.1.tgz#870e83befacc057ec653226f650a9935655fe6e9"
+  integrity sha512-bxpmPrbYWpsqZaHCvDRGFRBCSCzFkvO2V3WiFGMZF8VbfxR1WEGoJPf0RZQnTUszunPdIsVWLX1q1RQGhmkPPA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     did-jwt "^0.1.1"
@@ -1891,7 +1891,7 @@ async-eventemitter@^0.2.2, async-eventemitter@^0.2.4:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
@@ -18127,7 +18127,7 @@ web3-net@1.0.0-beta.48:
     web3-providers "1.0.0-beta.48"
     web3-utils "1.0.0-beta.48"
 
-"web3-provider-engine@github:makerdao/provider-engine#kovan-fix-dist":
+web3-provider-engine@makerdao/provider-engine#kovan-fix-dist:
   version "14.0.4"
   resolved "https://codeload.github.com/makerdao/provider-engine/tar.gz/7c4b187809f156409473246de15dc595e1fe3356"
   dependencies:

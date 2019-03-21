@@ -68,7 +68,7 @@ class Body extends React.Component {
       if (profile.status) {
         this.setState({ boxDialog: true });
       } else {
-        this.setState({ boxDialog: false, profile });
+        this.setState({ boxDialog: true, profile });
       }
     } catch (err) {
       console.log(err);
@@ -81,6 +81,32 @@ class Body extends React.Component {
  
   toggleDrawer = (side, open) => () => {
     this.setState({ [side]: open, });
+  };
+
+  doneProfile = async () => {
+    const { firstName, lastName, email, photo } = this.state;
+
+    const account = await this.getWeb3Account();
+
+    const box = await Box.openBox(account, window.ethereum);
+
+    console.log(box);
+
+    box.onSyncDone(function() {
+      console.log('done sync');
+      box.public.set("firstName", firstName);
+    });
+
+    //await box.public.set("firstName", firstName);
+
+    /*
+    Box.openBox(account, window.ethereum).then(box => {    
+      console.log(box);
+      box.public.set("firstName", firstName);
+      box.public.set("lastName", lastName);
+      box.public.set("email", email);
+      box.public.set("photo", photo);
+    })*/
   };
 
   uploadPicPro = (files) => {
@@ -207,7 +233,7 @@ class Body extends React.Component {
           </DialogContent>
 
               <DialogActions>
-                <Button  color="primary">
+                <Button color="primary" onClick={this.doneProfile}>
                   Done
                 </Button>
               </DialogActions>
