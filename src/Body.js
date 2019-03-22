@@ -142,7 +142,7 @@ class Body extends React.Component {
     return (
       <Router>
         <div>
-          <AppBar position="static">
+          <AppBar position="fixed">
             <Toolbar>
             <IconButton color="inherit" aria-label="Menu" style={style} onClick={this.toggleDrawer('left', true)}>
               <MenuIcon />
@@ -255,11 +255,12 @@ class Body extends React.Component {
 
 
 
-          
+          <div style= {{ 'paddingTop': '64px'}}>
           <Route exact path="/" component={HomePage}/>
           <Route path="/search" component={SearchPage}/> 
           <Route path="/files" component={MyFilesPage}/>  
           <Route path="/file/:address" component={FileView}/>  
+          </div>
         </div>
         </Router>
     );

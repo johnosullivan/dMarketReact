@@ -28,8 +28,18 @@ import Tab from '@material-ui/core/Tab';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { withStyles } from '@material-ui/core/styles';
 
+import Slide from '@material-ui/core/Slide';
+
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class MyFiles extends React.Component {
 
@@ -43,29 +53,38 @@ class MyFiles extends React.Component {
     file: [],
     isAdding: false,
     myFiles: [],
+    boughtFiles: [],
     tabValue: 0
   };
 
   constructor(props) {
     super(props);
 
-
     this.dataProvider = Providers.dataProvider;
-    console.log(this.dataProvider);
-
-    this.submit();
   }
 
   componentWillMount() {
     PubSub.publish('SET_TITLE', 'Files');
+    this.loadFiles();
   }
 
-  submit = () => {
+  loadFiles = () => {
     let self = this;
-    this.dataProvider.myFiles().then(async function(data) {
-        const s = await self.dataProvider.getFilePublicDetails(data[0]);
-        s['address'] = data[0];
-        self.setState({ myFiles: [s] });
+    this.dataProvider.getMyFiles().then(async function(data) {
+      let myFiles = [];
+      for (let address of data) {
+        const res = await self.dataProvider.getFilePublicDetails(address);
+        myFiles.push({ address, owner: res.owner, ... res.data });
+      }
+      self.setState({ myFiles });
+    });
+    this.dataProvider.getBoughtFiles().then(async function(data) {
+      let boughtFiles = [];
+      for (let address of data) {
+        const res = await self.dataProvider.getFilePublicDetails(address);
+        boughtFiles.push({ address, owner: res.owner, ... res.data });
+      }
+      self.setState({ boughtFiles });
     });
   }
 
@@ -97,6 +116,8 @@ class MyFiles extends React.Component {
     console.log(this.state);
 
     this.dataProvider.transactionFile(version, fileHash, password, hashDetails, np);
+    
+   this.setState({ isAdding: false });
   };
 
   view = async (index, event) => {
@@ -122,19 +143,25 @@ class MyFiles extends React.Component {
     this.setState({ 'tabValue':value });
   };
 
+  addFile = () => {
+    console.log('add file');
+    this.setState({ isAdding: true });
+  };
+
+  handleChangeCancelAdd = (event, value) => {
+    this.setState({ isAdding: false });
+  };
+
   render() {
-    const { myFiles = [] } = this.state;
+    const { myFiles = [], boughtFiles = [] } = this.state;
+    console.log(this.state);
 
-    console.log(myFiles);
-
-    console.log(this.props);
-
-    const fileItems = myFiles.map((file, i) =>
+    const myItems = myFiles.map((file, i) =>
         <ListItem key={i} style={{
             backgroundColor:'white'
         }}>
         <ListItemText
-          primary={file.title + ' - ' + file.price + ' dPUB'}
+          primary={file.title + ' - ' + file.price + ' dPUB - ' + file.address}
           secondary={
             <React.Fragment>
               <Typography component="span" color="textPrimary">
@@ -144,14 +171,34 @@ class MyFiles extends React.Component {
           }
         />
         <Button variant="contained" color="secondary" onClick={(event) => this.view(1, event)}>
-            View
+            Open
+        </Button>
+        </ListItem> 
+    );
+
+    const boughtItems = boughtFiles.map((file, i) =>
+        <ListItem key={i} style={{
+            backgroundColor:'white'
+        }}>
+        <ListItemText
+          primary={file.title + ' - ' + file.price + ' dPUB Created By: ' + file.owner }
+          secondary={
+            <React.Fragment>
+              <Typography component="span" color="textPrimary">
+                {file.description}
+              </Typography>
+            </React.Fragment>
+          }
+        />
+        <Button variant="contained" color="secondary" onClick={(event) => this.view(1, event)}>
+            Open
         </Button>
         </ListItem> 
     );
 
     return (
       <div>
-        <Dialog open={this.state.isAdding} aria-labelledby="welcomd-dialog-title">
+        <Dialog fullScreen open={this.state.isAdding} aria-labelledby="welcomd-dialog-title" TransitionComponent={Transition}>
             <DialogTitle id="welcomd-dialog-title">Add File</DialogTitle>
             <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
@@ -164,12 +211,16 @@ class MyFiles extends React.Component {
                 <TextField value={this.state.description} onChange={this.handleChange('description')} id="description" label="Description" margin="dense" variant="outlined" multiline rowsMax="4" fullWidth/>
                 <TextField value={this.state.price} onChange={this.handleChange('price')} id="price" label="Price (dPUB)" margin="dense" variant="outlined" fullWidth/>           
             </div>
-            <br/>
+            <br/> 
+
             <input type="file" onChange={ (e) => this.setState({ file: e.target.files }) } />
             </DialogContent>
             <DialogActions>
                 <Button onClick={this.handleSubmit} color="primary">
                   Add File
+                </Button>
+                <Button onClick={this.handleChangeCancelAdd} color="primary">
+                  Cancel
                 </Button>
             </DialogActions>
         </Dialog>
@@ -177,7 +228,10 @@ class MyFiles extends React.Component {
         <div className={{
           width: 500
         }}>
-        <AppBar position="static" color="default">
+        <AppBar color="default" style={{
+    top: 'auto',
+    bottom: 0,
+  }}>
           <Tabs
             value={this.state.tabValue}
             onChange={this.handleChangeTwo}
@@ -194,11 +248,13 @@ class MyFiles extends React.Component {
             index={this.state.tabValue}
             onChangeIndex={this.handleChangeIndex}>
             <div>
-           
+            <List>
+              {boughtItems}
+            </List>
             </div>
             <div>
             <List>
-              {fileItems}
+              {myItems}
             </List>
             </div>
         </SwipeableViews>
@@ -206,12 +262,12 @@ class MyFiles extends React.Component {
 
         {this.state.tabValue == 1 && <Fab style={{
           position: 'absolute' ,
-          bottom: '10px',
-          right: '10px'
-        }} color='secondary'>
+          bottom: '65px',
+          right: '10px',
+          outline: 'none'
+        }} color='secondary' onClick={this.addFile}>
           <AddIcon />
         </Fab>}
-        
       </div>
     );
   }

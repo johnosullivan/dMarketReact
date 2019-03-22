@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity >=0.4.22 <0.6.0;
 
 import "Owned.sol";
 import "Interfaces.sol";
@@ -73,6 +73,7 @@ contract File is Owned {
     ) public {
         require(token.transferFrom(msg.sender, address(this), tokenPrice));
         hasAccess[buyer] = true;
+        fileManager.addBoughtFile(address(this), msg.sender);
     }
 
     // Default external paying
@@ -136,9 +137,9 @@ contract File is Owned {
 
     // Get the public details of the document
     function getPublicDetails() view public returns (
-        string memory details
+        string memory details, address fileOwner
     ) {
-        return (filePublicDetails);
+        return (filePublicDetails, owner);
     }
 
     // Gets the data to decrpyt using the index

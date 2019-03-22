@@ -29,6 +29,11 @@ contract FileManager is Owned {
         require(value == msg.sender);
         files[sender].push(value);
     }
+    
+    function addBoughtFile(address value, address buyer) public {
+        require(value == msg.sender);
+        boughtFiles[buyer].push(value);
+    }
 
     function getMyFilesCount() public view returns (uint256) {
         return files[msg.sender].length;
@@ -36,6 +41,10 @@ contract FileManager is Owned {
     
     function getMyFiles() public view returns (address[] memory) {
         return files[msg.sender];
+    }
+    
+    function getBoughtFiles() public view returns (address[] memory) {
+        return boughtFiles[msg.sender];
     }
 
     function getMyFilesAt(uint256 index) public view returns (address file) {

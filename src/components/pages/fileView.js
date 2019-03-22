@@ -50,21 +50,27 @@ class FileView extends React.Component {
 
         this.dataProvider = Providers.dataProvider;
 
-        try {
+       /* try {
             const { params: { address } } = this.props.match;
             this.checkFileStatus(address);
         } catch (e) {
             console.error(e);
-        }
+        } */
     }
 
     componentWillMount() {
         PubSub.publish('SET_TITLE', 'File');
-      }
+    }
+
+    test = () => {
+        const { params: { address } } = this.props.match;
+            this.checkFileStatus(address);
+    };
 
     checkFileStatus = async (address) => {
         // Checks the access status of the metamask address
         const status = await this.dataProvider.getAccessStatus(address);
+        //const status = false;
         console.log('status:', status);
         if (status) {
             // Grabs the fileData
@@ -150,19 +156,23 @@ class FileView extends React.Component {
 
         if (hasAccess) {
             return (
-                <div>
+                <div style={{
+                    'margin-left': 'auto',
+                    'margin-right': 'auto',
+                    'display': 'flex',
+                    'justify-content': 'center',
+                }}>
+                <Button onClick={this.back} color="primary">
+                            B
+                    </Button>
                     <Document
                         file={file}
                         onLoadError={this.onDocumentError}
                         onLoadSuccess={this.onDocumentLoadSuccess}>
-                        <Page pageNumber={pageNumber} width={600} scale={1.0}/>
+                        <Page pageNumber={pageNumber} width={600} scale={2.0}/>
                     </Document>
-                    <p>Page {pageNumber} of {numPages}</p>
-                    <Button onClick={this.back} color="primary">
-                            Back
-                    </Button>
                     <Button onClick={this.forward} color="primary">
-                            Forward
+                            F
                     </Button>
                 </div>
             );
@@ -229,6 +239,10 @@ class FileView extends React.Component {
                     </DialogActions>
                     </Dialog>
                     <br/>
+
+                    <Button onClick={this.test} color="primary">
+                            Load
+                        </Button>
                 </div>
             );
         }

@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PubSub from 'pubsub-js'
+import PubSub from 'pubsub-js';
 
 class Search extends React.Component {
 
-  /*constructor(props) {
+  constructor(props) {
     super(props);
-  }*/
+  }
 
   componentWillMount() {
-    console.log('');
     PubSub.publish('SET_TITLE', 'Search');
   }
 

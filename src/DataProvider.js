@@ -10,7 +10,7 @@ const dataProvider = {};
 
 const web3 = new window.Web3(window.ethereum);
 
-const FileContractManagerAddress = "0xb0f18a0835f2f7bc8c57e17a013f37b9880c5d79";
+const FileContractManagerAddress = "0x62e7e1f1f563fe79f5e91fff066bd2f23704d326";
 const IPFS_URL = 'https://ipfs.io';
 
 const fileContractManager = web3.eth.contract(FileContractManager.interface).at(FileContractManagerAddress);
@@ -31,14 +31,6 @@ const file = web3.eth.contract(File.interface);
 
 dataProvider.FileContractManagerAddress = FileContractManagerAddress;
 dataProvider.IPFS_URL = IPFS_URL;
-
-dataProvider.myFiles = () => {
-  return new Promise(function(resolve, reject) {
-    fileManager.getMyFiles(function(err, data) {
-      if (err) { reject(err); } else { resolve(data); }
-    });
-  });
-}
 
 dataProvider.transactionFile = (fileVersion, fileHash, password, hashDetails, price) => {
    const contract = web3.eth.contract(File.interface);
@@ -154,26 +146,26 @@ dataProvider.getMyFilesAt = async (index) => {
 };
 
 dataProvider.getMyFiles = async () => {
-    const myFilesCount = await dataProvider.getMyFilesCount();
-    let myFiles = [];
-
-    for (const index of Array(myFilesCount).keys()) {
-      const fileAddress = await dataProvider.getMyFilesAt(index);
-      const filePublicDetails = await dataProvider.getFilePublicDetails(fileAddress);
-      myFiles.push({
-        fileAddress,
-        filePublicDetails
+    return new Promise(function(resolve, reject) {
+      fileManager.getMyFiles(function(err, data) {
+        if (err) { reject(err); } else { resolve(data); }
       });
-    }
+    });
+};
 
-    return myFiles;
+dataProvider.getBoughtFiles = async () => {
+  return new Promise(function(resolve, reject) {
+    fileManager.getBoughtFiles(function(err, data) {
+      if (err) { reject(err); } else { resolve(data); }
+    });
+  });
 };
 
 dataProvider.getFilePublicDetails = async (address) => {
     return new Promise(function(resolve, reject) {
       file.at(address).getPublicDetails(async function(err, data) {
-        const dataFromHash = await dataProvider.getIPFS(data);
-        if (err) { reject(err); } else { resolve(dataFromHash); }
+        const dataFromHash = await dataProvider.getIPFS(data[0]);
+        if (err) { reject(err); } else { resolve({ data: dataFromHash, owner: data[1] }); }
       });
     });
 };
