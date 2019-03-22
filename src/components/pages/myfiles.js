@@ -26,13 +26,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-function TabContainer({ children, dir }) {
-  return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
-};
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { withStyles } from '@material-ui/core/styles';
+
 
 class MyFiles extends React.Component {
 
@@ -56,7 +53,7 @@ class MyFiles extends React.Component {
     this.dataProvider = Providers.dataProvider;
     console.log(this.dataProvider);
 
-    //this.submit();
+    this.submit();
   }
 
   componentWillMount() {
@@ -196,18 +193,25 @@ class MyFiles extends React.Component {
             axis='x'
             index={this.state.tabValue}
             onChangeIndex={this.handleChangeIndex}>
-            <TabContainer dir='x'>Item One</TabContainer>
-            <TabContainer dir='x'>Item Two</TabContainer>
+            <div>
+           
+            </div>
+            <div>
+            <List>
+              {fileItems}
+            </List>
+            </div>
         </SwipeableViews>
       </div>
 
-        <List>
-          {fileItems}
-        </List>
-
-        <Button onClick={this.submit} color="primary">
-            My Files
-        </Button>
+        {this.state.tabValue == 1 && <Fab style={{
+          position: 'absolute' ,
+          bottom: '10px',
+          right: '10px'
+        }} color='secondary'>
+          <AddIcon />
+        </Fab>}
+        
       </div>
     );
   }
