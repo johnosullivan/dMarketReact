@@ -24,7 +24,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Providers from './DataProvider';
 import PubSub from 'pubsub-js'
 
-import { 
+import {
   HomePage,
   SearchPage,
   MyFilesPage,
@@ -36,11 +36,10 @@ const Box = require('3box');
 const web3 = new window.Web3(window.web3.currentProvider);
 
 /*
-Box.openBox('0xec578f71649a1f65F20Fd335B03aC6cEd41Bc46A', window.web3.currentProvider).then(box => {
-  // interact with 3Box data
+Box.openBox('0xe4c20a3feea37115caa1d236a9f1444bd33b38b1', window.ethereum).then(box => {
   console.log(box);
-})*/
-
+})
+*/
 
 class Body extends React.Component {
 
@@ -83,14 +82,21 @@ class Body extends React.Component {
   checkProfile = async () => {
     const account = await this.getWeb3Account();
     try {
-      const profile = await Box.getProfile(account);
-      console.log(profile);
-      /*if (profile.status) {
-        this.setState({ boxDialog: true });
+      const data = await Box.getProfile(account);
+      if (data) {
+        if (Object.keys(data).length) {
+          if (data.profile) {
+            console.log(data.profile);
+            this.setState({ boxDialog: false, profile: data.profile });
+          } else {
+            this.setState({ boxDialog: true });
+          }
+        } else {
+          this.setState({ boxDialog: true });
+        }
       } else {
-        this.setState({ boxDialog: true, profile });
-      }*/
-      this.setState({ boxDialog: false, profile });
+        this.setState({ boxDialog: true });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -99,7 +105,7 @@ class Body extends React.Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
- 
+
   toggleDrawer = (side, open) => () => {
     this.setState({ [side]: open, });
   };
@@ -111,9 +117,12 @@ class Body extends React.Component {
 
     const box = await Box.openBox(window.ethereum.selectedAddress, window.ethereum, {});
     console.log(box);
-    
-    await box.public.set('email', 'jnosullivan@icloud.com');
 
+    const profile = {
+      firstName, lastName, email, photo
+    };
+
+    await box.public.set('profile', profile);
   };
 
   uploadPicPro = (files) => {
@@ -123,7 +132,7 @@ class Body extends React.Component {
         const rawData = new Uint8Array(reader.result);
         const hashObject = await self.dataProvider.uploadDataIPFS(rawData);
         const photo = hashObject['hash'];
-        self.setState({ photo }); 
+        self.setState({ photo });
     }
     reader.readAsArrayBuffer(files[0]);
   };
@@ -153,7 +162,7 @@ class Body extends React.Component {
             </Toolbar>
           </AppBar>
 
-          <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} > 
+          <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} >
               <div
                 tabIndex={0}
                 role="button"
@@ -257,9 +266,9 @@ class Body extends React.Component {
 
           <div style= {{ 'paddingTop': '64px'}}>
           <Route exact path="/" component={HomePage}/>
-          <Route path="/search" component={SearchPage}/> 
-          <Route path="/files" component={MyFilesPage}/>  
-          <Route path="/file/:address" component={FileView}/>  
+          <Route path="/search" component={SearchPage}/>
+          <Route path="/files" component={MyFilesPage}/>
+          <Route path="/file/:address" component={FileView}/>
           </div>
         </div>
         </Router>

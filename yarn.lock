@@ -2,13 +2,14 @@
 # yarn lockfile v1
 
 
-"3box@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/3box/-/3box-1.4.0.tgz#1048edab90da819878461898f94fccafe7ba2929"
-  integrity sha512-NbwwRQBrd+2fjFMNB6r+y+t+V+vAbRGo7PfEy6itgVi6MR2UfaCcs2peWpGJdm2mQR443l2G1uQcOeojXEnDWA==
+"3box@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/3box/-/3box-1.7.0.tgz#c43b91334154a64b382034d9b45199f2dc0b6584"
+  integrity sha512-xsLH80IiJYTdBoGi7woyvcq1DsNzHSntpeI0LHX+pnXUrDVZCNVDv7pG63gjRNS9KCNo/1ApnPloLVUiBGhbvw==
   dependencies:
     "@babel/runtime" "^7.1.2"
     did-jwt "^0.1.1"
+    elliptic "^6.4.1"
     ethers "^4.0.20"
     graphql-request "^1.8.2"
     https-did-resolver "^0.1.0"
