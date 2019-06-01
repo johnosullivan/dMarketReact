@@ -27,6 +27,7 @@
     "multer": "^1.4.1",
     "node-serve": "^0.0.3",
     "nodemon": "^1.19.0",
+    "orbit-db": "^0.20.1",
     "pg": "^7.11.0",
     "prompt": "^1.0.0",
     "pubsub-js": "^1.7.0",
@@ -52,6 +53,7 @@
     "sjcl": "^1.0.7",
     "solc": "^0.5.6",
     "source-map-explorer": "^1.7.0",
+    "truffle": "^5.0.20",
     "uport-connect": "^1.0.1",
     "uport-credentials": "^1.0.2",
     "web3": "^1.0.0-beta.36"

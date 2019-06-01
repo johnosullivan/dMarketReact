@@ -1437,6 +1437,14 @@ abstract-leveldown@~4.0.0:
   dependencies:
     xtend "~4.0.0"
 
+abstract-leveldown@~6.0.0:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/abstract-leveldown/-/abstract-leveldown-6.0.3.tgz#b4b6159343c74b0c5197b2817854782d8f748c4a"
+  integrity sha512-jzewKKpZbaYUa6HTThnrl+GrJhzjEAeuc7hTVpZdzg7kupXZFoqQDFwyOwLNbmJKJlmzw8yiipMPkDiuKkT06Q==
+  dependencies:
+    level-concat-iterator "~2.0.0"
+    xtend "~4.0.0"
+
 accept@2.x.x:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/accept/-/accept-2.1.4.tgz#887af54ceee5c7f4430461971ec400c61d09acbb"
@@ -1638,6 +1646,11 @@ anymatch@^2.0.0:
   dependencies:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
+
+app-module-path@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/app-module-path/-/app-module-path-2.2.0.tgz#641aa55dfb7d6a6f0a8141c4b9c0aa50b6c24dd5"
+  integrity sha1-ZBqlXft9am8KgUHEucCqULbCTdU=
 
 append-field@^1.0.0:
   version "1.0.0"
@@ -3101,6 +3114,11 @@ browser-resolve@^1.11.3:
   dependencies:
     resolve "1.1.7"
 
+browser-stdout@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.0.tgz#f351d32969d32fa5d7a5567154263d928ae3bd1f"
+  integrity sha1-81HTKWnTL6XXpVZxVCY9korjvR8=
+
 browserify-aes@^1.0.0, browserify-aes@^1.0.4, browserify-aes@^1.0.6, browserify-aes@^1.1.1, browserify-aes@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/browserify-aes/-/browserify-aes-1.2.0.tgz#326734642f403dabc3003209853bb70ad428ef48"
@@ -3709,6 +3727,26 @@ cids@^0.5.3, cids@~0.5.1, cids@~0.5.2, cids@~0.5.3, cids@~0.5.4, cids@~0.5.5, ci
     multicodec "~0.2.7"
     multihashes "~0.4.14"
 
+cids@^0.5.7:
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/cids/-/cids-0.5.8.tgz#3d5000c3856a2d3c00967b21265aa57142611aa0"
+  integrity sha512-Ye8TZP3YQfy0j+i5k+LPHdTY3JOvTwN1pxds44p6BRUv8PTMOAF/Vt4Bc+oiIQ0Sktn0iftkUHgqKNHIMwhshA==
+  dependencies:
+    class-is "^1.1.0"
+    multibase "~0.6.0"
+    multicodec "~0.5.0"
+    multihashes "~0.4.14"
+
+cids@~0.7.0:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/cids/-/cids-0.7.1.tgz#d8bba49a35a0e82110879b5001abf1039c62347f"
+  integrity sha512-qEM4j2GKE/BiT6WdUi6cfW8dairhSLTUE8tIdxJG6SvY33Mp/UPjw+xcO0n1zsllgo72BupzKF/44v+Bg8YPPg==
+  dependencies:
+    class-is "^1.1.0"
+    multibase "~0.6.0"
+    multicodec "~0.5.1"
+    multihashes "~0.4.14"
+
 cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/cipher-base/-/cipher-base-1.0.4.tgz#8760e4ecc272f4c363532f926d874aae2c1397de"
@@ -3973,6 +4011,11 @@ commander@1.2.0, commander@~1.2.0:
   integrity sha1-/VcTv6FTx9bMWZN4patMRcU1Ap4=
   dependencies:
     keypress "0.1.x"
+
+commander@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
+  integrity sha512-b0553uYA5YAEGgyYIGYROzKQ7X5RAqedkfjiZxwi0kL1g3bOaBNNZfYkzt/CL0umgD5wc9Jec2FbB98CjkMRvQ==
 
 commander@2.17.x, commander@~2.17.1:
   version "2.17.1"
@@ -4766,19 +4809,19 @@ debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
+debug@3.1.0, debug@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+  dependencies:
+    ms "2.0.0"
+
 debug@^3.1.0, debug@^3.2.5, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
   dependencies:
     ms "^2.1.1"
-
-debug@~3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
-  dependencies:
-    ms "2.0.0"
 
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.2.0:
   version "1.2.0"
@@ -4922,6 +4965,14 @@ deferred-leveldown@~4.0.0:
   integrity sha512-5fMC8ek8alH16QiV0lTCis610D1Zt1+LA4MS4d63JgS32lrCjTFDUFz2ao09/j2I4Bqb5jL4FZYwu7Jz0XO1ww==
   dependencies:
     abstract-leveldown "~5.0.0"
+    inherits "^2.0.3"
+
+deferred-leveldown@~5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/deferred-leveldown/-/deferred-leveldown-5.0.1.tgz#1642eb18b535dfb2b6ac4d39fb10a9cbcfd13b09"
+  integrity sha512-BXohsvTedWOLkj2n/TY+yqVlrCWa2Zs8LSxh3uCAgFOru7/pjxKyZAexGa1j83BaKloER4PqUyQ9rGPJLt9bqA==
+  dependencies:
+    abstract-leveldown "~6.0.0"
     inherits "^2.0.3"
 
 define-properties@^1.1.2, define-properties@^1.1.3:
@@ -5075,6 +5126,11 @@ did-resolver@0.0.6, did-resolver@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/did-resolver/-/did-resolver-0.0.6.tgz#2d4638b8914871c19945fb3243f6f298c1cca9db"
   integrity sha512-PqxzaoomTbJG3IzEouUGgppu3xrsbGKHS75zS3vS/Hfm56XxLpwIe7yFLokgXUbMWmLa0dczFHOibmebO4wRLA==
+
+diff@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-3.3.1.tgz#aa8567a6eed03c531fc89d3f711cd0e5259dec75"
+  integrity sha512-MKPHZDMB0o6yHyDryUOScqZibp914ksXwAMYMTHj6KO8UeKsRYNJD3oNCKjTqZon+V488P7N/HzXF8t7ZR95ww==
 
 diff@^3.2.0:
   version "3.5.0"
@@ -7229,6 +7285,18 @@ glob-to-regexp@^0.3.0:
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
   integrity sha1-jFoUlNIGbFcMw7/kSWF1rMTVAqs=
 
+glob@7.1.2:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
+  integrity sha512-MJTUg1kjuLeQCJ+ccE4Vpa6kKVXkPYJ2mOCQyUuKLcLQsdrMCpBPUi8qVE6+YuaJkozeA9NusTAw3hLr8Xe5EQ==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
 glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@~7.1.3:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
@@ -7360,6 +7428,11 @@ graphql-request@^1.8.2:
   dependencies:
     cross-fetch "2.2.2"
 
+growl@1.10.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.3.tgz#1926ba90cf3edfe2adb4927f5880bc22c66c790f"
+  integrity sha512-hKlsbA5Vu3xsh1Cg3J7jSmX/WaW6A5oBeqzM88oNbCRQFz+zUaXm6yxS4RVytp1scBoJzSYl4YAEOQIt6O8V1Q==
+
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
@@ -7476,6 +7549,11 @@ has-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-1.0.0.tgz#9d9e793165ce017a00f00418c43f942a7b1d11fa"
   integrity sha1-nZ55MWXOAXoA8AQYxD+UKnsdEfo=
+
+has-flag@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-2.0.0.tgz#e8207af1cc7b30d446cc70b734b5e8be18f88d51"
+  integrity sha1-6CB68cx7MNRGzHC3NLXovhj4jVE=
 
 has-flag@^3.0.0:
   version "3.0.0"
@@ -7601,6 +7679,11 @@ hastscript@^5.0.0:
     hast-util-parse-selector "^2.2.0"
     property-information "^5.0.1"
     space-separated-tokens "^1.0.0"
+
+he@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
+  integrity sha1-k0EP0hsAlzUVH4howvJx80J+I/0=
 
 he@1.2.x:
   version "1.2.0"
@@ -8425,6 +8508,20 @@ ipfs-log@~4.1.0:
     p-map "^1.1.1"
     p-whilst "^1.0.0"
 
+ipfs-log@~4.3.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/ipfs-log/-/ipfs-log-4.3.1.tgz#e149702b9945f6e6bad887de158cf7d1de54e23f"
+  integrity sha512-b+s9JICsXyZXNMZyW0AoEN4vOdSxh6W86KXBmhDOt3aiNSb7tOvVOheHqhGcjasmUyGcxhiFfMgPojoYC3ZOpQ==
+  dependencies:
+    cids "^0.5.7"
+    ipld-dag-pb "^0.15.2"
+    json-stringify-deterministic "^1.0.1"
+    orbit-db-identity-provider "~0.1.0"
+    orbit-db-io "~0.0.1"
+    p-map "^1.1.1"
+    p-whilst "^1.0.0"
+    pify "^4.0.1"
+
 ipfs-mfs@~0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/ipfs-mfs/-/ipfs-mfs-0.4.2.tgz#1c9908fd7e2d379746bb349b889f273a272ea4a8"
@@ -8746,6 +8843,22 @@ ipld-dag-pb@^0.14.4, ipld-dag-pb@~0.14.11, ipld-dag-pb@~0.14.4, ipld-dag-pb@~0.1
     cids "~0.5.4"
     class-is "^1.1.0"
     is-ipfs "~0.4.2"
+    multihashing-async "~0.5.1"
+    protons "^1.0.1"
+    pull-stream "^3.6.9"
+    pull-traverse "^1.0.3"
+    stable "~0.1.8"
+
+ipld-dag-pb@^0.15.2:
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/ipld-dag-pb/-/ipld-dag-pb-0.15.3.tgz#0f72b99e77e3265f722457de5dc63b0f700fbb7d"
+  integrity sha512-J1RJzSVCaOpxPmSzXbwVNsAZPHctjY4OjqG1dMIG86Z37CKvuy1QwCFkDhNccUTcQpF3sXfj5e0ZUyMM035vzg==
+  dependencies:
+    async "^2.6.1"
+    bs58 "^4.0.1"
+    cids "~0.5.4"
+    class-is "^1.1.0"
+    is-ipfs "~0.6.0"
     multihashing-async "~0.5.1"
     protons "^1.0.1"
     pull-stream "^3.6.9"
@@ -9112,6 +9225,18 @@ is-ipfs@~0.4.2, is-ipfs@~0.4.7:
   dependencies:
     bs58 "4.0.1"
     cids "~0.5.6"
+    multibase "~0.6.0"
+    multihashes "~0.4.13"
+
+is-ipfs@~0.6.0:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/is-ipfs/-/is-ipfs-0.6.1.tgz#c85069c73275dc6a60673c791a9be731e2b4bfc4"
+  integrity sha512-WhqQylam6pODS2RyqT/u0PR5KWtBZNCgPjgargFOVQjzw/3+6d0midXenzU65klM4LH13IUiCC6ObhDUdXZ7Nw==
+  dependencies:
+    bs58 "^4.0.1"
+    cids "~0.7.0"
+    mafmt "^6.0.7"
+    multiaddr "^6.0.4"
     multibase "~0.6.0"
     multihashes "~0.4.13"
 
@@ -10067,6 +10192,11 @@ json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
+json-stringify-deterministic@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-stringify-deterministic/-/json-stringify-deterministic-1.0.1.tgz#3334798c374d723d46f7ba0e47d6e5e5ac8511f9"
+  integrity sha512-9Fg0OY3uyzozpvJ8TVbUk09PjzhT7O2Q5kEe30g6OrKhbA/Is92igcx0XDDX7E3yAwnIlUcYLRl+ZkVrBYVP7A==
+
 json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
@@ -10376,6 +10506,11 @@ level-codec@~7.0.0:
   resolved "https://registry.yarnpkg.com/level-codec/-/level-codec-7.0.1.tgz#341f22f907ce0f16763f24bddd681e395a0fb8a7"
   integrity sha512-Ua/R9B9r3RasXdRmOtd+t9TCOEIIlts+TN/7XTT2unhDaL6sJn83S3rUyljbr6lVtw49N3/yA0HHjpV6Kzb2aQ==
 
+level-concat-iterator@~2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/level-concat-iterator/-/level-concat-iterator-2.0.1.tgz#1d1009cf108340252cb38c51f9727311193e6263"
+  integrity sha512-OTKKOqeav2QWcERMJR7IS9CUo1sHnke2C0gkSmcR7QuEtFNLLzHQAvnMw8ykvEcv0Qtkg0p7FOwP1v9e5Smdcw==
+
 level-errors@^1.0.3, level-errors@~1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/level-errors/-/level-errors-1.1.2.tgz#4399c2f3d3ab87d0625f7e3676e2d807deff404d"
@@ -10423,6 +10558,15 @@ level-iterator-stream@~3.0.0:
   dependencies:
     inherits "^2.0.1"
     readable-stream "^2.3.6"
+    xtend "^4.0.0"
+
+level-iterator-stream@~4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/level-iterator-stream/-/level-iterator-stream-4.0.1.tgz#65c467070c0788fe0d08a0c1ed600c3b9e82bc8d"
+  integrity sha512-pSZWqXK6/yHQkZKCHrR59nKpU5iqorKM22C/BOHTb/cwNQ2EOZG+bovmFFGcOgaBoF3KxqJEI27YwewhJQTzsw==
+  dependencies:
+    inherits "^2.0.1"
+    readable-stream "^3.0.2"
     xtend "^4.0.0"
 
 "level-js@github:timkuijsten/level.js#idbunwrapper":
@@ -10522,6 +10666,16 @@ levelup@^3.0.0:
     level-iterator-stream "~3.0.0"
     xtend "~4.0.0"
 
+levelup@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/levelup/-/levelup-4.0.1.tgz#26321eb33ec1ddac1f29b1ac82f8b693e2cbf182"
+  integrity sha512-l7KXOkINXHgNqmz0v9bxvRnMCUG4gmShFrzFSZXXhcqFnfvKAW8NerVsTICpZtVhGOMAmhY6JsVoVh/tUPBmdg==
+  dependencies:
+    deferred-leveldown "~5.0.0"
+    level-errors "~2.0.0"
+    level-iterator-stream "~4.0.0"
+    xtend "~4.0.0"
+
 leven@2.1.0, leven@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
@@ -10573,24 +10727,24 @@ libp2p-connection-manager@~0.0.2:
     debug "^3.1.0"
     latency-monitor "^0.2.1"
 
-libp2p-crypto-secp256k1@~0.2.2:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/libp2p-crypto-secp256k1/-/libp2p-crypto-secp256k1-0.2.3.tgz#212fc171d39dae7be3eaf4d9d311e0a8e9619c78"
-  integrity sha512-DFrK89VdboacqM3vqWV8yt8FH9Ni181JJAOU2tRkJfUN9tNEV7VfZEg390NJxEQQbLsyH4HZ7on3QTpPHMHQZQ==
-  dependencies:
-    async "^2.6.1"
-    multihashing-async "~0.5.1"
-    nodeify "^1.0.1"
-    safe-buffer "^5.1.2"
-    secp256k1 "^3.6.1"
-
-libp2p-crypto-secp256k1@~0.3.0:
+libp2p-crypto-secp256k1@^0.3.0, libp2p-crypto-secp256k1@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/libp2p-crypto-secp256k1/-/libp2p-crypto-secp256k1-0.3.0.tgz#47ce694fa3c9f2a8b61b11e66d29f1b101d9e985"
   integrity sha512-+rF3S5p2pzS4JLDwVE6gLWZeaKkpl4NkYwG+0knV6ot29UcRSb73OyCWl07r1h5+g9E3KZC3wpsu+RIK5w8zQA==
   dependencies:
     async "^2.6.1"
     bs58 "^4.0.1"
+    multihashing-async "~0.5.1"
+    nodeify "^1.0.1"
+    safe-buffer "^5.1.2"
+    secp256k1 "^3.6.1"
+
+libp2p-crypto-secp256k1@~0.2.2:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/libp2p-crypto-secp256k1/-/libp2p-crypto-secp256k1-0.2.3.tgz#212fc171d39dae7be3eaf4d9d311e0a8e9619c78"
+  integrity sha512-DFrK89VdboacqM3vqWV8yt8FH9Ni181JJAOU2tRkJfUN9tNEV7VfZEg390NJxEQQbLsyH4HZ7on3QTpPHMHQZQ==
+  dependencies:
+    async "^2.6.1"
     multihashing-async "~0.5.1"
     nodeify "^1.0.1"
     safe-buffer "^5.1.2"
@@ -10614,6 +10768,28 @@ libp2p-crypto@^0.13.0, libp2p-crypto@~0.13.0:
     rsa-pem-to-jwk "^1.1.3"
     tweetnacl "^1.0.0"
     webcrypto-shim "github:dignifiedquire/webcrypto-shim#master"
+
+libp2p-crypto@^0.16.0, libp2p-crypto@~0.16.0:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/libp2p-crypto/-/libp2p-crypto-0.16.1.tgz#40aa07e95a0a7fe6887ea3868625e74c81c34d75"
+  integrity sha512-+fxqy+cDjwOKK4KTj44WQmjPE5ep2eR5uAIQWHl/+RKvRSor3+RAY53VWkAecgAEvjX2AswxBsoCIJK1Qk5aIQ==
+  dependencies:
+    asmcrypto.js "^2.3.2"
+    asn1.js "^5.0.1"
+    async "^2.6.1"
+    bn.js "^4.11.8"
+    browserify-aes "^1.2.0"
+    bs58 "^4.0.1"
+    iso-random-stream "^1.1.0"
+    keypair "^1.0.1"
+    libp2p-crypto-secp256k1 "~0.3.0"
+    multihashing-async "~0.5.1"
+    node-forge "~0.7.6"
+    pem-jwk "^2.0.0"
+    protons "^1.0.1"
+    rsa-pem-to-jwk "^1.1.3"
+    tweetnacl "^1.0.0"
+    ursa-optional "~0.9.10"
 
 libp2p-crypto@~0.12.1:
   version "0.12.1"
@@ -10653,28 +10829,6 @@ libp2p-crypto@~0.14.0, libp2p-crypto@~0.14.1:
     tweetnacl "^1.0.0"
     ursa-optional "~0.9.9"
     webcrypto-shim "github:dignifiedquire/webcrypto-shim#master"
-
-libp2p-crypto@~0.16.0:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/libp2p-crypto/-/libp2p-crypto-0.16.1.tgz#40aa07e95a0a7fe6887ea3868625e74c81c34d75"
-  integrity sha512-+fxqy+cDjwOKK4KTj44WQmjPE5ep2eR5uAIQWHl/+RKvRSor3+RAY53VWkAecgAEvjX2AswxBsoCIJK1Qk5aIQ==
-  dependencies:
-    asmcrypto.js "^2.3.2"
-    asn1.js "^5.0.1"
-    async "^2.6.1"
-    bn.js "^4.11.8"
-    browserify-aes "^1.2.0"
-    bs58 "^4.0.1"
-    iso-random-stream "^1.1.0"
-    keypair "^1.0.1"
-    libp2p-crypto-secp256k1 "~0.3.0"
-    multihashing-async "~0.5.1"
-    node-forge "~0.7.6"
-    pem-jwk "^2.0.0"
-    protons "^1.0.1"
-    rsa-pem-to-jwk "^1.1.3"
-    tweetnacl "^1.0.0"
-    ursa-optional "~0.9.10"
 
 libp2p-floodsub@~0.15.0:
   version "0.15.8"
@@ -11299,12 +11453,19 @@ lru-queue@0.1:
   dependencies:
     es5-ext "~0.10.2"
 
+lru@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lru/-/lru-3.1.0.tgz#ea7fb8546d83733396a13091d76cfeb4c06837d5"
+  integrity sha1-6n+4VG2DczOWoTCR12z+tMBoN9U=
+  dependencies:
+    inherits "^2.0.1"
+
 ltgt@^2.1.2, ltgt@~2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ltgt/-/ltgt-2.2.1.tgz#f35ca91c493f7b73da0e07495304f17b31f87ee5"
   integrity sha1-81ypHEk/e3PaDgdJUwTxezH4fuU=
 
-mafmt@^6.0.0, mafmt@^6.0.2, mafmt@^6.0.4:
+mafmt@^6.0.0, mafmt@^6.0.2, mafmt@^6.0.4, mafmt@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/mafmt/-/mafmt-6.0.7.tgz#80312e08bfba0f89e2daa403525f33e07d9b97fa"
   integrity sha512-2OG/EGAJZmpZBl7YRT1hD83sZa2gKsUEdegRuURreIOe7B4VeHU1rYYmhgk7BkLzknGL3xGYsDx3bbSgEEzE7g==
@@ -11818,6 +11979,22 @@ mobile-detect@^1.3.5:
   resolved "https://registry.yarnpkg.com/mobile-detect/-/mobile-detect-1.4.3.tgz#e436a3839f5807dd4d3cd4e081f7d3a51ffda2dd"
   integrity sha512-UaahPNLllQsstHOEHAmVnTHCMQrAS9eL5Qgdi50QrYz6UgGk+Xziz2udz2GN6NYcyODcPLnasC7a7s6R2DjiaQ==
 
+mocha@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-4.1.0.tgz#7d86cfbcf35cb829e2754c32e17355ec05338794"
+  integrity sha512-0RVnjg1HJsXY2YFDoTNzcc1NKhYuXKRrBAG2gDygmJJA136Cs2QlRliZG1mA0ap7cuaT30mw16luAeln+4RiNA==
+  dependencies:
+    browser-stdout "1.3.0"
+    commander "2.11.0"
+    debug "3.1.0"
+    diff "3.3.1"
+    escape-string-regexp "1.0.5"
+    glob "7.1.2"
+    growl "1.10.3"
+    he "1.1.1"
+    mkdirp "0.5.1"
+    supports-color "4.4.0"
+
 mock-fs@^4.1.0:
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.8.0.tgz#eb0784ceba4b34c91a924a5112eeb36e1b5a9e29"
@@ -11995,6 +12172,13 @@ multicodec@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/multicodec/-/multicodec-0.4.0.tgz#2d9c40ab58f415e1e01f4df78985e7b2e714e5a6"
   integrity sha512-npzvuOHRJD172WiolvyF8mAS5JfWWJlVh22OcGZ4I5ZKyFVI4aFQYB5AcMtmMTWRsjiePlOHH/dnaZi8ZidWuA==
+  dependencies:
+    varint "^5.0.0"
+
+multicodec@~0.5.0, multicodec@~0.5.1:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/multicodec/-/multicodec-0.5.3.tgz#b1ef71a55d0698c9b2d89585f66e4b081f33c20c"
+  integrity sha512-TUId9mavSh7q4ui5nUYiC0U10XVrMhsoMLPoG6nAAaFt2GKqZKK3aB2AeFk58aqEnLhmTSdRkmNrlty4jjOxzg==
   dependencies:
     varint "^5.0.0"
 
@@ -12719,6 +12903,14 @@ options@>=0.0.5:
   resolved "https://registry.yarnpkg.com/options/-/options-0.0.6.tgz#ec22d312806bb53e731773e7cdaefcf1c643128f"
   integrity sha1-7CLTEoBrtT5zF3Pnza788cZDEo8=
 
+orbit-db-access-controllers@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/orbit-db-access-controllers/-/orbit-db-access-controllers-0.1.0.tgz#eff03f0e129988a425ba37d15063f75b108a5da2"
+  integrity sha512-5nHaz4Mz8z8jUEBOaPNQhsI/WQq3r2VWA5LEwgeS1b7suIJVlA6otjptXbh659mzxFKkm4Cw1EAML4ayXLTTFg==
+  dependencies:
+    orbit-db-io "~0.0.1"
+    p-map-series "^1.0.0"
+
 orbit-db-cache-postmsg-proxy@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/orbit-db-cache-postmsg-proxy/-/orbit-db-cache-postmsg-proxy-0.1.1.tgz#eef1594c1ea813da6f0b8692f7d8c50038d08e23"
@@ -12745,12 +12937,28 @@ orbit-db-counterstore@~1.4.0:
     crdts "~0.1.2"
     orbit-db-store "~2.5.0"
 
+orbit-db-counterstore@~1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-counterstore/-/orbit-db-counterstore-1.5.1.tgz#c732b94f6eda80afad0505406266253893f2c4d6"
+  integrity sha512-exPHiZH+fkSVTDYBAMwHDPNL8zNjbcPk0e+09pcwRBUJP8QS0JSza9V65iv2lfPBXJu3S7HIfwO8YeHTNCBN8g==
+  dependencies:
+    crdts "~0.1.2"
+    orbit-db-store "~2.6.0"
+
 orbit-db-docstore@~1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/orbit-db-docstore/-/orbit-db-docstore-1.4.3.tgz#0e802ad0d23a70f65ccb7f612be00424722253c3"
   integrity sha512-iDSXL3V71qK7CuS3VBEHPMXubCFr77VkpqEu14K5jTLRAYZdL7496VTZX8gf8KSJkYQF+nqz4WHJmqoxh1XU0A==
   dependencies:
     orbit-db-store "~2.5.0"
+    p-map "~1.1.1"
+
+orbit-db-docstore@~1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-docstore/-/orbit-db-docstore-1.5.1.tgz#cb9a981b0b8af029c7984a8a40298723e4d842e3"
+  integrity sha512-HzV93dJ6r5K0+elEXam31ZWxz2z6Gvil8jwCM27wceZbqrnjibzkCavIflknsosgA49o0y7ZbL6F1Z9JwI7PCQ==
+  dependencies:
+    orbit-db-store "~2.6.0"
     p-map "~1.1.1"
 
 orbit-db-eventstore@~1.4.0:
@@ -12760,12 +12968,43 @@ orbit-db-eventstore@~1.4.0:
   dependencies:
     orbit-db-store "~2.5.0"
 
+orbit-db-eventstore@~1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-eventstore/-/orbit-db-eventstore-1.5.1.tgz#2412b43da94257b9115adce03d0b686338429226"
+  integrity sha512-ZPRe9jXaf7P5QcJWEJKOZi5WRDt4K62pbTk1wdoQPvZ9xJiB/dUaA7M0Twq4qosv2SfbKVCClUbTzqzreLqIeA==
+  dependencies:
+    orbit-db-store "~2.6.0"
+
 orbit-db-feedstore@~1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/orbit-db-feedstore/-/orbit-db-feedstore-1.4.0.tgz#877351bf7e36939862a0111955c68cec80df5525"
   integrity sha512-+VQrei6OMPsz9fHXBtqkqYrlJXJuBbFEpMTYR69uWlDd48z5DrLN1pdRq9ND5YeQmGBhdVR1Pm5zOIQNfYw37A==
   dependencies:
     orbit-db-eventstore "~1.4.0"
+
+orbit-db-feedstore@~1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-feedstore/-/orbit-db-feedstore-1.5.1.tgz#b786cfd7ffdf143b1783e3a5e95e3b7dd4fe55d1"
+  integrity sha512-o9XYcrhb0+Cx+QgF4W9gynYUTDFLvJA/r94VJM9O1g53Aw9pA/106TGlX/1bo7oUpFFlIjDIWfawRPSWgw9yqw==
+  dependencies:
+    orbit-db-eventstore "~1.5.0"
+
+orbit-db-identity-provider@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/orbit-db-identity-provider/-/orbit-db-identity-provider-0.1.0.tgz#9af5a38b12117e09f6b133581881b01b8e49b7d7"
+  integrity sha512-U8c2+Jmz903gpYMBHFQ+3RVj86up7Y7SJdPqOxvJVN2PQ4HXqLl2JiiFUIHtlb8wyyoCYHi1TSsGovD5wmgRlA==
+  dependencies:
+    ethers "^4.0.20"
+    orbit-db-keystore "~0.2.0"
+
+orbit-db-io@~0.0.1:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/orbit-db-io/-/orbit-db-io-0.0.2.tgz#d1a3454e1e9f942ce23daee24565fdc28c55b0b4"
+  integrity sha512-WX+Oo/wSJbkcCjnfDlkFvTyHyBJguZOTyAoQkAeA8V9OiWz4x/lYHmilv5jQN+e/X6aO10G+nzbYZTpglmhQMA==
+  dependencies:
+    cids "^0.5.7"
+    ipld-dag-pb "^0.15.2"
+    pify "^4.0.1"
 
 orbit-db-keystore@~0.1.0:
   version "0.1.0"
@@ -12776,12 +13015,34 @@ orbit-db-keystore@~0.1.0:
     mkdirp "^0.5.1"
     node-localstorage "^1.3.0"
 
+orbit-db-keystore@~0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-keystore/-/orbit-db-keystore-0.2.1.tgz#3d81574e94c3955ca594a61ddc2135e64cbd0080"
+  integrity sha512-i27zTE1uzDnxoFAXTLTBr2/tCxrEKtRdd8uU/7Zq46qaNr8JEBLREvNw4yMB8Y3QT++3CcV/MniDEcwyLGtkKg==
+  dependencies:
+    elliptic "^6.4.1"
+    level-js "~3.0.0"
+    leveldown "~3.0.2"
+    levelup "^4.0.0"
+    libp2p-crypto "^0.16.0"
+    libp2p-crypto-secp256k1 "^0.3.0"
+    lru "^3.1.0"
+    mkdirp "^0.5.1"
+    safe-buffer "^5.1.2"
+
 orbit-db-kvstore@~1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/orbit-db-kvstore/-/orbit-db-kvstore-1.4.0.tgz#d0287e3b1fc8465b295659cbd91942eb2e890d25"
   integrity sha512-4qhyJf6N2LK8/tUWWoN0svUGEA4GLujMXxZAPFjP6UdH3XM70bvPw4k6DjIST/PQcYZqKf3BbYoIKRSiLeEJPg==
   dependencies:
     orbit-db-store "~2.5.0"
+
+orbit-db-kvstore@~1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-kvstore/-/orbit-db-kvstore-1.5.1.tgz#49c3c8706c5762d1c941c606a597be67d5ed3861"
+  integrity sha512-fCov8iLmUA0GIsZi6oRspsAy3Rh5yaTBTnuJ/gN6MPU0LWuhZwH3sq/WVsrEQI8uGU4or4SKypSFSp8PC/G3qA==
+  dependencies:
+    orbit-db-store "~2.6.0"
 
 orbit-db-pubsub@~0.5.5:
   version "0.5.5"
@@ -12802,6 +13063,40 @@ orbit-db-store@~2.5.0, orbit-db-store@~2.5.3:
     p-each-series "^1.0.0"
     readable-stream "~2.3.5"
 
+orbit-db-store@~2.6.0:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/orbit-db-store/-/orbit-db-store-2.6.1.tgz#951b75202a17f1302cfc7f222f6e002ac144113d"
+  integrity sha512-BuvXsws6JreQG6sGpdl/lMVSUaTI4JD/NlUjQ/XLGQw6uKjtdBrEUdg2MgPlB5rXfbwBvvJD/IUDcenBfAP9HA==
+  dependencies:
+    ipfs-log "~4.3.0"
+    logplease "^1.2.14"
+    orbit-db-io "~0.0.1"
+    p-each-series "^1.0.0"
+    readable-stream "~2.3.5"
+
+orbit-db@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/orbit-db/-/orbit-db-0.20.1.tgz#7f82a77712f06fb23b3eaa478190edef24a96666"
+  integrity sha512-Cu/9aDyVHJdnAptvh+pchph54Y1OPhxD5Nk9+wsx9i5L91AEH6R+JiLUfv9PGQcLOgFgApTJJ+TtM1UwrxDiqA==
+  dependencies:
+    cids "^0.5.7"
+    ipfs-pubsub-1on1 "~0.0.4"
+    localstorage-down "^0.6.7"
+    logplease "^1.2.14"
+    multihashes "^0.4.12"
+    orbit-db-access-controllers "~0.1.0"
+    orbit-db-cache "~0.2.4"
+    orbit-db-counterstore "~1.5.0"
+    orbit-db-docstore "~1.5.0"
+    orbit-db-eventstore "~1.5.0"
+    orbit-db-feedstore "~1.5.0"
+    orbit-db-identity-provider "~0.1.0"
+    orbit-db-io "~0.0.1"
+    orbit-db-keystore "~0.2.0"
+    orbit-db-kvstore "~1.5.0"
+    orbit-db-pubsub "~0.5.5"
+    orbit-db-store "~2.6.0"
+
 "orbit-db@git://github.com/orbitdb/orbit-db.git#dddb271":
   version "0.19.9"
   resolved "git://github.com/orbitdb/orbit-db.git#dddb271a84e2455cd1e574909781c398a317e06a"
@@ -12819,6 +13114,11 @@ orbit-db-store@~2.5.0, orbit-db-store@~2.5.3:
     orbit-db-kvstore "~1.4.0"
     orbit-db-pubsub "~0.5.5"
     orbit-db-store "~2.5.3"
+
+original-require@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/original-require/-/original-require-1.0.1.tgz#0f130471584cd33511c5ec38c8d59213f9ac5e20"
+  integrity sha1-DxMEcVhM0zURxew4yNWSE/msXiA=
 
 original@^1.0.0:
   version "1.0.2"
@@ -12927,6 +13227,13 @@ p-locate@^3.0.0:
   integrity sha512-x+12w/To+4GFfgJhBEpiDcLozRJGegY+Ei7/z0tSLkMmxGZNybVMSfWj9aJn8Z5Fc7dBUNJOOVgPv2H7IwulSQ==
   dependencies:
     p-limit "^2.0.0"
+
+p-map-series@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/p-map-series/-/p-map-series-1.0.0.tgz#bf98fe575705658a9e1351befb85ae4c1f07bdca"
+  integrity sha1-v5j+V1cFZYqeE1G++4WuTB8Hvco=
+  dependencies:
+    p-reduce "^1.0.0"
 
 p-map@^1.1.1:
   version "1.2.0"
@@ -13355,6 +13662,11 @@ pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
+
+pify@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
+  integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
 pinkie-promise@^2.0.0:
   version "2.0.1"
@@ -17042,6 +17354,13 @@ subtext@5.x.x:
     pez "2.x.x"
     wreck "12.x.x"
 
+supports-color@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.4.0.tgz#883f7ddabc165142b2a61427f3352ded195d1a3e"
+  integrity sha512-rKC3+DyXWgK0ZLKwmRsrkyHVZAjNkfzeehuFWdGGcqGDTZFH73+RH6S/RDAAxl9GusSjZSUWYLmT9N5pzXFOXQ==
+  dependencies:
+    has-flag "^2.0.0"
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
@@ -17589,6 +17908,15 @@ trough@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/trough/-/trough-1.0.3.tgz#e29bd1614c6458d44869fc28b255ab7857ef7c24"
   integrity sha512-fwkLWH+DimvA4YCy+/nvJd61nWQQ2liO/nF/RjkTpiOGi+zxZzVkhb1mvbHIIW4b/8nDsYI8uTmAlc0nNkRMOw==
+
+truffle@^5.0.20:
+  version "5.0.20"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.0.20.tgz#6fa0ebaa8d3a5c325a717a3bfaf3fee2bf6f0475"
+  integrity sha512-Vr2+UnfoFXPf0shry1CawBrQYGveht4K+vfPx63JwVI71vqpeybPqFHiiuqmcnZ3ch+aQgaelNNQU4rsAKgTJg==
+  dependencies:
+    app-module-path "^2.2.0"
+    mocha "^4.1.0"
+    original-require "1.0.1"
 
 truncate-utf8-bytes@^1.0.0:
   version "1.0.2"

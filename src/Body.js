@@ -35,11 +35,11 @@ const Box = require('3box');
 
 const web3 = new window.Web3(window.web3.currentProvider);
 
-/*
-Box.openBox('0xe4c20a3feea37115caa1d236a9f1444bd33b38b1', window.ethereum).then(box => {
+
+Box.openBox('0x7899243003E5220F87Ddc5DBA790B775b3E459e6', window.ethereum).then(box => {
   console.log(box);
 })
-*/
+
 
 class Body extends React.Component {
 
@@ -83,6 +83,7 @@ class Body extends React.Component {
     const account = await this.getWeb3Account();
     try {
       const data = await Box.getProfile(account);
+      console.log(data);
       if (data) {
         if (Object.keys(data).length) {
           if (data.profile) {

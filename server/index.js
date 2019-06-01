@@ -87,6 +87,9 @@ app.post('/accounts', async (req, res) => {
 
 app.get('/accounts', async (req, res) => {
     try {
+        const secretKey = '155848592313754AvkWltjW30xZkKBgXFcVz0RMJJuO6fOw==';
+        const accountId = 'AC_XJH26PD68ZU';
+
         const config = {
             headers: { 
                 'Content-Type': 'application/json',
@@ -108,7 +111,9 @@ app.get('/accounts', async (req, res) => {
 app.put('/accounts/:id', upload.single('file'), async (req, res) => {
     try {
         // Debugging
-
+        const secretKey = '155848592313754AvkWltjW30xZkKBgXFcVz0RMJJuO6fOw==';
+        const accountId = 'AC_XJH26PD68ZU';
+        
         const { params: { id }, body } = req;
 
         let baseRequest = {
