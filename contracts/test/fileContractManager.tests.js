@@ -7,7 +7,7 @@ contract("ContractManager", function(accounts) {
     let name = web3util.toHex('owner');
 
     it("should create a new contract manager", async function() {
-       contract = await FileContractManager.deployed({ from: accounts[0] });
+       contract = await FileContractManager.new({ from: accounts[0] });
     });
 
     it("should set an address to an contract id (bytes32)", async function() {

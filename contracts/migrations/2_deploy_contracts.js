@@ -2,6 +2,6 @@ const FileContractManager = artifacts.require("../contracts/FileContractManager.
 const dPublishToken = artifacts.require("../contracts/dPublishToken.sol");
 
 module.exports = function(deployer) {
-	deployer.deploy(FileContractManager);
-	deployer.deploy(dPublishToken, 500000000000);
+	//deployer.deploy(FileContractManager);
+	//deployer.deploy(dPublishToken, 500000000000);
 };
