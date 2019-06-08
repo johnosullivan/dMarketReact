@@ -14,6 +14,7 @@ interface TokenInterface {
 
 interface FileContractManagerInterface {
     function getContractAddress(bytes32 name) external returns (address);
+    function getValue(bytes32 name) external returns (uint256);
 }
 
 interface tokenRecipient {

@@ -46,6 +46,10 @@ contract('dMarketSeller', function(accounts) {
     await manageContract.setAddress(web3util.toHex('main'),mainAccount, { from: accounts[0] });
   });
 
+  it("should set an value to 3 fee (bytes32)", async function() {
+    await manageContract.setValue(web3util.toHex('fee'),3, { from: accounts[0] });
+  });
+
   it("should get an address to an contract by token (bytes32)", async function() {
     const address = await manageContract.getContractAddress(web3util.toHex('token'));
     expect(address).toBe(tokenContract.address);
@@ -70,12 +74,16 @@ contract('dMarketSeller', function(accounts) {
     expect(status).toBe(false);
   });
 
-  it("should approve the payment of 1000 DAI", async function() {
+  /*it("should approve the payment of 1000 DAI", async function() {
     await tokenContract.approve(sellerContract.address, web3util.toWei('1000', 'ether'), { from: buyer });
   });
 
   it("should be purchase the eBook", async function() {
     await sellerContract.buy('Zs_AX12', { from: buyer });
+  });*/
+
+  it("should approve the payment of 1000 DAI and buy", async function() {
+    await tokenContract.approveAndCall(sellerContract.address, web3util.toWei('1000', 'ether'),web3util.toHex('Zs_AX12'), { from: buyer });
   });
 
   it("should get an status of file from buyer after buy", async function() {
@@ -88,8 +96,25 @@ contract('dMarketSeller', function(accounts) {
     expect(valueBuyer.toString()).toBe('1000000000000000000000');
   });
 
-  it('should get the balance of the sellerContract of 995 DAI', async function() {
+  it('should get the balance of the sellerContract of 970 DAI', async function() {
     const valueBuyer = await tokenContract.balanceOf(sellerContract.address);
-    expect(valueBuyer.toString()).toBe('950000000000000000000');
+    expect(valueBuyer.toString()).toBe('970000000000000000000');
+  });
+
+  it('should get the balance of the main account of 30 DAI', async function() {
+    const valueMain = await tokenContract.balanceOf(mainAccount);
+    expect(valueMain.toString()).toBe('30000000000000000000');
+  });
+
+  it('should get the balance of the main account of 30 DAI', async function() {
+    const valueMain = await tokenContract.balanceOf(mainAccount);
+    expect(valueMain.toString()).toBe('30000000000000000000');
+  });
+
+  it('should get the resource aka eBook', async function() {
+    const values = await sellerContract.getResource('Zs_AX12', { from: buyer });
+    expect(values.fileHash).toBe('fileHash');
+    expect(values.fileKey).toBe('fileKey');
+    expect(values.version).toBe('version');
   });
 });

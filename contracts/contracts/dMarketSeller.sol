@@ -44,14 +44,32 @@ contract dMarketSeller is Owned {
         return hasAccess[_id][msg.sender];
     }
 
-    function buy(
-        string memory _id
-    ) public {
-        require(token.transferFrom(msg.sender, address(this), tokenPrice[_id]));
-        hasAccess[_id][msg.sender] = true;
+    function getResource(string memory _id) view public returns (
+      string memory fileHash,
+      string memory fileKey,
+      string memory version
+    ) {
+        require(hasAccess[_id][msg.sender]);
+        return (
+          fileVersions[_id].fileHash,
+          fileVersions[_id].fileKey,
+          fileVersions[_id].version
+        );
+    }
 
-        uint256 amount = tokenPrice[_id] * 5 / 100;
+    function receiveApproval(address _from, uint256 _value, address _token, bytes memory _extraData) public {
+        string memory _id = string(_extraData);
 
-        token.transfer(FileContractManagerInterface(fileManagerContractManager).getContractAddress("main"), amount);
+        require(tokenPrice[_id] == _value);
+
+        require(TokenInterface(_token).transferFrom(_from, address(this), tokenPrice[_id]));
+
+        hasAccess[_id][_from] = true;
+
+        uint256 rate = FileContractManagerInterface(fileManagerContractManager).getValue("fee");
+
+        uint256 amount = tokenPrice[_id] * rate / 100;
+
+        TokenInterface(_token).transfer(FileContractManagerInterface(fileManagerContractManager).getContractAddress("main"), amount);
     }
 }
