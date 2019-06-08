@@ -9,12 +9,13 @@ interface FileManagerInterface {
 
 interface TokenInterface {
     function transferFrom(address _from, address _to, uint256 _value) external returns(bool success);
+    function transfer(address _to, uint256 _value) external returns (bool success);
 }
 
 interface FileContractManagerInterface {
     function getContractAddress(bytes32 name) external returns (address);
 }
 
-interface tokenRecipient { 
-    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; 
+interface tokenRecipient {
+    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external;
 }

@@ -17,9 +17,11 @@ contract dMarketSeller is Owned {
     mapping(string => uint256) private tokenPrice;
 
     TokenInterface public token;
+    address public fileManagerContractManager;
 
     constructor(address _fileManagerContractManager) public {
         owner = msg.sender;
+        fileManagerContractManager = _fileManagerContractManager;
         token = TokenInterface(FileContractManagerInterface(_fileManagerContractManager).getContractAddress("token"));
     }
 
@@ -38,7 +40,7 @@ contract dMarketSeller is Owned {
         tokenPrice[_id] = _price;
     }
 
-    function getAccessStatus(string memory _id) view public returns (bool) {
+    function getAccessStatus(string memory _id) view public returns (bool status) {
         return hasAccess[_id][msg.sender];
     }
 
@@ -47,5 +49,9 @@ contract dMarketSeller is Owned {
     ) public {
         require(token.transferFrom(msg.sender, address(this), tokenPrice[_id]));
         hasAccess[_id][msg.sender] = true;
+
+        uint256 amount = tokenPrice[_id] * 5 / 100;
+
+        token.transfer(FileContractManagerInterface(fileManagerContractManager).getContractAddress("main"), amount);
     }
 }
