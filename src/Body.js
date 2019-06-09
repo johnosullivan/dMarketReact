@@ -24,6 +24,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Providers from './DataProvider';
 import PubSub from 'pubsub-js'
 
+import { EpubView } from "react-reader";
+
 import {
   HomePage,
   SearchPage,
@@ -210,6 +212,11 @@ class Body extends React.Component {
                       <ListItemText primary="Files"/>
                     </ListItem>
                   </Link>
+                  <Link to="/">
+                    <ListItem button key="home">
+                      <ListItemText primary="Home"/>
+                    </ListItem>
+                  </Link>
                 </List>
                 <Divider/>
               </div>
@@ -258,11 +265,6 @@ class Body extends React.Component {
                 </Button>
               </DialogActions>
           </Dialog>
-
-
-
-
-
 
 
           <div style= {{ 'paddingTop': '64px'}}>
