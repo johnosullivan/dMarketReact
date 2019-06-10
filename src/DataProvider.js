@@ -10,8 +10,13 @@ const dataProvider = {};
 
 const web3 = new window.Web3(window.ethereum);
 
-const FileContractManagerAddress = "0x62e7e1f1f563fe79f5e91fff066bd2f23704d326";
+const FileContractManagerAddress = "0x645eeceea858ecf492fea5a2d053f9c3fc073361";
 const IPFS_URL = 'https://ipfs.io';
+
+const TEST = '0xfbfc6d96c67778a1a14c082c1f72c836ea82feed';
+
+//"4652106660"
+//20000000000000000000
 
 const fileContractManager = web3.eth.contract(FileContractManager.interface).at(FileContractManagerAddress);
 let fileManager;
