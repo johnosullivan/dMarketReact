@@ -50,7 +50,7 @@
     "semantic-ui-react": "^0.80.0",
     "sequelize": "^5.8.6",
     "sequelize-cli": "^5.4.0",
-    "serve": "^6.5.6",
+    "serve": "^10.1.2",
     "sjcl": "^1.0.7",
     "solc": "^0.5.6",
     "source-map-explorer": "^1.7.0",
